@@ -370,14 +370,25 @@ main {
   min-width: 220px;
   padding: 12px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(6px);
   opacity: 0;
   pointer-events: none;
   transform-origin: bottom right;
   transform: translateY(0) scale(.98);
   transition: opacity .12s ease, transform .12s ease;
+  -webkit-transition: opacity .12s ease, transform .12s ease;
+  -moz-transition: opacity .12s ease, transform .12s ease;
+  -ms-transition: opacity .12s ease, transform .12s ease;
+  -o-transition: opacity .12s ease, transform .12s ease;
+  -webkit-transform: translateY(0) scale(.98);
+  -moz-transform: translateY(0) scale(.98);
+  -ms-transform: translateY(0) scale(.98);
+  -o-transform: translateY(0) scale(.98);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 .jump-pop.open {
@@ -393,7 +404,7 @@ main {
 .jump-title {
   font-size: 13px;
   margin-bottom: 6px;
-  color: #e6eef8;
+  color: #333333;
 }
 
 .jump-row {
@@ -419,9 +430,8 @@ main {
   height: 35px;
   border-radius: 8px;
   border: none;
-  background: #7c3aed;
-  ;
-  color: #fff;
+  background: #F875AA;
+  color: #FDEDED;
   cursor: pointer;
   display: flex;
   align-items: center;

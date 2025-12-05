@@ -31,7 +31,6 @@ a {
 
 main {
   width: 80%;
-  /*width: min(1100px, 90%);*/
   margin: 0 auto;
   padding: 50px 0;
   display: flex;
@@ -57,10 +56,9 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  /*background: linear-gradient(90deg, rgb(184, 247, 249), #d6829a);
-  border-bottom: 1px solid #e5dff0;*/
+  padding: 15px 15px;
   z-index: 10;
+  background-color: #EDFFF0;
   box-shadow: 0 7px 20px -10px rgb(73, 71, 71);
 }
 
@@ -74,7 +72,8 @@ main {
 
 .logo img {
   width: 80px;
-  height: auto;
+  height: 80px;
+  margin-top: 10px;
 }
 
 .menu {
@@ -89,7 +88,6 @@ main {
 }
 
 .menu a:hover {
-  /*color: #43dee7;*/
   color: #AEDEFC;
 }
 
@@ -414,8 +412,8 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 400px;
-  max-width: 480px;
+  min-width: 200px;
+  max-width: 280px;
   border-radius: 14px;
   padding: 20px;
   box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25);
@@ -666,24 +664,22 @@ h3 {
 
 
 
-/*--------------------Footer Wave---------------------*/
+/*--------------------Footer---------------------*/
+
 .footer {
   width: 100%;
-  background: linear-gradient(135deg, #AEDEFC, #4d89c6);
-  color: #fff;
+  background: #EDFFF0;
+  color: #FFFFFF;
   position: relative;
   padding-top: 0;
   overflow: visible;
-
 }
-
 
 .footer-wave {
   position: absolute;
   top: -120px;
   left: 0;
   width: 100%;
-  line-height: 0;
   overflow: visible;
 }
 
@@ -702,33 +698,19 @@ h3 {
 }
 
 
-/* ------------------------------FOOTER------------------------------ */
-.footer {
-  width: 100%;
-  background: #AEDEFC;
-  color: #FFFFFF;
-  position: relative;
-  padding-top: 0;
-}
-
-
-.cont-footer {
-  width: 90%;
-  margin: 0 auto;
-}
-
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 28px 20px 0 20px;
+  padding: 40px 20px 0 20px;
 }
 
 .brand,
 .links,
-.newsletter {
+.social,
+.contact {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -738,6 +720,7 @@ h3 {
   margin: 0;
   font-size: 18px;
   color: #333333;
+  font-weight: 700;
 }
 
 p.muted {
@@ -746,44 +729,44 @@ p.muted {
   line-height: 1.6;
 }
 
+.quick {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 a.link {
   color: #F875AA;
   text-decoration: none;
+  transition: 0.2s;
 }
 
 a.link:hover {
-  color: #FDEDED;
+  color: #ffffff;
 }
 
-.newsletter {
-  background: #EDFFF0;
-  padding: 12px;
-  border-radius: 12px;
-  color: #F875AA;
+.social-icons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  justify-items: flex-start;
+  margin-top: 5px;
 }
 
-.newsletter form {
-  display: flex;
-  gap: 8px;
+.icon {
+  width: 22px;
+  height: 22px;
 }
 
-.newsletter input[type=email] {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  /*background: transparent;*/
-  background-color: #EDFFF0;
+.icon svg {
+  width: 22px;
+  height: 22px;
+  fill: #F875AA;
+  transition: fill 0.3s;
 }
 
-.btn {
-  background: #F875AA;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  color: #FDEDED;
-  cursor: pointer;
-  font-weight: 600;
+.icon:hover svg {
+  fill: #FDEDED;
 }
 
 .meta {
@@ -805,16 +788,16 @@ a.link:hover {
   flex-wrap: wrap;
 }
 
-.quick {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.footer-svg {
-  display: block;
-  width: 100%;
-  height: 70px;
+@media (max-width: 550px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 
