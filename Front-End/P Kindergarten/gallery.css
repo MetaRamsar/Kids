@@ -241,12 +241,6 @@ main {
   justify-content: center;
   color: #F875AA;
 }
-.gallery .masonry,
-.gallery {
-  width: 100% !important;
-  margin: 0 auto !important;
-  overflow-x: hidden !important;
-}
 .masonry{
   column-count: 4;
   column-gap: 1.25rem;
@@ -582,4 +576,5 @@ a.link:hover {
   align-items: center;
   flex-wrap: wrap;
 }
+
 
