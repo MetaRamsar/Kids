@@ -260,9 +260,25 @@ main {
   flex-wrap: wrap;
   /*margin-top: 60px;*/
 }
+@media (max-width: 1120px) and (min-width: 1086px) {
+  .info-section{
+    justify-content: center;
+  }
+  .info-box:last-child{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
 @media (max-width: 1087px) {
-  .info-section>div:last-child:nth-child(odd) {
+  /*.info-section>div:last-child:nth-child(odd) {
+    margin-left: auto;
+    margin-right: auto;
+  }*/
+  .info-section{
+    justify-content: center;
+  }
+  .info-box:last-child{
     margin-left: auto;
     margin-right: auto;
   }
@@ -322,6 +338,28 @@ h3 {
   color: #333333;
   line-height: 1.6;
   opacity: 0.85;
+}
+@media (max-width: 1087px) and (min-width: 993px) {
+  .info-section {
+    justify-content: center;
+  }
+ }
+@media (max-width: 992px) and (min-width: 601px){
+  .info-section{
+    justify-content: space-between;
+  }
+  .info-box {
+    width: calc(50% - 10px);
+  }
+  .info-box:nth-child(3){
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media (max-width: 600px) {
+  .info-box {
+    width: 100% !important;
+  }
 }
 
 /* ---------- Slider Section ---------- */
