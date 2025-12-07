@@ -736,6 +736,7 @@ main {
 .gallery-section {
   width: 100%;
   max-width: 1000px;
+  margin: 0 auto;
   overflow: hidden;
   border-radius: 16px;
   padding: 20px;
@@ -866,7 +867,32 @@ main {
     --card-w: 180px;
   }
 }
-
+.see-more{
+  display: flex;
+  justify-content: space-between;
+  
+}
+.see-more a{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 20px;
+  height: 40px;
+  width: 100px;
+  color: #F875AA;
+  background-color: white;
+  border: none;
+  /* پهنا متناسب با متن */
+ /* padding: 0 20px; */
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.see-more a:hover {
+   /* transform: scale(1.05);*/
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 /*------------------------SEC 2-----------------------------*/
 /*--------------------Footer---------------------*/
 .footer {
