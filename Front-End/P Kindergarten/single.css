@@ -24,6 +24,7 @@ main {
 }
 
 /*---------------- Header Archive ---------------*/
+/* -------- حالت دسکتاپ (900px به بالا) -------- */
 .header-archive {
   position: relative;
   display: flex;
@@ -47,7 +48,7 @@ main {
 .logo img {
   width: 80px;
   height: 80px;
-  margin-top: 10px;
+  margin-top: 3px;
 }
 
 .header-archive nav {
@@ -116,24 +117,85 @@ main {
 .search-box i.fas:hover {
   background: rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
-  -webkit-transform: translateY(-1px);
-  -moz-transform: translateY(-1px);
-  -ms-transform: translateY(-1px);
-  -o-transform: translateY(-1px);
 }
 
-@media (max-width: 900px) {
+.menu-btn {
+  display: none; /* پیش‌فرض دسکتاپ مخفی */
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.menu-btn span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #333;
+  border-radius: 3px;
+}
+
+@media (max-width: 1080px) and (min-width: 971px) {
+  .header-archive {
+    padding: 23px 40px;
+  }
+
+  .logo img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .header-archive .search-box {
+    width: 280px;
+  }
+}
+
+@media (max-width: 970px) {
   .header-archive {
     flex-direction: column;
     align-items: center;
     padding: 15px 20px;
   }
 
+  .header-archive .logo {
+    position: static;
+    margin-bottom: 10px;
+  }
+
+  .menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .menu-btn span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #333;
+    border-radius: 3px;
+  }
+
   .header-archive nav {
-    order: 1;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .header-archive nav.active {
+    display: flex;
   }
 
   .header-archive .search-box {
@@ -142,14 +204,54 @@ main {
     margin-top: 12px;
     width: 85%;
     max-width: 400px;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -ms-transform: none;
-    -o-transform: none;
   }
 }
-
 /*---------------- Header Archive ---------------*/
+
+
+.slider-wrapper {
+  width: 90%;
+  max-width: 700px;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  height: 360px;
+  direction: ltr;
+}
+
+.slider {
+  direction: ltr;
+  display: flex;
+  transition: transform 0.4s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-img {
+  flex: 0 0 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.prev-slide-btn, .next-slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: white;
+  background: rgba(0,0,0,0.45);
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  user-select: none;
+}
+
+.prev-slide-btn { right: 10px; }  
+.next-slide-btn { left: 10px; }
+/* ------------------ slider ------------------ */
+
 
 .gallery-single {
   display: grid;
@@ -161,7 +263,6 @@ main {
   direction: ltr;
 }
 
-
 .pictures {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -170,21 +271,19 @@ main {
 }
 
 .pic-row {
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
 }
 
 .pic {
-  height: 170px;
   width: 100%;
+  height: 170px;
   object-fit: cover;
   border-radius: 10px;
   cursor: pointer;
   border: 2px solid transparent;
 }
-
 
 .main-image img {
   width: 100%;
@@ -193,53 +292,12 @@ main {
   border-radius: 12px;
   cursor: pointer;
 }
-
-
-.more-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-.more-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 10px;
-}
-
-.view-more-btn {
-  white-space: nowrap;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #111;
-  font-weight: 600;
-  transition: 0.2s;
-}
-
-.view-more-btn:hover {
-  background: rgb(163, 157, 166);
-}
-
-.view-more-btn i {
-  margin-right: 6px;
-  font-size: 14px;
-}
-
-/*----------------gallery-single----------------*/
-
+/* ------------------- grid ----------------- */
 
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0,0,0,0.85);
   display: none;
   justify-content: center;
   align-items: center;
@@ -255,25 +313,9 @@ main {
 }
 
 .lightbox-img {
-  width: auto;
   max-width: 80vw;
   max-height: 38vw;
-  height: auto;
   border-radius: 10px;
-}
-
-.prev-btn,
-.next-btn {
-  font-size: 45px;
-  color: white;
-  cursor: pointer;
-  padding: 10px;
-  user-select: none;
-}
-
-.prev-btn:hover,
-.next-btn:hover {
-  color: #ddd;
 }
 
 .close-lightbox {
@@ -283,9 +325,22 @@ main {
   font-size: 45px;
   color: white;
   cursor: pointer;
-  z-index: 10000;
 }
 
+.prev-btn, .next-btn {
+  position: fixed;    
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  color: white;
+  background: rgba(0,0,0,0.35);
+  padding: 4px 14px;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.prev-btn { left: 20px; }
+.next-btn { right: 20px; }
 
 .lightbox-thumbs {
   margin-top: 20px;
@@ -294,89 +349,29 @@ main {
   overflow-x: auto;
   padding: 10px 0;
   max-width: 90vw;
-  cursor: grab;
-  scrollbar-width: none;
 }
-
-.lightbox-thumbs::-webkit-scrollbar {
-  display: none;
-}
-
 
 .lightbox-thumbs img {
   width: 70px;
   height: 70px;
   object-fit: cover;
   border-radius: 8px;
-  cursor: pointer;
   opacity: 0.6;
+  cursor: pointer;
   transition: 0.2s;
-  border: 2px solid transparent;
-}
-
-.lightbox-thumbs img:hover {
-  transform: scale(1.1);
-  opacity: 1;
-  border-color: #fff;
 }
 
 .lightbox-thumbs img.active-thumb {
   opacity: 1;
-  border-color: #fff;
+  border: 2px solid #fff;
   transform: scale(1.05);
 }
 
 .lightbox-counter {
-  position: fixed;
-  top: calc(50% + 220px);
-  right: 20px;
-  background-color: rgba(189, 179, 179, 0.85);
-  color: #111;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  z-index: 10002;
+  color: #fff;
+  margin-top: 10px;
 }
-
-.lightbox-thumbs img:hover {
-  transform: scale(1.1);
-  opacity: 1;
-  border-color: #fff;
-}
-
-
-.prev-btn,
-.next-btn {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 28px;
-  color: white;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 1px 14px;
-  border-radius: 10%;
-  cursor: pointer;
-  z-index: 10001;
-  transition: 0.2s;
-}
-
-.prev-btn {
-  left: 20px;
-}
-
-.next-btn {
-  right: 20px;
-}
-
-.prev-btn:hover,
-.next-btn:hover {
-  background: rgba(255, 255, 255, 0.45);
-  transform: translateY(-50%) scale(1.1);
-}
-
 /*------------------lightbox-------------------*/
-
-
 
 
 .class-info {
@@ -490,6 +485,17 @@ main {
 
 }
 
+
+.tab-link i {
+  font-size: 16px;
+  margin-left: 5px;    
+  color: #ff468d;        /* اندازه آیکون */
+}
+
+.tab-link.actives i {
+  color: white;
+}
+
 /* تب فعال */
 .pr a.actives {
   background-color: #42bde2;
@@ -531,6 +537,7 @@ main {
   gap: 20px;
   margin-bottom: 10px;
   margin-top: 10px;
+  margin-right: 2.5rem;
 }
 
 .te-pro p {
@@ -549,6 +556,7 @@ main {
   font-size: 20px;
   /*font-weight: bold;*/
   color: black;
+  margin-bottom: 20px;
 }
 
 .se-li {
@@ -561,10 +569,13 @@ main {
 /*---------------------------ideas---------------------------*/
 .ideass {
   width: 100%;
+ /* margin: 0 auto;*/
   display: flex;
   flex-direction: column;
+  align-items: center;
   /*max-height: 320px;*/
   height: auto;
+  margin-right: 2.5rem;
 }
 
 .ideas {
@@ -893,8 +904,11 @@ main {
    /* transform: scale(1.05);*/
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
+
 /*------------------------SEC 2-----------------------------*/
 /*--------------------Footer---------------------*/
+
+
 .footer {
   width: 100%;
   background: #EDFFF0;
@@ -1026,4 +1040,4 @@ a.link:hover {
   .grid {
     grid-template-columns: 1fr;
   }
-}
+}   
