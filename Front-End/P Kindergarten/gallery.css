@@ -278,7 +278,7 @@ main {
     bottom: 0;
     right: 0;
     left: 0;
-    padding: 5px 10px;
+    padding: 10px 12px;
     color: black;
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(8px);
@@ -576,5 +576,6 @@ a.link:hover {
   align-items: center;
   flex-wrap: wrap;
 }
+
 
 
