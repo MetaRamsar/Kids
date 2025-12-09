@@ -8,57 +8,32 @@
   <link rel="stylesheet" href="/single.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
-
+<body>
 <header>
+ <div class="headd">
   <div class="header-archive">
-    <nav>
-
-      <a href="/main.html">صفحه اصلی</a>
-      <a href="#">ورود/ثبت نام</a>
-      <a href="#">علاقه مندی ها</a>
-    </nav>
+    <a href="/main.html" class="logo">
+      <img src="/img/Logo.png" alt="لوگو">
+    </a>
+    <button class="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <div class="search-box">
       <input type="text" placeholder="جستجو">
       <i class="fas fa-search"></i>
     </div>
-    <div class="logo">
-      <a href="#"><img src="/img/Logo.png" alt="لوگو"></a>
-    </div>
+    <nav class="nav-links">
+      <a href="/main.html">صفحه اصلی</a>
+      <a href="#">ورود/ثبت نام</a>
+      <a href="#">علاقه مندی ها</a>
+    </nav>
+  </div>
   </div>
 </header>
-
-<body>
-  <main>
-
-    <section>
-      <div class="gallery-single">
-
-        <div class="pictures">
-          <div class="pic-row">
-            <img src="/img/download3.jpg" class="pic preview-pic">
-            <img src="/img/download2.jpg" class="pic preview-pic">
-          </div>
-
-          <div class="pic-row">
-            <img src="/img/download0.jpg" class="pic preview-pic">
-
-            <div class="pic more-wrapper">
-              <img src="/img/download4.jpg" class="pic preview-pic last-pic">
-              <a href="#" class="view-more-btn" id="moreBtn"><i class="fa-solid fa-images"></i> مشاهده بیشتر</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="main-image">
-          <img src="/img/download1.jpg" class="main-img" id="mainImg">
-        </div>
-
-      </div>
-    </section>
-
-
-
+<main>
+ <div id="galleryContainer"></div>
     <section class="class-info">
       <div class="class-box">
         <h2>اطلاعات کلاس نقاشی کودکان</h2>
@@ -90,12 +65,12 @@
     </section>
     <div class="sins2">
       <nav class="pr">
-        <a data-target="teachre" class="tab-link  actives">درباره معلم</a>
-        <a data-target="activities" class="tab-link">گالری</a>
-        <a data-target="idea" class="tab-link">نظرات</a>
+        <a data-target="teachre" class="tab-link  actives"> <i class="fa-solid fa-user"></i>درباره معلم</a>
+        <a data-target="activities" class="tab-link"> <i class="fa-solid fa-images"></i>گالری</a>
+        <a data-target="idea" class="tab-link"> <i class="fa-solid fa-comments"></i>نظرات</a>
       </nav>
-      <div class="teacher-inf tab-content" id="teachre">
-        <p class="inf">درباره معلم</p>
+      <div class="teacher-inf tab-content" id="teachre" >
+        <p class="inf"></i>درباره معلم</p>
         <a href="" class="te-pro">
           <img src="/img/profile-pic.jpg.jpeg" alt="">
           <p class="name">مریم محمدی</p>
@@ -183,8 +158,8 @@
     </div>
 
   </main>
-  <!-----------------------------Footer-------------------------------->
 
+  <!-----------------------------Footer-------------------------------->
   <footer class="footer">
     <div class="footer-wave">
       <svg viewBox="0 0 500 80" preserveAspectRatio="none">
@@ -270,159 +245,243 @@
 
     </div>
   </footer>
-
   <!-----------------------------Footer-------------------------------->
 
 
-
-  <div class="lightbox" id="lightbox">
-    <span class="close-lightbox">&times;</span>
-
-    <div class="lightbox-slider">
-      <span class="prev-btn"><i class="fa-solid fa-chevron-left"></i></span>
-      <img class="lightbox-img">
-      <span class="next-btn"><i class="fa-solid fa-chevron-right"></i></span>
-    </div>
-
-    <div class="lightbox-counter" id="lightboxCounter">عکس ۱ از ۸</div>
-
-    <div class="lightbox-thumbs"></div>
+<div class="lightbox" id="lightbox">
+  <span class="close-lightbox">&times;</span>
+  <div class="lightbox-slider">
+    <span class="prev-btn"><i class="fa-solid fa-chevron-left"></i></span>
+    <img class="lightbox-img">
+    <span class="next-btn"><i class="fa-solid fa-chevron-right"></i></span>
   </div>
-  <script>
-    const galleryImages = [
-      "/Pictures/download3.jfif",
-      "/Pictures/download2.jfif",
-      "/Pictures/download0.jfif",
-      "/Pictures/download4.jfif",
-      "/Pictures/download1.jfif",
-      "/Pictures/mahd1.jpg",
-      "/Pictures/mahd2.jpg",
-      "/Pictures/mahd3.jpg",
-    ];
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.querySelector(".lightbox-img");
-    const closeLb = document.querySelector(".close-lightbox");
-    const nextBtn = document.querySelector(".next-btn");
-    const prevBtn = document.querySelector(".prev-btn");
-    const thumbsContainer = document.querySelector(".lightbox-thumbs");
-    const lightboxCounter = document.getElementById("lightboxCounter");
-
-    let currentIndex = 0;
-
-
-    thumbsContainer.innerHTML = "";
-
-
-    galleryImages.forEach((src, index) => {
-      const thumb = document.createElement("img");
-      thumb.src = src;
-      thumb.classList.add("lightbox-pic");
-      if (index === currentIndex) thumb.classList.add("active-thumb");
-
-      thumb.addEventListener("click", () => {
-        changeImage(index);
-      });
-
-      thumbsContainer.appendChild(thumb);
-    });
-
-
-    function changeImage(index) {
-      currentIndex = index;
-      lightboxImg.src = galleryImages[currentIndex];
-      updateActiveThumb();
-      updateCounter();
-    }
-
-
-    function updateActiveThumb() {
-      document.querySelectorAll(".lightbox-pic").forEach((t, i) => {
-        t.classList.toggle("active-thumb", i === currentIndex);
-      });
-    }
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+  <div class="lightbox-thumbs"></div>
+</div>
 
 
 
-    function updateCounter() {
-      lightboxCounter.textContent = "عکس " + (currentIndex + 1) + " از " + galleryImages.length;
-    }
-
-
-
-    nextBtn.addEventListener("click", () => {
-      changeImage((currentIndex + 1) % galleryImages.length);
-    });
-
-    prevBtn.addEventListener("click", () => {
-      changeImage((currentIndex - 1 + galleryImages.length) % galleryImages.length);
-    });
-
-
-    function openLightbox(index) {
-      lightbox.style.display = "flex";
-      changeImage(index);
-    }
-
-    closeLb.addEventListener("click", () => {
-      lightbox.style.display = "none";
-    });
-
-
-    document.getElementById("mainImg").addEventListener("click", () => openLightbox(4));
-
-    document.querySelectorAll(".preview-pic").forEach((img, i) => {
-      openLightboxPreview = (index) => openLightbox(index);
-      img.addEventListener("click", () => openLightbox(i));
-    });
-
-    document.getElementById("moreBtn").addEventListener("click", (e) => {
-      e.preventDefault();
-      openLightbox(5);
-    });
-  </script>
-  <script>
-    const tabs = document.querySelectorAll(".tab-link");
-    const contents = document.querySelectorAll(".tab-content");
-
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-
-        tabs.forEach(t => t.classList.remove("actives"));
-        tab.classList.add("actives");
-
-        contents.forEach(c => c.style.display = "none");
-
-        document.getElementById(tab.dataset.target).style.display = "block";
-      });
-    });
-  </script>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 <script>
-  const swiper = new Swiper('.swiper', {
-    direction: 'horizontal',
-    loop: true,
+  var galleryImages = [
+    "/img/download1.jpg",
+    "/img/download3.jpg",
+    "/img/download0.jpg"
+  ];
 
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
+  var galleryContainer = document.getElementById("galleryContainer");
 
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
+  function renderGallery(images){
+  if(images.length < 5){
+    renderSlider(images); 
+  } else {
+    renderGrid(images);   
+    initLightbox(images); 
 
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
+    var allPics = document.querySelectorAll(".pic, .main-img");
+    allPics.forEach((pic, i)=>{
+      pic.onclick = ()=>{
+        window.openLightbox(i);
+      };
+    });
+  }
+}
 
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    },
+  function renderSlider(images){
+    var html = '<div class="slider-wrapper"><div class="slider">';
+    for(var i=0; i<images.length; i++){
+      html += '<img src="'+images[i]+'" class="slide-img">';
+    }
+    html += '</div>'
+         + '<span class="prev-slide-btn">&#10094;</span>'
+         + '<span class="next-slide-btn">&#10095;</span>'
+         + '</div>';
+
+    galleryContainer.innerHTML = html;
+
+    var slider = document.querySelector(".slider");
+    var slides = document.querySelectorAll(".slide-img");
+    var index = 0;
+
+    function updateSlider(){
+      slider.style.transform = "translateX(-" + (index * 100) + "%)";
+    }
+
+document.querySelector(".next-slide-btn").onclick = function(){
+  index = (index - 1 + slides.length) % slides.length; 
+  updateSlider();
+};
+
+document.querySelector(".prev-slide-btn").onclick = function(){
+  index = (index + 1) % slides.length; 
+  updateSlider();
+};
+
+    updateSlider();
+  }
+
+  function renderGrid(images){
+    if(images.length < 5) return;
+
+    var html = '<div class="gallery-single">'
+             + '<div class="pictures">'
+             + '<div class="pic-row">'
+             + '<img src="'+images[0]+'" class="pic">'
+             + '<img src="'+images[1]+'" class="pic">'
+             + '</div>'
+             + '<div class="pic-row">'
+             + '<img src="'+images[2]+'" class="pic">'
+             + '<img src="'+images[3]+'" class="pic">'
+             + '</div>'
+             + '</div>'
+             + '<div class="main-image">'
+             + '<img src="'+images[4]+'" class="main-img">'
+             + '</div></div>';
+
+    galleryContainer.innerHTML = html;
+  }
+
+function initLightbox(images){
+  var lightbox = document.getElementById("lightbox");
+  var lightboxImg = document.querySelector(".lightbox-img");
+  var closeLb = document.querySelector(".close-lightbox");
+  var nextBtn = document.querySelector(".next-btn");
+  var prevBtn = document.querySelector(".prev-btn");
+  var thumbs = document.querySelector(".lightbox-thumbs");
+  var counter = document.getElementById("lightboxCounter");
+  if(!thumbs) return;
+
+  thumbs.innerHTML = "";
+  images.forEach((img, i)=>{
+    var t = document.createElement("img");
+    t.src = img;
+    t.className = "lightbox-pic";
+    t.onclick = ()=> changeImage(i);
+    thumbs.appendChild(t);
   });
 
-</script>
+  var currentIndex = 0;
 
+  function changeImage(i){
+    currentIndex = i;
+    lightboxImg.src = images[i];
+    counter.textContent = "عکس "+(i+1)+" از "+images.length;
+    document.querySelectorAll(".lightbox-pic").forEach((el,j)=>{
+      el.classList.toggle("active-thumb", i===j);
+    });
+  }
+
+  nextBtn.onclick = ()=> changeImage((currentIndex+1)%images.length);
+  prevBtn.onclick = ()=> changeImage((currentIndex-1+images.length)%images.length);
+  closeLb.onclick = ()=> lightbox.style.display="none";
+
+  window.openLightbox = function(i){
+    lightbox.style.display="flex";
+    changeImage(i);
+  }
+}
+
+  renderGallery(galleryImages);
+
+
+
+  var tabLinks = document.querySelectorAll(".tab-link");
+var tabContents = document.querySelectorAll(".tab-content");
+tabLinks.forEach(function(link){
+  link.addEventListener("click", function(){
+    
+    tabLinks.forEach(l => l.classList.remove("actives"));
+   
+    link.classList.add("actives");
+
+    var target = link.getAttribute("data-target");
+    tabContents.forEach(function(content){
+      if(content.id === target){
+        content.style.display = "block";
+      } else {
+        content.style.display = "none";
+      }
+    });
+  });
+});
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const sliders = document.querySelectorAll('.swiper');
+    sliders.forEach(slider => {
+      const swiper = new Swiper(slider, {
+        loop: true,
+        pagination: { el: slider.querySelector('.swiper-pagination'), clickable: true },
+        navigation: {
+          nextEl: slider.querySelector('.swiper-button-next'),
+          prevEl: slider.querySelector('.swiper-button-prev'),
+        },
+        speed: 700,
+      });
+
+      const prev = slider.querySelector('.swiper-button-prev');
+      const next = slider.querySelector('.swiper-button-next');
+      [prev, next].forEach(btn => {
+        btn.style.width = '35px';
+        btn.style.height = '35px';
+      });
+    });
+    (function () {
+      const dotsBtn = document.getElementById('dotsBtn');
+      const pop = document.getElementById('jumpPop');
+      const input = document.getElementById('jumpInput');
+      const go = document.getElementById('jumpGo');
+
+      function openPop() {
+        pop.classList.add("open");
+        setTimeout(() => { input.focus(); input.select(); }, 50);
+      }
+      function closePop() {
+        pop.classList.remove("open");
+      }
+
+      dotsBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        pop.classList.contains("open") ? closePop() : openPop();
+      });
+
+      document.addEventListener('click', e => {
+        if (!pop.contains(e.target) && e.target !== dotsBtn) closePop();
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closePop();
+        if (e.key === 'Enter' && pop.classList.contains("open")) {
+          e.preventDefault();
+          submitJump();
+        }
+      });
+
+      function submitJump() {
+        const v = Number(input.value);
+        if (!v || v < 1) {
+          input.setCustomValidity('عدد معتبر وارد کنید');
+          input.reportValidity();
+          return;
+        }
+        closePop();
+      }
+
+      go.addEventListener('click', submitJump);
+
+      input.addEventListener('input', () => {
+        if (input.value.startsWith('0')) input.value = input.value.replace(/^0+/, '');
+        input.setCustomValidity('');
+      });
+    })();
+  </script>
+  <script>
+  const menuBtn = document.querySelector('.menu-btn');
+const navLinks = document.querySelector('.nav-links');
+
+menuBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+</script>
+</body>
 </html>
