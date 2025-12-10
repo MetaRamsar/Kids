@@ -469,7 +469,8 @@ h3 {
 
 .slider-text h2 {
   font-size: 24px;
-  color: #AEDEFC;
+  /*color: #AEDEFC;*/
+  color: black;
   margin-bottom: 10px;
 }
 
