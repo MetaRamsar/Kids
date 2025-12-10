@@ -15,25 +15,28 @@
 
 <body>
 
-  <div class="header-menu">
-    <div class="auth">
-      <a href="#"><i class="fa-solid fa-right-to-bracket sin"></i>ورود</a>
-
-      <a href="#"><i class="fa-solid fa-user-plus login"></i>ثبت نام</a>
+   <div class="header-menu">
+   <div class="right-items">
+    <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
     </div>
 
-    <div class="menu">
-      <a href="#">خانه</a>
-      <a href="/about.html">درباره ما</a>
-      <a href="/archive.html">کلاس‌ها</a>
+    <div class="auth">
+        <a href="#"><i class="fa-solid fa-right-to-bracket sin"></i> ورود</a>
+        <a href="#"><i class="fa-solid fa-user-plus login"></i> ثبت نام</a>
+    </div>
+</div>
+
+    <div class="menu" id="menu">
+     <a href="#">خانه</a>
+     <a href="/about.html">درباره ما</a>
+     <a href="/archive.html">کلاس‌ها</a>
     </div>
 
     <div class="logo">
       <a href="#"><img src="/img/Logo.png" alt="لوگو"></a>
     </div>
   </div>
-
-
 
   <header class="header">
     <div class="bg-image"></div>
@@ -342,10 +345,6 @@
 
 
   <!------------------------------Main--------------------------------->
-
-
-
-
   <!-----------------------------Footer-------------------------------->
 
   <footer class="footer">
@@ -436,10 +435,6 @@
 
 
   <!-----------------------------Footer-------------------------------->
-
-</body>
-
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 <script>
   const swiper = new Swiper('.swiper', {
@@ -466,6 +461,13 @@
     },
   });
 
-</script>
 
+const ham = document.getElementById('hamburger');
+const menu = document.getElementById('menu');
+
+ham.addEventListener('click', () => {
+    menu.classList.toggle('active');
+});
+</script>
+</body>
 </html>
