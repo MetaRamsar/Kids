@@ -1152,9 +1152,13 @@ a.link:hover {
     display: none;
     flex-direction: column;
     gap: 8px;
-    z-index: 999;
+    /*z-index: 999;*/
+     z-index: 2000 !important;
   }
-
+  .header-menu {
+    position: relative;
+    z-index: 1;
+  }
   .menu a {
     font-size: 15px;
     display: block;      
