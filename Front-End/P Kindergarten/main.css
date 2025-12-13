@@ -925,10 +925,8 @@ a.link:hover {
 
 .social-icons {
   display: grid;
-  /*grid-template-columns: repeat(3, 1fr);
-  gap: 5px;*/
-  grid-template-columns: repeat(3, 0.27fr);
-  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
   justify-items: flex-start;
   margin-top: 5px;
 }
