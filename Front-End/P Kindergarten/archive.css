@@ -16,17 +16,23 @@
 
 /*---------------- Header Archive ---------------*/
 /* -------- حالت دسکتاپ (900px به بالا) -------- */
+header{
+  width: 100%;
+  background: linear-gradient(135deg, #d5e2e8, #EDFFF0);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
 .header-archive {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(135deg, #d5e2e8, #EDFFF0);
+  width: 100%;
+  /*background: linear-gradient(135deg, #d5e2e8, #EDFFF0);*/
   padding: 23px 50px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
+ /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;*/
 }
-
 .logo {
   display: flex;
   align-items: center;
@@ -473,7 +479,6 @@ main {
   border-radius: 8px;
   border: none;
   background: #7c3aed;
-  ;
   color: #fff;
   cursor: pointer;
   display: flex;
@@ -644,42 +649,7 @@ main {
 }
 
 /*--------------------Footer---------------------*/
-.footer {
-  width: 100%;
-  background: linear-gradient(135deg, #AEDEFC, #4d89c6);
-  color: #fff;
-  position: relative;
-  padding-top: 0;
-  overflow: visible;
 
-}
-
-
-.footer-wave {
-  position: absolute;
-  top: -120px;
-  left: 0;
-  width: 100%;
-  line-height: 0;
-  overflow: visible;
-}
-
-.footer-wave svg {
-  display: block;
-  width: 100%;
-  height: 120px;
-}
-
-.cont-footer {
-  width: 90%;
-  margin: 0 auto;
-  padding-top: 40px;
-  position: relative;
-  z-index: 2;
-}
-
-
-/* ------------------------------FOOTER------------------------------ */
 .footer {
   width: 100%;
   background: #EDFFF0;
@@ -711,22 +681,14 @@ main {
   z-index: 2;
 }
 
+
 .grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  justify-items: center;
-  align-items: center;
+  grid-template-columns: repeat(4, 1fr);
   gap: 22px;
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px 0 20px;
-  min-height: 180px;
-}
-
-.grid>div {
-  height: 180px;
-  display: flex;
-  flex-direction: column;
 }
 
 .brand,
@@ -735,11 +697,7 @@ main {
 .contact {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
   gap: 12px;
-  justify-content: flex-start;
-  align-items: flex-start;
 }
 
 h3 {
@@ -753,7 +711,6 @@ p.muted {
   color: #F875AA;
   margin: 0;
   line-height: 1.6;
-  text-align: justify;
 }
 
 .quick {
@@ -766,20 +723,16 @@ a.link {
   color: #F875AA;
   text-decoration: none;
   transition: 0.2s;
-  -webkit-transition: 0.2s;
-  -moz-transition: 0.2s;
-  -ms-transition: 0.2s;
-  -o-transition: 0.2s;
 }
 
 a.link:hover {
-  color: #aedefc;
+  color: #ffffff;
 }
 
 .social-icons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 100%;
+  grid-template-columns: repeat(3, 0.25fr);
+  gap: 5px;
   justify-items: flex-start;
   margin-top: 5px;
 }
@@ -787,7 +740,7 @@ a.link:hover {
 .icon {
   width: 22px;
   height: 22px;
- /* padding-bottom: 20px;*/
+  margin-bottom: 15px;
 }
 
 .icon svg {
@@ -795,14 +748,10 @@ a.link:hover {
   height: 22px;
   fill: #F875AA;
   transition: fill 0.3s;
-  -webkit-transition: fill 0.3s;
-  -moz-transition: fill 0.3s;
-  -ms-transition: fill 0.3s;
-  -o-transition: fill 0.3s;
 }
 
 .icon:hover svg {
-  fill: #aedefc;
+  fill: #FDEDED;
 }
 
 .meta {
@@ -822,5 +771,50 @@ a.link:hover {
   gap: 14px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .grid {
+    grid-template-columns: 1fr;
+
+  }
+  .jump-pop {
+    right: auto;         
+    left: -30px;          
+    bottom: calc(100% + 8px);
+
+    width: 240px;         
+    max-width: 90vw;
+
+    transform: none;     
+  }
+  .jump-row .jump-go{
+    font-size: smaller;
+  }
+}
+/*ریسپانسیودر عرض های بزرگتر*/
+@media(min-width :1380px) and (max-width:4420px){
+  main{
+    width: 67.55rem;
+    margin: 0 auto;
+    margin-bottom: 100px;
+  }
+  .cont-footer{
+    width: 67.55rem;
+    margin: 0 auto;
+  }
+}
+@media(min-width: 1380px) and (max-width:4420px)
+{
+  .header-archive{
+    width: 69rem;
+    margin: 0 auto;
+  }
 }
 
