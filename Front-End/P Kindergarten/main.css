@@ -865,7 +865,7 @@ a.link:hover {
 
 .social-icons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 0.25fr);
   gap: 5px;
   justify-items: flex-start;
   margin-top: 5px;
@@ -1122,7 +1122,7 @@ a.link:hover {
   }
 }
 /*ریسپانسیو در عرض های بزرگتر*/
-@media(min-width :1352px) and (max-width:4420px){
+@media(min-width :1380px) and (max-width:4420px){
   main{
     width: 67.55rem;
     margin: 0 auto;
