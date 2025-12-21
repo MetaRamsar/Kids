@@ -1,3 +1,14 @@
+@font-face {
+  font-family: vazir;
+  src: url(/Vazir-Medium.ttf);
+}
+
+* {
+  font-family: "vazir", sans-serif;
+}
+body{
+  margin: 0;
+}
 /*---------------- Header Archive ---------------*/
 .header-archive {
   position: relative;
