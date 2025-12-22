@@ -15,21 +15,48 @@
     <a href="/main.html" class="logo">
       <img src="/img/Logo.png" alt="لوگو">
     </a>
-    <button class="menu-btn">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+
     <div class="search-box">
       <input type="text" placeholder="جستجو">
       <i class="fas fa-search"></i>
     </div>
+
+   <div class="right-items">
+      <div class="header-actions">
+        <div class="hamburger" id="hamburger">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+      <div class="profile" id="profile">
+      <img src="/img/profile-pic.jpg.jpeg" alt="پروفایل">
+    </div>
+    </div>
+
     <nav class="nav-links">
       <a href="/main.html">صفحه اصلی</a>
       <a href="#">ورود/ثبت نام</a>
       <a href="#">علاقه مندی ها</a>
     </nav>
   </div>
+
+       <!-- منوی موبایل -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+
+  <div class="menu" id="mobile-menu">
+    <div class="menu-close" id="menu-close">✕</div>
+
+    <div class="menu-auth">
+      <img src="/img/profile-pic.jpg.jpeg" alt="profile">
+      <a href="#">ورود / ثبت‌نام</a>
+    </div>
+
+      <a href="/main.html"><i class="fa-solid fa-house"></i> خانه</a>
+  <a href="/about.html"><i class="fa-solid fa-info-circle"></i> درباره ما</a>
+  <a href="/archive.html"><i class="fa-solid fa-chalkboard-user"></i> کلاس‌ها</a>
+
+  </div>
+
+
   </div>
 </header>
 <main>
@@ -361,8 +388,28 @@
   <div class="lightbox-counter" id="lightboxCounter"></div>
   <div class="lightbox-thumbs"></div>
 </div>
-</body>
+
 <script>
+
+  const hamburger = document.getElementById('hamburger');
+const menu = document.getElementById('mobile-menu');
+const menuClose = document.getElementById('menu-close');
+const overlay = document.getElementById('menu-overlay');
+
+function openMenu() {
+    menu.classList.add('active');
+    overlay.style.display = 'block';
+}
+
+function closeMenu() {
+    menu.classList.remove('active');
+    overlay.style.display = 'none';
+}
+
+hamburger.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+
   var galleryImages = [
     "/img/download1.jpg",
     "/img/download3.jpg",
@@ -584,4 +631,5 @@ menuBtn.addEventListener('click', () => {
 });
 
 </script>
+</body>
 </html>
