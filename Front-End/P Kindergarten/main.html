@@ -11,15 +11,22 @@
 </head>
 
 
+
 <!------------------------------Header--------------------------------->
 
 <body>
 
    <div class="header-menu">
-    <div class="header-inner">
-     <div class="right-items">
+    
+    <div class="right-items">
+      <div class="header-actions">
     <div class="hamburger" id="hamburger">
         <i class="fa-solid fa-bars"></i>
+    </div>
+
+     <div class="profile" id="profile">
+      <img src="/img/profile-pic.jpg.jpeg" alt="پروفایل">
+    </div>
     </div>
 
     <div class="auth">
@@ -28,7 +35,25 @@
     </div>
     </div>
 
-    <div class="menu" id="menu">
+      <!-- منوی موبایل -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+
+  <div class="menu" id="mobile-menu">
+    <div class="menu-close" id="menu-close">✕</div>
+
+    <div class="menu-auth">
+      <img src="/img/profile-pic.jpg.jpeg" alt="profile">
+      <a href="#">ورود / ثبت‌نام</a>
+    </div>
+
+   <a href="/main.html"><i class="fa-solid fa-house"></i> خانه</a>
+   <a href="/about.html"><i class="fa-solid fa-info-circle"></i> درباره ما</a>
+   <a href="/archive.html"><i class="fa-solid fa-chalkboard-user"></i> کلاس‌ها</a>
+
+  </div>
+
+
+    <div class="menu" id="desktop-menu">
      <a href="#">خانه</a>
      <a href="/about.html">درباره ما</a>
      <a href="/archive.html">کلاس‌ها</a>
@@ -37,7 +62,7 @@
     <div class="logo">
       <a href="#"><img src="/img/Logo.png" alt="لوگو"></a>
     </div>
-    </div>
+    
   </div>
 
   <header class="header">
@@ -46,6 +71,7 @@
     <div class="right-side">
       <h1>کودک شاد، کودک سالم!</h1>
       <p>توضیحات بیشتر .......</p>
+
       <div class="search-box">
         <input type="text" placeholder="جستجو">
         <i class="fas fa-search"></i>
@@ -57,6 +83,7 @@
         <path d="M0,30 C150,130 350,-50 500,50 L500,80 L0,80 Z" fill="#ffffff"></path>
       </svg>
     </div>
+
   </header>
 
   <!------------------------------Header--------------------------------->
@@ -69,19 +96,19 @@
   <main>
     <section class="info-section">
       <div class="info-box" id="ic1">
-        <div class="icon"><img src="/img/kids_3636298.png" alt=""></div>
+        <div class="category-img"><img src="/img/kids_3636298.png" alt=""></div>
         <h3>آموزش و پرورش</h3>
         <p class="desc">توضیحات...</p>
       </div>
 
       <div class="info-box" id="ic2">
-        <div class="icon"><img src="/img/kid_10133636.png" alt=""></div>
+        <div class="category-img"><img src="/img/kid_10133636.png" alt=""></div>
         <h3>خلاقیت</h3>
         <p class="desc">توضیحات...</p>
       </div>
 
       <div class="info-box" id="ic3">
-        <div class="icon"><img src="/img/dough_9102578.png" alt=""></div>
+        <div class="category-img"><img src="/img/dough_9102578.png" alt=""></div>
         <h3>مهارت‌های زندگی</h3>
         <p class="desc">توضیحات...</p>
       </div>
@@ -465,11 +492,34 @@
   });
 
 
-const ham = document.getElementById('hamburger');
-const menu = document.getElementById('menu');
 
-ham.addEventListener('click', () => {
-    menu.classList.toggle('active');
+const hamburger = document.getElementById('hamburger');
+const menu = document.getElementById('mobile-menu');
+const menuClose = document.getElementById('menu-close');
+const overlay = document.getElementById('menu-overlay');
+
+function openMenu() {
+    menu.classList.add('active');
+    overlay.style.display = 'block';
+}
+
+function closeMenu() {
+    menu.classList.remove('active');
+    overlay.style.display = 'none';
+}
+
+hamburger.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+
+
+
+const menuLinks = document.querySelectorAll('#mobile-menu a');
+const currentPath = window.location.pathname;
+menuLinks.forEach(link => {
+  if (link.getAttribute('href') === currentPath) {
+    link.classList.add('active');
+  }
 });
 </script>
 </html>
