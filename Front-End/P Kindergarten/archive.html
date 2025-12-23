@@ -19,12 +19,46 @@
       <img src="/img/Logo.png" alt="لوگو">
     </a>
 
-     <div class="search-box">
+    <div class="sea-cat">
+    <div class="search-box">
       <input type="text" placeholder="جستجو">
       <i class="fas fa-search"></i>
     </div>
+<div class="amenities-wrapper">
+  <button id="amenitiesBtn" class="filter-btn">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g>
+	<path d="M8.9,2H4.5C3.1,2,2,3.1,2,4.5v4.4c0,1.4,1.1,2.5,2.5,2.5h4.4c1.4,0,2.5-1.1,2.5-2.5V4.5C11.4,3.1,10.3,2,8.9,2z M9.4,8.9
+		c0,0.3-0.2,0.5-0.5,0.5H4.5C4.2,9.4,4,9.2,4,8.9V4.5C4,4.2,4.2,4,4.5,4h4.4c0.3,0,0.5,0.2,0.5,0.5V8.9z"></path>
+	<path d="M19.5,2h-4.4c-1.4,0-2.5,1.1-2.5,2.5v4.4c0,1.4,1.1,2.5,2.5,2.5h4.4c1.4,0,2.5-1.1,2.5-2.5V4.5C22,3.1,20.9,2,19.5,2z
+		 M20,8.9c0,0.3-0.2,0.5-0.5,0.5h-4.4c-0.3,0-0.5-0.2-0.5-0.5V4.5c0-0.3,0.2-0.5,0.5-0.5h4.4C19.8,4,20,4.2,20,4.5V8.9z"></path>
+	<path d="M8.9,12.6H4.5c-1.4,0-2.5,1.1-2.5,2.5v4.4C2,20.9,3.1,22,4.5,22h4.4c1.4,0,2.5-1.1,2.5-2.5v-4.4
+		C11.4,13.7,10.3,12.6,8.9,12.6z M9.4,19.5c0,0.3-0.2,0.5-0.5,0.5H4.5C4.2,20,4,19.8,4,19.5v-4.4c0-0.3,0.2-0.5,0.5-0.5h4.4
+		c0.3,0,0.5,0.2,0.5,0.5V19.5z"></path>
+	<path d="M19.5,12.6h-4.4c-1.4,0-2.5,1.1-2.5,2.5v4.4c0,1.4,1.1,2.5,2.5,2.5h4.4c1.4,0,2.5-1.1,2.5-2.5v-4.4
+		C22,13.7,20.9,12.6,19.5,12.6z M20,19.5c0,0.3-0.2,0.5-0.5,0.5h-4.4c-0.3,0-0.5-0.2-0.5-0.5v-4.4c0-0.3,0.2-0.5,0.5-0.5h4.4
+		c0.3,0,0.5,0.2,0.5,0.5V19.5z"></path>
+</g>
+</svg>
+  </button>
 
+  <div id="amenitiesPopover" class="popover hidden">
+    <div class="amenities">
+      <button class="amenity" data-value="pool">زبان انگلیسی</button>
+      <button class="amenity" data-value="sauna">زبان فرانسه</button>
+      <button class="amenity" data-value="bbq">نقاشی</button>
+      <button class="amenity" data-value="elevator">ورزش</button>
+      <button class="amenity" data-value="fireplace">آشپزی</button>
+      <button class="amenity" data-value="yard">نواختن ساز</button>
+    </div>
 
+    <div class="actions">
+      <button id="applyFilter" class="apply">اعمال</button>
+      <button id="closeFilter" class="close">بستن</button>
+    </div>
+  </div>
+</div>
+    </div>
      <div class="right-items">
     <div class="header-actions">
         <div class="hamburger" id="hamburger">
@@ -61,6 +95,7 @@
 
   </div>
 
+      </div>
       </div>
     </header>
     <main>
@@ -512,5 +547,55 @@ menuLinks.forEach(link => {
 });
 
  </script>
+ <script>
+const btn = document.getElementById("amenitiesBtn");
+const popover = document.getElementById("amenitiesPopover");
+const amenities = document.querySelectorAll(".amenity");
+const closeBtn = document.getElementById("closeFilter");
+const applyBtn = document.getElementById("applyFilter");
+
+let selected = [];
+
+// باز و بسته شدن پنجره
+btn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  popover.classList.toggle("hidden");
+});
+
+// انتخاب امکانات
+amenities.forEach(item => {
+  item.addEventListener("click", () => {
+    const value = item.dataset.value;
+    item.classList.toggle("active");
+
+    if (selected.includes(value)) {
+      selected = selected.filter(v => v !== value);
+    } else {
+      selected.push(value);
+    }
+  });
+});
+
+// اعمال فیلتر
+applyBtn.addEventListener("click", () => {
+  console.log("Selected amenities:", selected);
+  popover.classList.add("hidden");
+
+  // اینجا می‌تونی AJAX یا فیلتر فرانت‌اند انجام بدی
+});
+
+// بستن دستی
+closeBtn.addEventListener("click", () => {
+  popover.classList.add("hidden");
+});
+
+// بستن با کلیک بیرون
+document.addEventListener("click", () => {
+  popover.classList.add("hidden");
+});
+
+// جلوگیری از بسته شدن با کلیک داخل پنجره
+popover.addEventListener("click", e => e.stopPropagation());
+</script>
 </html>
 
