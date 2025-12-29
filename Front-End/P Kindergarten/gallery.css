@@ -248,18 +248,26 @@ main {
     column-count: 3;
     column-gap: 1rem;
   }
+ .masonry .card:last-child {
+    min-height: 18.75rem;
+ }
 }
 @media (max-width: 62rem) {
   .masonry {
     column-count: 2;
     column-gap: 0.8rem;
   }
-
+  .masonry .card:nth-child(6){
+    min-height: 18.75rem;
+  }
 }
 @media (max-width: 48rem) {
   .masonry {
     column-count: 2;
     column-gap: 0.6rem;
+  }
+  .masonry .card:nth-child(6){
+    min-height: 18.75rem;
   }
 }
 /* عرض 600 پیکسل*/
@@ -915,6 +923,7 @@ a.link:hover {
   }
 
 }
+
 
 
 
