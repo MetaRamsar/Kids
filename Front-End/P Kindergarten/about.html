@@ -5,35 +5,66 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/about.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <title>درباره ما - مهدکودک</title>
 </head>
 
+
 <body>
-  <header>
-    <div class="header-archive">
-      <a href="/main.html" class="logo">
-        <img src="/img/Logo.png" alt="لوگو">
-      </a>
+    
+    <header>
+ <div class="headd">
+  <div class="header-archive">
+    <a href="/main.html" class="logo">
+      <img src="/img/Logo.png" alt="لوگو">
+    </a>
 
-      <button class="menu-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <div class="search-box">
-        <input type="text" placeholder="جستجو">
-        <i class="fas fa-search"></i>
-      </div>
-
-      <nav class="nav-links">
-        <a href="/main.html">صفحه اصلی</a>
-        <a href="#">ورود/ثبت نام</a>
-        <a href="#">علاقه مندی ها</a>
-      </nav>
+    <div class="search-box">
+      <input type="text" placeholder="جستجو">
+      <i class="fas fa-search"></i>
     </div>
-  </header>
-  <div class="container">
+
+   <div class="right-items">
+      <div class="header-actions">
+        <div class="hamburger" id="hamburger">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+      <div class="profile" id="profile">
+      <img src="/img/profile-pic.jpg.jpeg" alt="پروفایل">
+    </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="/main.html">صفحه اصلی</a>
+      <a href="#">ورود/ثبت نام</a>
+      <a href="#">علاقه مندی ها</a>
+    </nav>
+  </div>
+
+       <!-- منوی موبایل -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+
+  <div class="menu" id="mobile-menu">
+    <div class="menu-close" id="menu-close">✕</div>
+
+    <div class="menu-auth">
+      <img src="/img/profile-pic.jpg.jpeg" alt="profile">
+      <a href="#">ورود / ثبت‌نام</a>
+    </div>
+
+      <a href="/main.html"><i class="fa-solid fa-house"></i> خانه</a>
+  <a href="/about.html"><i class="fa-solid fa-info-circle"></i> درباره ما</a>
+  <a href="/archive.html"><i class="fa-solid fa-chalkboard-user"></i> کلاس‌ها</a>
+
+  </div>
+
+  </div>
+</header>
+
+
+<main>
+      <div class="container">
 
     <section class="about-section">
       <img src="/img/slide1 (3).jpg" alt="کودکان در حال بازی">
@@ -78,6 +109,12 @@
     </section>
 
   </div>
+</main>
+
+
+
+<!-----------------------------Footer-------------------------------->
+
   <footer class="footer">
     <div class="footer-wave">
       <svg viewBox="0 0 500 80" preserveAspectRatio="none">
@@ -163,9 +200,9 @@
 
     </div>
   </footer>
+<!-----------------------------Footer-------------------------------->
 
 
-</body>
 <script>
   const statsSection = document.getElementById('stats');
   const counters = document.querySelectorAll('.stat h2');
@@ -203,14 +240,33 @@
     }
   });
 
-  const menuBtn = document.querySelector('.menu-btn');
-  const navLinks = document.querySelector('.nav-links');
+const hamburger = document.getElementById('hamburger');
+const menu = document.getElementById('mobile-menu');
+const menuClose = document.getElementById('menu-close');
+const overlay = document.getElementById('menu-overlay');
 
-  menuBtn.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-  });
+function openMenu() {
+    menu.classList.add('active');
+    overlay.style.display = 'block';
+}
 
+function closeMenu() {
+    menu.classList.remove('active');
+    overlay.style.display = 'none';
+}
+
+hamburger.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+
+const menuLinks = document.querySelectorAll('#mobile-menu a');
+const currentPath = window.location.pathname;
+menuLinks.forEach(link => {
+  if (link.getAttribute('href') === currentPath) {
+    link.classList.add('active');
+  }
+});
 
 </script>
-
+</body>
 </html>
