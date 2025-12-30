@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="En" dir="rtl">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/event.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <title>رویداد مهدکودک</title>
 </head>
 
+
 <body>
-<header>
+    
+    <header>
+ <div class="headd">
   <div class="header-archive">
     <a href="/main.html" class="logo">
       <img src="/img/Logo.png" alt="لوگو">
     </a>
 
-    <button class="menu-btn">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
     <div class="search-box">
       <input type="text" placeholder="جستجو">
       <i class="fas fa-search"></i>
+    </div>
+
+   <div class="right-items">
+      <div class="header-actions">
+        <div class="hamburger" id="hamburger">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+      <div class="profile" id="profile">
+      <img src="/img/profile-pic.jpg.jpeg" alt="پروفایل">
+    </div>
     </div>
 
     <nav class="nav-links">
@@ -32,10 +40,29 @@
       <a href="#">علاقه مندی ها</a>
     </nav>
   </div>
+
+       <!-- منوی موبایل -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+
+  <div class="menu" id="mobile-menu">
+    <div class="menu-close" id="menu-close">✕</div>
+
+    <div class="menu-auth">
+      <img src="/img/profile-pic.jpg.jpeg" alt="profile">
+      <a href="#">ورود / ثبت‌نام</a>
+    </div>
+
+      <a href="/main.html"><i class="fa-solid fa-house"></i> خانه</a>
+  <a href="/about.html"><i class="fa-solid fa-info-circle"></i> درباره ما</a>
+  <a href="/archive.html"><i class="fa-solid fa-chalkboard-user"></i> کلاس‌ها</a>
+
+  </div>
+
+  </div>
 </header>
 
-
-  <div class="container">
+<main>
+      <div class="container">
     <div>
       <div class="event-info">
         <h1>عنوان رویداد</h1>
@@ -87,6 +114,8 @@
     </div>
 
   </div>
+</main>
+
   <!-----------------------------Footer-------------------------------->
 
   <footer class="footer">
@@ -177,16 +206,27 @@
 
 <!-----------------------------Footer-------------------------------->
 
-</body>
-
 <script>
-  const menuBtn = document.querySelector('.menu-btn');
-const navLinks = document.querySelector('.nav-links');
 
-menuBtn.addEventListener('click', () => {
-  navLinks.classList.toggle('active');
-});
+const hamburger = document.getElementById('hamburger');
+const menu = document.getElementById('mobile-menu');
+const menuClose = document.getElementById('menu-close');
+const overlay = document.getElementById('menu-overlay');
+
+function openMenu() {
+    menu.classList.add('active');
+    overlay.style.display = 'block';
+}
+
+function closeMenu() {
+    menu.classList.remove('active');
+    overlay.style.display = 'none';
+}
+
+hamburger.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
 
 </script>
-
+</body>
 </html>
