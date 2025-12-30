@@ -1240,6 +1240,11 @@ a.link:hover {
  .right-items {
     margin-inline-end: auto;
   }
+
+   .menu {
+    width: 70%;
+    right: -70%;
+  }
 }
 
 @media (min-width: 769px) {
