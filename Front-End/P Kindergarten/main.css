@@ -1459,28 +1459,6 @@ a.link:hover {
   }
 
 }
-
-
-/*ریسپانسیو در عرض های بزرگتر*/
-@media(min-width :1380px) and (max-width:4420px){
-  main{
-    width: 67.55rem;
-    margin: 0 auto;
-  }
-  .cont-footer{
-    width: 67.55rem;
-    margin: 0 auto;
-  }
-}
-@media(min-width: 1380px) and (max-width:4420px)
-{
-  .header-inner{
-    width: 65.55rem;
-  }
-}
-
-
-
 /* ---------- DESKTOP BASE ----------*/
 
 /* منوی همبرگری (حالت بسته) */
