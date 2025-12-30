@@ -3,24 +3,35 @@
   src: url(/Vazir-Medium.ttf);
 }
 
-body {
-  font-family: "vazir", sans-serif;
+* {
+  font-family: vazir;
+  direction: rtl;
+  text-decoration: none;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 
 /*---------------- Header Archive ---------------*/
 /* -------- حالت دسکتاپ (900px به بالا) -------- */
+header{
+  width: 100%;
+  background: linear-gradient(135deg, #d5e2e8, #EDFFF0);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
 .header-archive {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(135deg, #d5e2e8, #EDFFF0);
+  width: 100%;
+  /*background: linear-gradient(135deg, #d5e2e8, #EDFFF0);*/
   padding: 23px 50px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
+ /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;*/
 }
-
 .logo {
   display: flex;
   align-items: center;
@@ -100,12 +111,17 @@ body {
 }
 
 .search-box i.fas:hover {
-  background: rgba(0, 0, 0, 0.08);
-  transform: translateY(-1px);
+  /*background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);*/
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
 }
 
-.menu-btn {
-  display: none; /* پیش‌فرض دسکتاپ مخفی */
+/*.menu-btn {
+  display: none;
   position: absolute;
   top: 15px;
   right: 20px;
@@ -123,79 +139,11 @@ body {
   height: 3px;
   background: #333;
   border-radius: 3px;
-}
-
-@media (max-width: 1080px) and (min-width: 971px) {
-  .header-archive {
-    padding: 23px 40px;
-  }
-
-  .logo img {
-    width: 70px;
-    height: 70px;
-  }
-
-  .header-archive .search-box {
-    width: 280px;
-  }
-}
-
-@media (max-width: 970px) {
-  .header-archive {
-    flex-direction: column;
-    align-items: center;
-    padding: 15px 20px;
-  }
-
-  .header-archive .logo {
-    position: static;
-    margin-bottom: 10px;
-  }
-
-  .menu-btn {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-
-  .menu-btn span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: #333;
-    border-radius: 3px;
-  }
-
-  .header-archive nav {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
-  }
-
-  .header-archive nav.active {
-    display: flex;
-  }
-
-  .header-archive .search-box {
-    position: static;
-    transform: none;
-    margin-top: 12px;
-    width: 85%;
-    max-width: 400px;
-  }
-}
-
-
+}*/
 
 
 /*---------------- Header Archive ---------------*/
+
 
 .container {
   width: 80%;
@@ -377,7 +325,7 @@ a.link:hover {
 .icon {
   width: 22px;
   height: 22px;
-  padding-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .icon svg {
@@ -509,11 +457,12 @@ a.link:hover {
 
 
 @media (max-width: 900px) {
-    .container {
+  .container {
     padding: 15px;
     width: 80%;
   }
- /*.grid {
+
+  /*.grid {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
   }
@@ -550,6 +499,7 @@ a.link:hover {
     padding: 15px;
     width: 80%;
   }
+
   /*.grid {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
@@ -563,16 +513,480 @@ a.link:hover {
 
 @media (max-width: 500px) {
   .container {
-    padding: 15px; /* از 25px کمتر، ولی برای کوچیک بودن کافی */
+    padding: 15px;
+    /* از 25px کمتر، ولی برای کوچیک بودن کافی */
     width: 80%;
   }
 
   .event-info {
-    padding: 0 10px; /* فاصله داخلی اضافی */
+    padding: 0 10px;
+    /* فاصله داخلی اضافی */
   }
 
   .main-img img {
-    height: auto; /* ارتفاع ثابت باعث جمع شدن تصویر میشه، بهتره auto */
+    height: auto;
+    /* ارتفاع ثابت باعث جمع شدن تصویر میشه، بهتره auto */
   }
 }
+
+
+
+
+/*------- hamburger -------- */
+.hamburger {
+  position: absolute;
+  top: 25px;
+  right: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #F875AA;
+}
+
+.profile img {
+  width: 40px;
+   height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.right-items {
+  display: flex;
+  align-items: center;
+  gap: 15px; 
+  
+}
+
+.menu a {
+  color: #F875AA;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+ 
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: -400px; 
+  width: 400px;  
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 20px;
+  box-shadow: -3px 0 15px rgba(0,0,0,0.1);
+  transition: right 0.3s ease;
+  z-index: 9999;
+  border-radius: 20px 0 0 20px;
+} 
+
+
+.menu a:hover {
+  color: #AEDEFC;
+}
+
+.menu.active {
+  right: 0;
+}
+
+.menu-close {
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+
+.menu a {
+  font-size: 18px;
+  color: #F875AA;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.menu a:hover {
+  color: #AEDEFC;
+}
+
+
+@media (max-width: 970px) {
+  .hamburger {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+   .profile img {
+    position: absolute;
+    top: 20px;
+    right: 60px;
+  }
+}
+
+
+
+/* -------------- DESKTOP BASE ------------ */
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 360px;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 12px;
+  box-shadow: -3px 0 15px rgba(0,0,0,0.1);
+  transition: right 0.3s ease;
+  z-index: 9999;
+}
+
+.menu.active {
+  right: 0;
+}
+
+.menu-close {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.menu-close:hover {
+  color: #F875AA;
+}
+
+
+.menu-auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+
+.menu-auth::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -20px;               
+  width: calc(100% + 40px);  
+  height: 1px;
+  background: #eee;
+}
+
+.menu-auth img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.menu-auth a {
+  width: auto;
+  display: inline-block;
+  background: #f3f3f3;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+.menu > a {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.menu > a:hover {
+  background: #f7f7f7;
+}
+
+
+
+/* ------------- MOBILE ------------- */
+
+@media (max-width: 1080px) and (min-width: 971px) {
+  .header-archive {
+    padding: 23px 40px;
+  }
+
+  .logo img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .header-archive .sea-cat {
+    width: 280px;
+  }
+}
+
+@media (max-width: 1280px) {
+ .header-archive nav {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+  }
+
+@media (max-width: 1000px) {
+
+  .logo,
+  .header-actions,
+  .hamburger,
+  .profile img {
+    position: static !important;
+  }
+}
+
+
+@media (max-width: 1000px) {
+
+  .header-archive {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+  }
+
+    .right-items {
+    order: 1;  
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sea-cat {
+    order: 2;   
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logo {
+    order: 3;   
+  }
+
+  .search-box {
+   /*max-width: 150px;*/
+   width: clamp(120px, 30vw, 180px);
+  }
+
+  
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .hamburger {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+  }
+
+  .profile img {
+    width: 32px;
+    height: 32px;
+  }
+
+ .right-items {
+    margin-inline-end: auto;
+  }
+
+   .menu {
+    width: 70%;
+    right: -70%;
+  }
+}
+
+@media (min-width: 769px) {
+ 
+   .menu {
+    width: 300px;
+    right: -300px;
+    padding-top: 48px;
+  }
+   
+}
+
+
+/*----------  منوی دسکتاپ  ---------*/ 
+#desktop-menu {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 0 auto;     
+  position: static;  
+  width: auto;
+  height: auto;
+  right: auto;
+  top: auto;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  #desktop-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu#desktop-menu > a {
+    border-radius: 0;
+    background: transparent;
+  }
+}
+
+
+#mobile-menu a i {
+  margin-left: 4px;  
+  color: #F875AA;  
+  
+}
+
+
+#mobile-menu a:hover i {
+  color: #AEDEFC;  
+
+}
+
+#mobile-menu a.active {
+  background: #e0e0e0;
+  color: #555555;
+  border-radius: 8px;
+}
+
+#mobile-menu a.active i {
+  color: #555555;
+}
+
+#mobile-menu a.active:hover {
+  background: #d4d4d4;
+  cursor: pointer;
+}
+
+
+
+
+/* ---------- header-actions -------- */
+
+@media (min-width: 769px) {
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    
+    gap: 14px;
+
+    padding: 7px 10px;
+    height: 48px;
+    line-height: 1;
+
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .hamburger {
+    position: static;
+    font-size: 24px;
+    cursor: pointer;
+    color: #F875AA;
+    display: flex;
+    align-items: center;
+  }
+
+  .hamburger i {
+    line-height: 1;
+    display: block;
+  }
+
+  .profile img {
+   width: 36px;
+   height: 36px;
+   border-radius: 50%;
+   object-fit: cover;
+   display: block;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    gap: 12px;
+    
+    padding: 7px 10px;
+    height: 48px; 
+    line-height: 1;
+
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .hamburger, .profile img {
+    display: block;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .header-archive {
+    position: relative; 
+  }
+
+  .logo {
+    position: static; 
+    margin-bottom: 10px;
+  }
+
+  .header-actions {
+    position: absolute;
+    top: 12px; 
+    right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+  }
+
+}
+
 
