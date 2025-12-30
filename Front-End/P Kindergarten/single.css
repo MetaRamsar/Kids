@@ -1501,6 +1501,47 @@ a.link:hover {
 
 
 
+@media (min-width: 769px) {
+ 
+   .menu {
+    width: 300px;
+    right: -300px;
+    padding-top: 48px;
+  }
+   
+}
+
+
+/*----------  منوی دسکتاپ  ---------*/ 
+#desktop-menu {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 0 auto;     
+  position: static;  
+  width: auto;
+  height: auto;
+  right: auto;
+  top: auto;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  #desktop-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu#desktop-menu > a {
+    border-radius: 0;
+    background: transparent;
+  }
+}
+
 #mobile-menu a i {
   margin-left: 4px;  
   color: #F875AA;  
