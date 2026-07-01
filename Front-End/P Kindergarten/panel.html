@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل ادمین — کیدآپ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="/panel.style.css">
+</head>
+<body>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<aside class="sidebar">
+  <div class="sidebar-admin">
+    <img src="/img/profile-pic.jpg.jpeg" class="admin-photo" alt="ادمین">
+    <div class="admin-role">مدیر سیستم</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">مدیریت سایت</div>
+    <div class="nav-item active" onclick="showSection('site')">
+      <i class="fa-solid fa-globe"></i> تنظیمات سایت
+    </div>
+    <div class="nav-item" onclick="showSection('appearance')">
+      <i class="fa-solid fa-palette"></i> ظاهر و طراحی
+    </div>
+    <div class="nav-item" onclick="showSection('homepage')">
+      <i class="fa-solid fa-house"></i> صفحه اصلی
+    </div>
+    <div class="nav-item" onclick="showSection('about')">
+      <i class="fa-solid fa-circle-info"></i> درباره ما
+    </div>
+
+    <div class="nav-section">مدیریت محتوا</div>
+    <div class="nav-item" onclick="showSection('students')">
+      <i class="fa-solid fa-child"></i> دانش‌آموزان
+    </div>
+    <div class="nav-item" onclick="showSection('teachers')">
+      <i class="fa-solid fa-chalkboard-user"></i> معلمان
+    </div>
+    <div class="nav-item" onclick="showSection('classes')">
+      <i class="fa-solid fa-door-open"></i> کلاس‌ها
+    </div>
+    <div class="nav-item" onclick="showSection('events')">
+      <i class="fa-solid fa-calendar-days"></i> رویدادها
+    </div>
+    <div class="nav-item" onclick="showSection('gallery')">
+      <i class="fa-solid fa-images"></i> گالری
+    </div>
+
+    <div class="nav-section">ارتباطات</div>
+    <div class="nav-item" onclick="showSection('messages')">
+      <i class="fa-solid fa-envelope"></i> پیام‌ها
+      <span class="nav-badge">۳</span>
+    </div>
+  </nav>
+
+  <nav class="sidebar-quick-links">
+    <div class="nav-section">لینک‌های سریع</div>
+    <a href="/main.html" class="nav-item"><i class="fa-solid fa-house"></i> خانه</a>
+    <a href="/about.html" class="nav-item"><i class="fa-solid fa-info-circle"></i> درباره ما</a>
+    <a href="/archive.html" class="nav-item"><i class="fa-solid fa-chalkboard-user"></i> کلاس‌ها</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="nav-item logout-item" title="خروج از حساب">
+      <i class="fa-solid fa-right-from-bracket"></i> خروج از حساب
+    </div>
+  </div>
+</aside>
+<div class="sidebar-overlay" onclick="closeSidebar()"></div>
+<!-- ═══════════ MAIN ═══════════ -->
+<div class="main-wrap">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">
+       <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <nav class="quick-links">
+      <a href="/main.html">صفحه اصلی</a>
+      <a href="/archive.html">کلاس‌ها</a>
+    </nav>
+
+<div class="topbar-brand">
+  <div class="icon-btn notif-dot" title="اعلان‌ها"><i class="fa-regular fa-bell"></i></div>
+  <a href="/main.html" class="topbar-logo">
+    <img src="/img/Logo.png" alt="لوگو">
+  </a>
+</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ══ SECTION: تنظیمات سایت ══ -->
+    <div id="sec-site" class="section active">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">تنظیمات سایت</div>
+          <div class="sec-sub">اطلاعات اصلی سایت مهدکودک را ویرایش کنید</div>
+        </div>
+      </div>
+
+      <!-- لوگو -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head">
+          <div>
+            <div class="card-title">لوگو سایت</div>
+            <div class="card-sub">لوگویی که در هدر سایت نمایش داده می‌شود</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <div>
+              <img src="https://via.placeholder.com/100x60/F875AA/fff?text=Logo" class="logo-preview" id="logo-preview" alt="لوگو">
+              <div style="font-size:11px;color:var(--text-muted);text-align:center;">لوگوی فعلی</div>
+            </div>
+            <div style="flex:1;min-width:200px;">
+              <div class="upload-zone">
+                <input type="file" accept="image/*" onchange="previewLogo(this)">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>برای آپلود لوگو اینجا کلیک کنید</p>
+                <small>PNG یا SVG — حداکثر ۲ مگابایت</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- اطلاعات اصلی -->
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head">
+          <div class="card-title">اطلاعات اصلی</div>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>عنوان سایت</label>
+              <input type="text" value="کیدآپ — مهدکودک">
+              <span class="hint">نمایش داده‌شده در تب مرورگر و هدر سایت</span>
+            </div>
+            <div class="field">
+              <label>شعار سایت (Tagline)</label>
+              <input type="text" value="محیطی امن برای رشد کودکان">
+            </div>
+            <div class="field">
+              <label>شماره تماس</label>
+              <input type="tel" value="021-12345678">
+            </div>
+            <div class="field">
+              <label>ایمیل</label>
+              <input type="email" value="info@kidup.com">
+            </div>
+            <div class="field full">
+              <label>آدرس</label>
+              <input type="text" value="تهران، خیابان کودکستان، پلاک ۱۲">
+            </div>
+            <div class="field full">
+              <label>توضیح کوتاه (برای فوتر و سئو)</label>
+              <textarea>مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.</textarea>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost">انصراف</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- شبکه‌های اجتماعی -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">شبکه‌های اجتماعی</div>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label><i class="fa-brands fa-instagram" style="color:#E1306C;"></i> اینستاگرام</label>
+              <input type="url" placeholder="https://instagram.com/...">
+            </div>
+            <div class="field">
+              <label><i class="fa-brands fa-telegram" style="color:#229ED9;"></i> تلگرام</label>
+              <input type="url" placeholder="https://t.me/...">
+            </div>
+            <div class="field">
+              <label><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> واتساپ</label>
+              <input type="url" placeholder="https://wa.me/...">
+            </div>
+            <div class="field">
+              <label><i class="fa-brands fa-youtube" style="color:#FF0000;"></i> یوتیوب</label>
+              <input type="url" placeholder="https://youtube.com/...">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: ظاهر و طراحی ══ -->
+    <div id="sec-appearance" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">ظاهر و طراحی</div>
+          <div class="sec-sub">رنگ‌ها، فونت و المان‌های بصری سایت</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">رنگ‌های اصلی</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>رنگ اصلی (Primary)</label>
+              <div class="color-row">
+                <input type="color" value="#F875AA" class="color-swatch" id="color-primary" oninput="updateColorPreview()">
+                <input type="text" value="#F875AA" id="color-primary-text" style="flex:1;" oninput="syncColor('primary')">
+              </div>
+              <span class="hint">استفاده در دکمه‌ها، لینک‌ها و هایلایت‌ها</span>
+            </div>
+            <div class="field">
+              <label>رنگ پس‌زمینه هدر</label>
+              <div class="color-row">
+                <input type="color" value="#EDFFF0" class="color-swatch" id="color-bg">
+                <input type="text" value="#EDFFF0" style="flex:1;">
+              </div>
+            </div>
+            <div class="field">
+              <label>رنگ فوتر</label>
+              <div class="color-row">
+                <input type="color" value="#EDFFF0" class="color-swatch">
+                <input type="text" value="#EDFFF0" style="flex:1;">
+              </div>
+            </div>
+            <div class="field">
+              <label>رنگ متن اصلی</label>
+              <div class="color-row">
+                <input type="color" value="#333333" class="color-swatch">
+                <input type="text" value="#333333" style="flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">فاویکون سایت</div></div>
+        <div class="card-body">
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <img src="https://via.placeholder.com/48/F875AA/fff?text=K" style="width:48px;height:48px;border-radius:8px;border:1px solid var(--border);" alt="فاویکون">
+              <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">فاویکون فعلی</div>
+            </div>
+            <div style="flex:1;min-width:200px;">
+              <div class="upload-zone" style="padding:18px;">
+                <input type="file" accept="image/*">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size:20px;"></i>
+                <p style="font-size:12px;">آپلود فاویکون</p>
+                <small>۳۲×۳۲ یا ۶۴×۶۴ پیکسل — ICO یا PNG</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: صفحه اصلی ══ -->
+    <div id="sec-homepage" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">ویرایش صفحه اصلی</div>
+          <div class="sec-sub">محتوای اسلایدر، بخش‌ها و متن‌های صفحه اصلی</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head">
+          <div class="card-title">اسلایدر اصلی (Hero)</div>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>عنوان اصلی</label>
+              <input type="text" value="مهدکودک کیدآپ">
+            </div>
+            <div class="field">
+              <label>زیرعنوان</label>
+              <input type="text" value="محیطی امن و شاد برای کودک شما">
+            </div>
+            <div class="field full">
+              <label>متن توضیحی</label>
+              <textarea>با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطرافشان تشویق می‌کنیم.</textarea>
+            </div>
+            <div class="field full">
+              <label>تصویر اسلایدر</label>
+              <div class="upload-zone">
+                <input type="file" accept="image/*">
+                <i class="fa-solid fa-image"></i>
+                <p>آپلود تصویر پس‌زمینه اسلایدر</p>
+                <small>JPG یا PNG — حداقل ۱۲۰۰×۶۰۰ پیکسل</small>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">آمار و دستاوردها</div>
+        </div>
+        <div class="card-body">
+          <div class="alert info"><i class="fa-solid fa-circle-info"></i> این اعداد در بخش آمار صفحه اصلی نمایش داده می‌شوند.</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>هنر‌آموزان</label>
+              <input type="text" value="۱۲۰+">
+            </div>
+            <div class="field">
+              <label>برچسب آمار اول</label>
+              <input type="text" value="هنرآموزی کودکان">
+            </div>
+            <div class="field">
+              <label>فارغ‌التحصیلان</label>
+              <input type="text" value="۸۵+">
+            </div>
+            <div class="field">
+              <label>برچسب آمار دوم</label>
+              <input type="text" value="فارغ‌التحصیل کودکان">
+            </div>
+            <div class="field">
+              <label>کودکان فعال</label>
+              <input type="text" value="۶۰">
+            </div>
+            <div class="field">
+              <label>برچسب آمار سوم</label>
+              <input type="text" value="کودکان حال حاضر">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: درباره ما ══ -->
+    <div id="sec-about" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">ویرایش صفحه درباره ما</div>
+          <div class="sec-sub">متن، تصویر و اطلاعات تماس</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">متن معرفی</div></div>
+        <div class="card-body">
+          <div class="form-grid full">
+            <div class="field">
+              <label>عنوان صفحه</label>
+              <input type="text" value="درباره ما">
+            </div>
+            <div class="field">
+              <label>متن معرفی</label>
+              <textarea style="min-height:120px;">مهدکودک ما محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطرافشان تشویق می‌کنیم. تیم ما متعهد است با خلاقیت و عشق، بهترین تجربه کودکی را فراهم کند.</textarea>
+            </div>
+            <div class="field">
+              <label>تصویر بخش معرفی</label>
+              <div class="upload-zone" style="padding:18px;">
+                <input type="file" accept="image/*">
+                <i class="fa-solid fa-image" style="font-size:20px;"></i>
+                <p style="font-size:12px;">آپلود تصویر</p>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">اطلاعات تماس (فرم ارتباط با ما)</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>آدرس</label>
+              <input type="text" value="تهران، خیابان کودکستان">
+            </div>
+            <div class="field">
+              <label>تلفن</label>
+              <input type="tel" value="021-12345678">
+            </div>
+            <div class="field full">
+              <label>ایمیل</label>
+              <input type="email" value="info@kidup.com">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: دانش‌آموزان ══ -->
+    <div id="sec-students" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">مدیریت دانش‌آموزان</div>
+          <div class="sec-sub">۶۰ دانش‌آموز ثبت‌نام‌شده</div>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('modal-add-student')"><i class="fa-solid fa-plus"></i> ثبت دانش‌آموز</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <input type="text" placeholder="جستجو نام..." style="width:180px;">
+            <select style="width:130px;">
+              <option>همه کلاس‌ها</option>
+              <option>نقاشی</option>
+              <option>موسیقی</option>
+              <option>ورزش</option>
+            </select>
+            <select style="width:120px;">
+              <option>همه وضعیت‌ها</option>
+              <option>فعال</option>
+              <option>در انتظار</option>
+            </select>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>نام دانش‌آموز</th>
+                <th>سن</th>
+                <th>کلاس</th>
+                <th>ولی امر</th>
+                <th>تلفن</th>
+                <th>وضعیت</th>
+                <th>عملیات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="u-row"><div class="u-av pink">ن</div><div><div class="u-name">نیلوفر رضایی</div></div></div></td>
+                <td>۴</td><td>نقاشی</td><td>زهرا رضایی</td><td>۰۹۱۲۱۲۳۴۵۶۷</td>
+                <td><span class="chip green">فعال</span></td>
+                <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="u-row"><div class="u-av blue">ع</div><div><div class="u-name">علی محمدی</div></div></div></td>
+                <td>۵</td><td>موسیقی</td><td>محمد محمدی</td><td>۰۹۳۵۹۸۷۶۵۴۳</td>
+                <td><span class="chip green">فعال</span></td>
+                <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="u-row"><div class="u-av green">س</div><div><div class="u-name">سارا احمدی</div></div></div></td>
+                <td>۳</td><td>ورزش</td><td>فاطمه احمدی</td><td>۰۹۱۰۴۴۴۵۵۵۶</td>
+                <td><span class="chip amber">در انتظار</span></td>
+                <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: معلمان ══ -->
+    <div id="sec-teachers" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">مدیریت معلمان</div>
+          <div class="sec-sub">۱۲ معلم فعال</div>
+        </div>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
+      </div>
+
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>نام</th><th>تخصص</th><th>کلاس‌ها</th><th>تلفن</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+            <tbody>
+              <tr><td><div class="u-row"><div class="u-av blue">ف</div><div><div class="u-name">فریده موسوی</div><div class="u-sub">معلم نقاشی</div></div></div></td><td>هنر و نقاشی</td><td>۳ کلاس</td><td>۰۹۱۲۳۳۳۴۴۴۵</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button></div></td></tr>
+              <tr><td><div class="u-row"><div class="u-av green">ح</div><div><div class="u-name">حسین کرمی</div><div class="u-sub">معلم ورزش</div></div></div></td><td>ورزش و حرکت</td><td>۲ کلاس</td><td>۰۹۳۵۱۱۱۲۲۲۳</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: کلاس‌ها ══ -->
+    <div id="sec-classes" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">مدیریت کلاس‌ها</div>
+          <div class="sec-sub">۸ کلاس فعال</div>
+        </div>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> افزودن کلاس</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div class="card"><div class="card-head"><div class="card-title">نقاشی</div><span class="chip green">فعال</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> فریده موسوی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> شنبه‌ها — ۱۰:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۵ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
+        <div class="card"><div class="card-head"><div class="card-title">موسیقی</div><span class="chip green">فعال</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> احمد صادقی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> دوشنبه — ۱۴:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۲ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
+        <div class="card"><div class="card-head"><div class="card-title">ورزش</div><span class="chip amber">در انتظار</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> حسین کرمی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> سه‌شنبه — ۱۱:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۰ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: رویدادها ══ -->
+    <div id="sec-events" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">مدیریت رویدادها</div>
+          <div class="sec-sub">رویدادها در صفحه اصلی و صفحه رویداد نمایش داده می‌شوند</div>
+        </div>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> رویداد جدید</button>
+      </div>
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>عنوان</th><th>تاریخ</th><th>مکان</th><th>کلاس</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+            <tbody>
+              <tr><td>روز نقاشی</td><td>۲۰ آذر ۱۴۰۳</td><td>سالن اصلی</td><td>نقاشی</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
+              <tr><td>جشن یلدا</td><td>۳۰ آذر ۱۴۰۳</td><td>حیاط</td><td>همه</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
+              <tr><td>کارگاه خمیربازی</td><td>۵ دی ۱۴۰۳</td><td>کلاس خلاقیت</td><td>خلاقیت</td><td><span class="chip amber">پیش‌نویس</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: گالری ══ -->
+    <div id="sec-gallery" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">مدیریت گالری</div>
+          <div class="sec-sub">تصاویر در صفحه گالری سایت نمایش داده می‌شوند</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <select style="width:130px;"><option>همه کلاس‌ها</option><option>نقاشی</option><option>موسیقی</option></select>
+          <button class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> آپلود تصویر</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="upload-zone" style="margin-bottom:16px;">
+            <input type="file" accept="image/*" multiple>
+            <i class="fa-solid fa-images"></i>
+            <p>برای آپلود چند تصویر همزمان اینجا کلیک کنید</p>
+            <small>JPG یا PNG — حداکثر ۵ مگابایت هر فایل</small>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+            <div style="position:relative;aspect-ratio:1;background:var(--pink-bg);border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--pink);"><i class="fa-solid fa-image"></i><button style="position:absolute;top:4px;left:4px;background:#E24B4A;color:#fff;border:none;border-radius:6px;width:22px;height:22px;font-size:11px;cursor:pointer;" title="حذف">×</button></div>
+            <div style="position:relative;aspect-ratio:1;background:var(--green-bg);border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--success);"><i class="fa-solid fa-image"></i><button style="position:absolute;top:4px;left:4px;background:#E24B4A;color:#fff;border:none;border-radius:6px;width:22px;height:22px;font-size:11px;cursor:pointer;">×</button></div>
+            <div style="position:relative;aspect-ratio:1;background:#E6F1FB;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:32px;color:#185FA5;"><i class="fa-solid fa-image"></i><button style="position:absolute;top:4px;left:4px;background:#E24B4A;color:#fff;border:none;border-radius:6px;width:22px;height:22px;font-size:11px;cursor:pointer;">×</button></div>
+            <div style="position:relative;aspect-ratio:1;background:var(--warning-bg);border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--warning);"><i class="fa-solid fa-image"></i><button style="position:absolute;top:4px;left:4px;background:#E24B4A;color:#fff;border:none;border-radius:6px;width:22px;height:22px;font-size:11px;cursor:pointer;">×</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: پیام‌ها ══ -->
+    <div id="sec-messages" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">پیام‌های والدین</div>
+          <div class="sec-sub">۳ پیام خوانده‌نشده</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="msg-pane">
+          <div class="msg-list-pane">
+            <div class="msg-item unread active" onclick="selectMsg(this,'زهرا رضایی','درباره حضور و غیاب فرزندم می‌خواستم سوال کنم. آیا نیلوفر هفته گذشته غیبت داشته؟')">
+              <div class="msg-av">ز</div>
+              <div class="msg-meta">
+                <div class="msg-sender">زهرا رضایی</div>
+                <div class="msg-preview">درباره حضور و غیاب...</div>
+              </div>
+              <div class="msg-time">۱۰:۳۲</div>
+            </div>
+            <div class="msg-item unread" onclick="selectMsg(this,'محمد محمدی','آیا کلاس فردا به خاطر هوای سرد برگزار می‌شود؟')">
+              <div class="msg-av">م</div>
+              <div class="msg-meta">
+                <div class="msg-sender">محمد محمدی</div>
+                <div class="msg-preview">آیا کلاس فردا...</div>
+              </div>
+              <div class="msg-time">دیروز</div>
+            </div>
+            <div class="msg-item" onclick="selectMsg(this,'فاطمه احمدی','ممنون از توجه شما و همکاری خوب تیم مهدکودک.')">
+              <div class="msg-av">ف</div>
+              <div class="msg-meta">
+                <div class="msg-sender">فاطمه احمدی</div>
+                <div class="msg-preview">ممنون از توجه...</div>
+              </div>
+              <div class="msg-time">شنبه</div>
+            </div>
+          </div>
+
+          <div class="msg-chat" id="msg-chat-area">
+            <div class="msg-chat-head">
+              <div class="msg-av">ز</div>
+              <div>
+                <div class="u-name" id="chat-name">زهرا رضایی</div>
+                <div class="u-sub">والدین نیلوفر رضایی</div>
+              </div>
+            </div>
+            <div id="chat-bubble-area" style="flex:1;display:flex;flex-direction:column;gap:8px;overflow-y:auto;">
+              <div>
+                <div class="chat-bubble" id="chat-msg-text">درباره حضور و غیاب فرزندم می‌خواستم سوال کنم. آیا نیلوفر هفته گذشته غیبت داشته؟</div>
+                <div class="chat-time">۱۰:۳۲</div>
+              </div>
+            </div>
+            <div class="chat-input-row">
+              <input type="text" placeholder="پاسخ بنویسید..." id="reply-input" style="flex:1;" onkeydown="if(event.key==='Enter')sendReply()">
+              <button class="btn btn-primary" onclick="sendReply()"><i class="fa-solid fa-paper-plane"></i> ارسال</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main-wrap -->
+
+<!-- TOAST -->
+<div id="toast">✓ تغییرات با موفقیت ذخیره شد</div>
+
+<script>
+const sections = ['site','appearance','homepage','about','students','teachers','classes','events','gallery','messages'];
+const titles = {
+  site: ['تنظیمات سایت', 'پنل ادمین / تنظیمات سایت'],
+  appearance: ['ظاهر و طراحی', 'پنل ادمین / ظاهر و طراحی'],
+  homepage: ['صفحه اصلی', 'پنل ادمین / صفحه اصلی'],
+  about: ['درباره ما', 'پنل ادمین / درباره ما'],
+  students: ['دانش‌آموزان', 'پنل ادمین / مدیریت دانش‌آموزان'],
+  teachers: ['معلمان', 'پنل ادمین / مدیریت معلمان'],
+  classes: ['کلاس‌ها', 'پنل ادمین / مدیریت کلاس‌ها'],
+  events: ['رویدادها', 'پنل ادمین / مدیریت رویدادها'],
+  gallery: ['گالری', 'پنل ادمین / مدیریت گالری'],
+  messages: ['پیام‌ها', 'پنل ادمین / پیام‌های والدین']
+};
+
+function showSection(name) {
+  sections.forEach(s => {
+    const el = document.getElementById('sec-' + s);
+    if (el) el.classList.toggle('active', s === name);
+  });
+  document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  if(window.innerWidth<=700){
+    closeSidebar();
+ }
+}
+
+function saveToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function previewLogo(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('logo-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function selectMsg(el, name, text) {
+  document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  el.classList.remove('unread');
+  document.getElementById('chat-name').textContent = name;
+  document.getElementById('chat-msg-text').textContent = text;
+  document.getElementById('chat-bubble-area').innerHTML = `<div><div class="chat-bubble">${text}</div><div class="chat-time">الان</div></div>`;
+}
+
+function sendReply() {
+  const input = document.getElementById('reply-input');
+  const val = input.value.trim();
+  if (!val) return;
+  const area = document.getElementById('chat-bubble-area');
+  area.innerHTML += `<div style="align-self:flex-start;"><div class="chat-bubble mine">${val}</div><div class="chat-time">همین الان</div></div>`;
+  input.value = '';
+  area.scrollTop = area.scrollHeight;
+}
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".sidebar-overlay");
+
+function toggleSidebar(){
+
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("show");
+
+}
+
+function closeSidebar(){
+
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+
+}
+</script>
+</body>
+</html>
