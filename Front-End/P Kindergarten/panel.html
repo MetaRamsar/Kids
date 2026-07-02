@@ -21,9 +21,9 @@
     <div class="nav-item active" onclick="showSection('site')">
       <i class="fa-solid fa-globe"></i> تنظیمات سایت
     </div>
-    <div class="nav-item" onclick="showSection('appearance')">
+    <!--<div class="nav-item" onclick="showSection('appearance')">
       <i class="fa-solid fa-palette"></i> ظاهر و طراحی
-    </div>
+    </div>-->
     <div class="nav-item" onclick="showSection('homepage')">
       <i class="fa-solid fa-house"></i> صفحه اصلی
     </div>
@@ -42,10 +42,7 @@
       <i class="fa-solid fa-door-open"></i> کلاس‌ها
     </div>
     <div class="nav-item" onclick="showSection('events')">
-      <i class="fa-solid fa-calendar-days"></i> رویدادها
-    </div>
-    <div class="nav-item" onclick="showSection('gallery')">
-      <i class="fa-solid fa-images"></i> گالری
+      <i class="fa-solid fa-calendar-days"></i> وبلاگ
     </div>
 
     <div class="nav-section">ارتباطات</div>
@@ -201,7 +198,7 @@
     </div>
 
     <!-- ══ SECTION: ظاهر و طراحی ══ -->
-    <div id="sec-appearance" class="section">
+    <!--<div id="sec-appearance" class="section">
       <div class="sec-header">
         <div>
           <div class="sec-title">ظاهر و طراحی</div>
@@ -268,7 +265,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <!-- ══ SECTION: صفحه اصلی ══ -->
     <div id="sec-homepage" class="section">
@@ -514,34 +511,9 @@
         <div class="card"><div class="card-head"><div class="card-title">موسیقی</div><span class="chip green">فعال</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> احمد صادقی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> دوشنبه — ۱۴:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۲ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
         <div class="card"><div class="card-head"><div class="card-title">ورزش</div><span class="chip amber">در انتظار</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> حسین کرمی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> سه‌شنبه — ۱۱:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۰ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
       </div>
-    </div>
 
-    <!-- ══ SECTION: رویدادها ══ -->
-    <div id="sec-events" class="section">
-      <div class="sec-header">
-        <div>
-          <div class="sec-title">مدیریت رویدادها</div>
-          <div class="sec-sub">رویدادها در صفحه اصلی و صفحه رویداد نمایش داده می‌شوند</div>
-        </div>
-        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> رویداد جدید</button>
-      </div>
-      <div class="card">
-        <div style="overflow-x:auto;">
-          <table class="data-table">
-            <thead><tr><th>عنوان</th><th>تاریخ</th><th>مکان</th><th>کلاس</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-            <tbody>
-              <tr><td>روز نقاشی</td><td>۲۰ آذر ۱۴۰۳</td><td>سالن اصلی</td><td>نقاشی</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
-              <tr><td>جشن یلدا</td><td>۳۰ آذر ۱۴۰۳</td><td>حیاط</td><td>همه</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
-              <tr><td>کارگاه خمیربازی</td><td>۵ دی ۱۴۰۳</td><td>کلاس خلاقیت</td><td>خلاقیت</td><td><span class="chip amber">پیش‌نویس</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ SECTION: گالری ══ -->
-    <div id="sec-gallery" class="section">
-      <div class="sec-header">
+      <!-- ── گالری کلاس‌ها ── -->
+      <div class="sec-header" style="margin-top:24px;">
         <div>
           <div class="sec-title">مدیریت گالری</div>
           <div class="sec-sub">تصاویر در صفحه گالری سایت نمایش داده می‌شوند</div>
@@ -568,6 +540,30 @@
         </div>
       </div>
     </div>
+
+    <!-- ══ SECTION: وبلاگ ══ -->
+    <div id="sec-events" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">مدیریت وبلاگ</div>
+          <div class="sec-sub">وبلاگ‌ها در صفحه اصلی و صفحه وبلاگ نمایش داده می‌شوند</div>
+        </div>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> وبلاگ جدید</button>
+      </div>
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>عنوان</th><th>تاریخ</th><th>مکان</th><th>کلاس</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+            <tbody>
+              <tr><td>روز نقاشی</td><td>۲۰ آذر ۱۴۰۳</td><td>سالن اصلی</td><td>نقاشی</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
+              <tr><td>جشن یلدا</td><td>۳۰ آذر ۱۴۰۳</td><td>حیاط</td><td>همه</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
+              <tr><td>کارگاه خمیربازی</td><td>۵ دی ۱۴۰۳</td><td>کلاس خلاقیت</td><td>خلاقیت</td><td><span class="chip amber">پیش‌نویس</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
 
     <!-- ══ SECTION: پیام‌ها ══ -->
     <div id="sec-messages" class="section">
@@ -636,7 +632,7 @@
 <div id="toast">✓ تغییرات با موفقیت ذخیره شد</div>
 
 <script>
-const sections = ['site','appearance','homepage','about','students','teachers','classes','events','gallery','messages'];
+const sections = ['site','appearance','homepage','about','students','teachers','classes','events','messages'];
 const titles = {
   site: ['تنظیمات سایت', 'پنل ادمین / تنظیمات سایت'],
   appearance: ['ظاهر و طراحی', 'پنل ادمین / ظاهر و طراحی'],
@@ -646,7 +642,6 @@ const titles = {
   teachers: ['معلمان', 'پنل ادمین / مدیریت معلمان'],
   classes: ['کلاس‌ها', 'پنل ادمین / مدیریت کلاس‌ها'],
   events: ['رویدادها', 'پنل ادمین / مدیریت رویدادها'],
-  gallery: ['گالری', 'پنل ادمین / مدیریت گالری'],
   messages: ['پیام‌ها', 'پنل ادمین / پیام‌های والدین']
 };
 
