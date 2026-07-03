@@ -358,6 +358,56 @@
     margin-bottom: 8px;
   }
 
+  .favicon-preview {
+    width: 56px; height: 56px;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* ─── ردیف‌های پویا (لینک‌های فوتر / شبکه‌های اجتماعی) ─── */
+  .dynamic-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .dynamic-row .field { flex: 1; min-width: 0; }
+
+  .dynamic-row-remove {
+    flex-shrink: 0;
+    padding: 9px 12px;
+    color: #E24B4A;
+    border-color: var(--border);
+  }
+
+  .dynamic-row-remove:hover { background: #FDECEC; border-color: #E24B4A; }
+
+  .social-platform-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .social-icon-preview {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--surface-1);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 15px;
+  }
+
+  @media (max-width: 600px) {
+    .dynamic-row { flex-wrap: wrap; }
+    .dynamic-row .field { flex-basis: 100%; }
+    .dynamic-row-remove { margin-right: auto; }
+  }
+
   /* ─── BUTTONS ─── */
   .btn {
     display: inline-flex; align-items: center; gap: 7px;
