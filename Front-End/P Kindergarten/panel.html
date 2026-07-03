@@ -100,68 +100,86 @@
         </div>
       </div>
 
-      <!-- لوگو -->
+      <!-- تنظیمات کلی سایت: نام، لوگو، فیوآیکون، متا دیسکریپشن -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
           <div>
-            <div class="card-title">لوگو سایت</div>
-            <div class="card-sub">لوگویی که در هدر سایت نمایش داده می‌شود</div>
+            <div class="card-title">تنظیمات کلی سایت</div>
+            <div class="card-sub">نام سایت، لوگو، فیوآیکون و توضیح متا (سئو) را ویرایش کنید</div>
           </div>
         </div>
         <div class="card-body">
-          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-            <div>
-              <img src="https://via.placeholder.com/100x60/F875AA/fff?text=Logo" class="logo-preview" id="logo-preview" alt="لوگو">
-              <div style="font-size:11px;color:var(--text-muted);text-align:center;">لوگوی فعلی</div>
+          <div class="form-grid">
+
+            <div class="field full">
+              <label>نام سایت</label>
+              <input type="text" id="site-name-input" value="کیدآپ — مهدکودک">
+              <span class="hint">نمایش داده‌شده در تب مرورگر و هدر سایت</span>
             </div>
-            <div style="flex:1;min-width:200px;">
-              <div class="upload-zone">
-                <input type="file" accept="image/*" onchange="previewLogo(this)">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-                <p>برای آپلود لوگو اینجا کلیک کنید</p>
-                <small>PNG یا SVG — حداکثر ۲ مگابایت</small>
+
+            <div class="field">
+              <label>لوگو سایت</label>
+              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                <img src="/img/Logo.png" class="logo-preview" id="logo-preview" alt="لوگو">
+                <div style="flex:1;min-width:160px;">
+                  <div class="upload-zone">
+                    <input type="file" accept="image/*" onchange="previewLogo(this)">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p>آپلود لوگو</p>
+                    <small>PNG یا SVG — حداکثر ۲ مگابایت</small>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <div class="field">
+              <label>فیوآیکون سایت</label>
+              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                <img src="https://via.placeholder.com/48/F875AA/fff?text=K" class="favicon-preview" id="favicon-preview" alt="فیوآیکون">
+                <div style="flex:1;min-width:160px;">
+                  <div class="upload-zone">
+                    <input type="file" accept="image/*" onchange="previewFavicon(this)">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p>آپلود فیوآیکون</p>
+                    <small>۳۲×۳۲ یا ۶۴×۶۴ پیکسل — ICO یا PNG</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label>متا دیسکریپشن (توضیح متا برای موتورهای جستجو)</label>
+              <textarea id="meta-desc-input" maxlength="160">مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.</textarea>
+              <span class="hint">حداکثر ۱۶۰ کاراکتر — در نتایج جستجوی گوگل نمایش داده می‌شود</span>
+            </div>
+
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost" onclick="cancelGeneralSettings()">انصراف</button>
           </div>
         </div>
       </div>
 
-      <!-- اطلاعات اصلی -->
+      <!-- لینک‌های کاربردی فوتر -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
-          <div class="card-title">اطلاعات اصلی</div>
+          <div>
+            <div class="card-title">لینک‌های کاربردی فوتر</div>
+            <div class="card-sub">لینک‌هایی که در بخش «لینک‌های کاربردی» فوتر سایت نمایش داده می‌شوند</div>
+          </div>
         </div>
         <div class="card-body">
-          <div class="form-grid">
-            <div class="field">
-              <label>عنوان سایت</label>
-              <input type="text" value="کیدآپ — مهدکودک">
-              <span class="hint">نمایش داده‌شده در تب مرورگر و هدر سایت</span>
-            </div>
-            <div class="field">
-              <label>شعار سایت (Tagline)</label>
-              <input type="text" value="محیطی امن برای رشد کودکان">
-            </div>
-            <div class="field">
-              <label>شماره تماس</label>
-              <input type="tel" value="021-12345678">
-            </div>
-            <div class="field">
-              <label>ایمیل</label>
-              <input type="email" value="info@kidup.com">
-            </div>
-            <div class="field full">
-              <label>آدرس</label>
-              <input type="text" value="تهران، خیابان کودکستان، پلاک ۱۲">
-            </div>
-            <div class="field full">
-              <label>توضیح کوتاه (برای فوتر و سئو)</label>
-              <textarea>مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.</textarea>
-            </div>
-          </div>
+
+          <div id="footer-links-list"></div>
+
+          <button type="button" class="btn btn-ghost" style="margin-bottom:4px;" onclick="addFooterLink()">
+            <i class="fa-solid fa-plus"></i> افزودن لینک
+          </button>
+
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
-            <button class="btn btn-ghost">انصراف</button>
+            <button class="btn btn-primary" onclick="saveFooterLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost" onclick="cancelFooterLinks()">انصراف</button>
           </div>
         </div>
       </div>
@@ -169,104 +187,27 @@
       <!-- شبکه‌های اجتماعی -->
       <div class="card">
         <div class="card-head">
-          <div class="card-title">شبکه‌های اجتماعی</div>
+          <div>
+            <div class="card-title">شبکه‌های اجتماعی</div>
+            <div class="card-sub">شبکه‌های اجتماعی و لینک صفحه مربوطه را اضافه یا مدیریت کنید</div>
+          </div>
         </div>
         <div class="card-body">
-          <div class="form-grid">
-            <div class="field">
-              <label><i class="fa-brands fa-instagram" style="color:#E1306C;"></i> اینستاگرام</label>
-              <input type="url" placeholder="https://instagram.com/...">
-            </div>
-            <div class="field">
-              <label><i class="fa-brands fa-telegram" style="color:#229ED9;"></i> تلگرام</label>
-              <input type="url" placeholder="https://t.me/...">
-            </div>
-            <div class="field">
-              <label><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> واتساپ</label>
-              <input type="url" placeholder="https://wa.me/...">
-            </div>
-            <div class="field">
-              <label><i class="fa-brands fa-youtube" style="color:#FF0000;"></i> یوتیوب</label>
-              <input type="url" placeholder="https://youtube.com/...">
-            </div>
-          </div>
+
+          <div id="social-links-list"></div>
+
+          <button type="button" class="btn btn-ghost" style="margin-bottom:4px;" onclick="addSocialLink()">
+            <i class="fa-solid fa-plus"></i> افزودن شبکه اجتماعی
+          </button>
+
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-primary" onclick="saveSocialLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost" onclick="cancelSocialLinks()">انصراف</button>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- ══ SECTION: ظاهر و طراحی ══ -->
-    <!--<div id="sec-appearance" class="section">
-      <div class="sec-header">
-        <div>
-          <div class="sec-title">ظاهر و طراحی</div>
-          <div class="sec-sub">رنگ‌ها، فونت و المان‌های بصری سایت</div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-bottom:16px;">
-        <div class="card-head"><div class="card-title">رنگ‌های اصلی</div></div>
-        <div class="card-body">
-          <div class="form-grid">
-            <div class="field">
-              <label>رنگ اصلی (Primary)</label>
-              <div class="color-row">
-                <input type="color" value="#F875AA" class="color-swatch" id="color-primary" oninput="updateColorPreview()">
-                <input type="text" value="#F875AA" id="color-primary-text" style="flex:1;" oninput="syncColor('primary')">
-              </div>
-              <span class="hint">استفاده در دکمه‌ها، لینک‌ها و هایلایت‌ها</span>
-            </div>
-            <div class="field">
-              <label>رنگ پس‌زمینه هدر</label>
-              <div class="color-row">
-                <input type="color" value="#EDFFF0" class="color-swatch" id="color-bg">
-                <input type="text" value="#EDFFF0" style="flex:1;">
-              </div>
-            </div>
-            <div class="field">
-              <label>رنگ فوتر</label>
-              <div class="color-row">
-                <input type="color" value="#EDFFF0" class="color-swatch">
-                <input type="text" value="#EDFFF0" style="flex:1;">
-              </div>
-            </div>
-            <div class="field">
-              <label>رنگ متن اصلی</label>
-              <div class="color-row">
-                <input type="color" value="#333333" class="color-swatch">
-                <input type="text" value="#333333" style="flex:1;">
-              </div>
-            </div>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><div class="card-title">فاویکون سایت</div></div>
-        <div class="card-body">
-          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-            <div style="text-align:center;">
-              <img src="https://via.placeholder.com/48/F875AA/fff?text=K" style="width:48px;height:48px;border-radius:8px;border:1px solid var(--border);" alt="فاویکون">
-              <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">فاویکون فعلی</div>
-            </div>
-            <div style="flex:1;min-width:200px;">
-              <div class="upload-zone" style="padding:18px;">
-                <input type="file" accept="image/*">
-                <i class="fa-solid fa-cloud-arrow-up" style="font-size:20px;"></i>
-                <p style="font-size:12px;">آپلود فاویکون</p>
-                <small>۳۲×۳۲ یا ۶۴×۶۴ پیکسل — ICO یا PNG</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>-->
-
+    
     <!-- ══ SECTION: صفحه اصلی ══ -->
     <div id="sec-homepage" class="section">
       <div class="sec-header">
@@ -670,6 +611,174 @@ function previewLogo(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+function previewFavicon(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('favicon-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+  /* مقادیر پیش‌فرض کارت «تنظیمات کلی سایت» برای دکمه انصراف */
+const generalSiteDefaults = {
+  siteName: 'کیدآپ — مهدکودک',
+  logoSrc: '/img/Logo.png',
+  faviconSrc: 'https://via.placeholder.com/48/F875AA/fff?text=K',
+  metaDesc: 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.'
+};
+
+  function cancelGeneralSettings() {
+  document.getElementById('site-name-input').value = generalSiteDefaults.siteName;
+  document.getElementById('logo-preview').src = generalSiteDefaults.logoSrc;
+  document.getElementById('favicon-preview').src = generalSiteDefaults.faviconSrc;
+  document.getElementById('meta-desc-input').value = generalSiteDefaults.metaDesc;
+}
+/* ─── لینک‌های کاربردی فوتر ─── */
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
+let footerLinksDefaults = [
+  { title: 'خانه', url: '/main.html' },
+  { title: 'درباره ما', url: '/about.html' },
+  { title: 'کلاس‌ها', url: '/archive.html' }
+];
+
+/* کپی کاری که با تایپ کاربر تغییر می‌کند */
+let footerLinks = footerLinksDefaults.map(l => ({ ...l }));
+
+function renderFooterLinks() {
+  const wrap = document.getElementById('footer-links-list');
+  wrap.innerHTML = footerLinks.map((link, i) => `
+    <div class="dynamic-row">
+      <div class="field">
+        <label>عنوان لینک</label>
+        <input type="text" placeholder="مثلاً: تماس با ما" value="${escapeAttr(link.title)}"
+               oninput="footerLinks[${i}].title = this.value">
+      </div>
+      <div class="field">
+        <label>آدرس لینک</label>
+        <input type="text" placeholder="مثلاً: /contact.html" value="${escapeAttr(link.url)}"
+               oninput="footerLinks[${i}].url = this.value">
+      </div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف لینک" onclick="removeFooterLink(${i})">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  `).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز لینکی اضافه نشده است.</p>';
+}
+
+function escapeAttr(str) {
+  return String(str ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function addFooterLink() {
+  footerLinks.push({ title: '', url: '' });
+  renderFooterLinks();
+  const rows = document.querySelectorAll('#footer-links-list .dynamic-row');
+  const lastRow = rows[rows.length - 1];
+  if (lastRow) lastRow.querySelector('input').focus();
+}
+
+function removeFooterLink(index) {
+  footerLinks.splice(index, 1);
+  renderFooterLinks();
+}
+
+function saveFooterLinks() {
+  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
+  footerLinksDefaults = footerLinks.map(l => ({ ...l }));
+  saveToast();
+}
+
+function cancelFooterLinks() {
+  footerLinks = footerLinksDefaults.map(l => ({ ...l }));
+  renderFooterLinks();
+}
+
+renderFooterLinks();
+
+/* ─── شبکه‌های اجتماعی ─── */
+
+const socialPlatforms = [
+  { key: 'instagram', label: 'اینستاگرام', icon: 'fa-brands fa-instagram', color: '#E1306C', placeholder: 'https://instagram.com/...' },
+  { key: 'telegram',  label: 'تلگرام',      icon: 'fa-brands fa-telegram',  color: '#229ED9', placeholder: 'https://t.me/...' },
+  { key: 'whatsapp',  label: 'واتساپ',      icon: 'fa-brands fa-whatsapp',  color: '#25D366', placeholder: 'https://wa.me/...' },
+  { key: 'youtube',   label: 'یوتیوب',      icon: 'fa-brands fa-youtube',   color: '#FF0000', placeholder: 'https://youtube.com/...' },
+  { key: 'twitter',   label: 'ایکس (توییتر)', icon: 'fa-brands fa-x-twitter', color: '#000000', placeholder: 'https://x.com/...' },
+  { key: 'linkedin',  label: 'لینکدین',     icon: 'fa-brands fa-linkedin',  color: '#0A66C2', placeholder: 'https://linkedin.com/...' },
+  { key: 'aparat',    label: 'آپارات',      icon: 'fa-solid fa-clapperboard', color: '#FF3333', placeholder: 'https://aparat.com/...' },
+  { key: 'eitaa',     label: 'ایتا',        icon: 'fa-solid fa-paper-plane', color: '#3EB049', placeholder: 'https://eitaa.com/...' },
+  { key: 'other',     label: 'سایر',        icon: 'fa-solid fa-link',       color: '#555555', placeholder: 'https://...' }
+];
+
+function getSocialPlatform(key) {
+  return socialPlatforms.find(p => p.key === key) || socialPlatforms[socialPlatforms.length - 1];
+}
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
+let socialLinksDefaults = [
+  { platform: 'instagram', url: '' },
+  { platform: 'telegram', url: '' },
+  { platform: 'whatsapp', url: '' },
+  { platform: 'youtube', url: '' }
+];
+
+/* کپی کاری که با تایپ/انتخاب کاربر تغییر می‌کند */
+let socialLinks = socialLinksDefaults.map(l => ({ ...l }));
+
+function renderSocialLinks() {
+  const wrap = document.getElementById('social-links-list');
+  wrap.innerHTML = socialLinks.map((link, i) => {
+    const platform = getSocialPlatform(link.platform);
+    const options = socialPlatforms.map(p =>
+      `<option value="${p.key}" ${p.key === link.platform ? 'selected' : ''}>${p.label}</option>`
+    ).join('');
+    return `
+    <div class="dynamic-row">
+      <div class="field">
+        <label>شبکه اجتماعی</label>
+        <div class="social-platform-picker">
+          <span class="social-icon-preview" style="color:${platform.color};"><i class="${platform.icon}"></i></span>
+          <select style="flex:1;" onchange="socialLinks[${i}].platform = this.value; renderSocialLinks();">
+            ${options}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>لینک شبکه اجتماعی</label>
+        <input type="url" placeholder="${platform.placeholder}" value="${escapeAttr(link.url)}"
+               oninput="socialLinks[${i}].url = this.value">
+      </div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف" onclick="removeSocialLink(${i})">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>`;
+  }).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز شبکه اجتماعی‌ای اضافه نشده است.</p>';
+}
+
+function addSocialLink() {
+  socialLinks.push({ platform: 'instagram', url: '' });
+  renderSocialLinks();
+  const rows = document.querySelectorAll('#social-links-list .dynamic-row');
+  const lastRow = rows[rows.length - 1];
+  if (lastRow) lastRow.querySelector('input[type="url"]').focus();
+}
+
+function removeSocialLink(index) {
+  socialLinks.splice(index, 1);
+  renderSocialLinks();
+}
+
+function saveSocialLinks() {
+  socialLinksDefaults = socialLinks.map(l => ({ ...l }));
+  saveToast();
+}
+
+function cancelSocialLinks() {
+  socialLinks = socialLinksDefaults.map(l => ({ ...l }));
+  renderSocialLinks();
+}
+
+renderSocialLinks();
 
 function selectMsg(el, name, text) {
   document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
