@@ -32,11 +32,19 @@
     </div>
 
     <div class="nav-section">مدیریت محتوا</div>
-    <div class="nav-item" onclick="showSection('students')">
-      <i class="fa-solid fa-child"></i> دانش‌آموزان
+    <div class="nav-item nav-item-parent" onclick="toggleSubmenu(this)">
+      <i class="fa-solid fa-users"></i> کاربران
+      <i class="fa-solid fa-chevron-down nav-arrow"></i>
     </div>
-    <div class="nav-item" onclick="showSection('teachers')">
-      <i class="fa-solid fa-chalkboard-user"></i> معلمان
+    <div class="nav-submenu">
+      <div class="nav-submenu-inner">
+        <div class="nav-item nav-subitem" onclick="showSection('students', event)">
+          <i class="fa-solid fa-child"></i> دانش‌آموزان
+        </div>
+        <div class="nav-item nav-subitem" onclick="showSection('teachers', event)">
+          <i class="fa-solid fa-chalkboard-user"></i> معلمان
+        </div>
+      </div>
     </div>
     <div class="nav-item" onclick="showSection('classes')">
       <i class="fa-solid fa-door-open"></i> کلاس‌ها
@@ -207,7 +215,77 @@
         </div>
       </div>
     </div>
-    
+
+    <!-- ══ SECTION: ظاهر و طراحی ══ -->
+    <!--<div id="sec-appearance" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">ظاهر و طراحی</div>
+          <div class="sec-sub">رنگ‌ها، فونت و المان‌های بصری سایت</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">رنگ‌های اصلی</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>رنگ اصلی (Primary)</label>
+              <div class="color-row">
+                <input type="color" value="#F875AA" class="color-swatch" id="color-primary" oninput="updateColorPreview()">
+                <input type="text" value="#F875AA" id="color-primary-text" style="flex:1;" oninput="syncColor('primary')">
+              </div>
+              <span class="hint">استفاده در دکمه‌ها، لینک‌ها و هایلایت‌ها</span>
+            </div>
+            <div class="field">
+              <label>رنگ پس‌زمینه هدر</label>
+              <div class="color-row">
+                <input type="color" value="#EDFFF0" class="color-swatch" id="color-bg">
+                <input type="text" value="#EDFFF0" style="flex:1;">
+              </div>
+            </div>
+            <div class="field">
+              <label>رنگ فوتر</label>
+              <div class="color-row">
+                <input type="color" value="#EDFFF0" class="color-swatch">
+                <input type="text" value="#EDFFF0" style="flex:1;">
+              </div>
+            </div>
+            <div class="field">
+              <label>رنگ متن اصلی</label>
+              <div class="color-row">
+                <input type="color" value="#333333" class="color-swatch">
+                <input type="text" value="#333333" style="flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">فاویکون سایت</div></div>
+        <div class="card-body">
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <img src="https://via.placeholder.com/48/F875AA/fff?text=K" style="width:48px;height:48px;border-radius:8px;border:1px solid var(--border);" alt="فاویکون">
+              <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">فاویکون فعلی</div>
+            </div>
+            <div style="flex:1;min-width:200px;">
+              <div class="upload-zone" style="padding:18px;">
+                <input type="file" accept="image/*">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size:20px;"></i>
+                <p style="font-size:12px;">آپلود فاویکون</p>
+                <small>۳۲×۳۲ یا ۶۴×۶۴ پیکسل — ICO یا PNG</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
     <!-- ══ SECTION: صفحه اصلی ══ -->
     <div id="sec-homepage" class="section">
       <div class="sec-header">
@@ -586,16 +664,36 @@ const titles = {
   messages: ['پیام‌ها', 'پنل ادمین / پیام‌های والدین']
 };
 
-function showSection(name) {
+function showSection(name, evt) {
   sections.forEach(s => {
     const el = document.getElementById('sec-' + s);
     if (el) el.classList.toggle('active', s === name);
   });
   document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+  const clicked = (evt || window.event).currentTarget;
+  clicked.classList.add('active');
+
+  /* اگر ایتم کلیک‌شده داخل زیرمنو باشه، ایتم والد (کاربران) رو هم فعال و باز نگه دار */
+  const parentSubmenu = clicked.closest('.nav-submenu');
+  if (parentSubmenu) {
+    const parentItem = parentSubmenu.previousElementSibling;
+    if (parentItem && parentItem.classList.contains('nav-item-parent')) {
+      parentItem.classList.add('active');
+      parentSubmenu.classList.add('open');
+      parentItem.classList.add('open');
+    }
+  }
+
   if(window.innerWidth<=700){
     closeSidebar();
  }
+}
+
+function toggleSubmenu(el) {
+  const submenu = el.nextElementSibling;
+  const isOpen = submenu.classList.contains('open');
+  submenu.classList.toggle('open', !isOpen);
+  el.classList.toggle('open', !isOpen);
 }
 
 function saveToast() {
@@ -611,6 +709,7 @@ function previewLogo(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+
 function previewFavicon(input) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
@@ -619,7 +718,7 @@ function previewFavicon(input) {
   }
 }
 
-  /* مقادیر پیش‌فرض کارت «تنظیمات کلی سایت» برای دکمه انصراف */
+/* مقادیر پیش‌فرض کارت «تنظیمات کلی سایت» برای دکمه انصراف */
 const generalSiteDefaults = {
   siteName: 'کیدآپ — مهدکودک',
   logoSrc: '/img/Logo.png',
@@ -627,12 +726,13 @@ const generalSiteDefaults = {
   metaDesc: 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.'
 };
 
-  function cancelGeneralSettings() {
+function cancelGeneralSettings() {
   document.getElementById('site-name-input').value = generalSiteDefaults.siteName;
   document.getElementById('logo-preview').src = generalSiteDefaults.logoSrc;
   document.getElementById('favicon-preview').src = generalSiteDefaults.faviconSrc;
   document.getElementById('meta-desc-input').value = generalSiteDefaults.metaDesc;
 }
+
 /* ─── لینک‌های کاربردی فوتر ─── */
 
 /* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
