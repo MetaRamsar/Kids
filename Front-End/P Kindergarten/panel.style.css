@@ -27,10 +27,6 @@
     --warning-bg: #FAEEDA;
   }
 
-  html {
-    overflow-x: hidden;
-  }
-
   body {
     font-family: 'Vazirmatn', Tahoma, sans-serif;
     direction: rtl;
@@ -38,7 +34,6 @@
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
-    overflow-x: hidden;
   }
 
   /* ─── SIDEBAR ─── */
@@ -113,49 +108,36 @@
     font-weight: 500;
   }
 
-  /* ─── نان آیتم دارای زیرمنو (کاربران) ─── */
-  .nav-item-parent {
-    position: relative;
-  }
+  .nav-item.has-submenu {
+  justify-content: flex-start;
+}
 
-  .nav-arrow {
-    margin-right: auto;
-    font-size: 11px !important;
-    width: auto !important;
-    transition: transform 0.2s ease;
-  }
+.submenu-arrow {
+  margin-right: auto;
+  font-size: 11px !important;
+  width: auto !important;
+  transition: transform 0.25s ease;
+}
 
-  .nav-item-parent.open .nav-arrow {
-    transform: rotate(180deg);
-  }
+.nav-item.has-submenu.open .submenu-arrow {
+  transform: rotate(180deg);
+}
 
-  .nav-submenu {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  /*background: var(--surface-1);*/
+}
 
-  .nav-submenu.open {
-    grid-template-rows: 1fr;
-  }
+.submenu.open {
+  max-height: 200px;
+}
 
-  .nav-submenu-inner {
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition: opacity 0.25s ease, transform 0.3s ease;
-  }
-
-  .nav-submenu.open .nav-submenu-inner {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
-  }
-
-  .nav-subitem {
-    padding-right: 44px;
-    font-size: 13px;
-  }
+.sub-item {
+  padding-right: 44px;
+  font-size: 13px;
+}
 
   /* ─── SIDEBAR QUICK LINKS ─── */
   .sidebar-quick-links {
@@ -183,7 +165,6 @@
   .main-wrap {
     margin-right: var(--sidebar-w);
     flex: 1;
-    min-width: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -256,12 +237,6 @@
   @media (max-width: 700px) {
     .quick-links { display: none; }
   }
-
-  /* لینک‌های سریع همیشه در سایدبار (دسکتاپ) و منوی همبرگری (موبایل) نمایش داده می‌شوند */
- /* .sidebar-quick-links {
-    border-top: 1px solid var(--border);
-    padding: 6px 0;
-  }*/
 
   .notif-dot::after {
     content: ''; position: absolute;
@@ -348,6 +323,10 @@
   input[type="email"],
   input[type="tel"],
   input[type="url"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  input[type="file"],
   textarea,
   select {
     width: 100%;
@@ -362,6 +341,14 @@
     transition: border-color 0.15s, box-shadow 0.15s;
     outline: none;
   }
+
+  input:disabled {
+    background: var(--surface-1);
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+
+  select[multiple] { padding: 6px; }
 
   input:focus, textarea:focus, select:focus {
     border-color: var(--pink);
@@ -384,7 +371,7 @@
   }
 
   .upload-zone:hover { border-color: var(--pink); background: var(--pink-bg); }
-  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; border: none; padding: 0; }
   .upload-zone i { font-size: 28px; color: var(--pink); margin-bottom: 8px; display: block; }
   .upload-zone p { font-size: 13px; color: var(--text-secondary); }
   .upload-zone small { font-size: 11px; color: var(--text-muted); }
@@ -418,7 +405,7 @@
     flex-shrink: 0;
   }
 
-  /* ─── ردیف‌های پویا (لینک‌های فوتر / شبکه‌های اجتماعی) ─── */
+  /* ─── ردیف‌های پویا (لینک‌های فوتر / شبکه‌های اجتماعی / دستاوردها / برنامه هفتگی / گالری) ─── */
   .dynamic-row {
     display: flex;
     align-items: flex-end;
@@ -492,6 +479,7 @@
     margin-top: 20px;
     padding-top: 16px;
     border-top: 1px solid var(--border);
+    flex-wrap: wrap;
   }
 
   /* ─── CHIP ─── */
@@ -571,23 +559,12 @@
   .sec-header {
     display: flex; align-items: flex-start; justify-content: space-between;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .sec-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
   .sec-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
-
-  /* ─── COLOR PICKER DISPLAY ─── */
-  /*.color-row {
-    display: flex; align-items: center; gap: 10px;
-  }
-
-  .color-swatch {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    flex-shrink: 0;
-  }*/
 
   /* ─── MESSAGES ─── */
   .msg-pane { display: grid; grid-template-columns: 280px 1fr; gap: 0; height: 480px; }
@@ -698,6 +675,7 @@
     .sidebar { display: none; }
     .main-wrap { margin-right: 0; }
   }
+
 /* ===========================
    Mobile Sidebar
 =========================== */
