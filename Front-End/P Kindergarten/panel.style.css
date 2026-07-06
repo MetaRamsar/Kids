@@ -27,6 +27,10 @@
     --warning-bg: #FAEEDA;
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     font-family: 'Vazirmatn', Tahoma, sans-serif;
     direction: rtl;
@@ -34,6 +38,7 @@
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
+    overflow-x: hidden;
   }
 
   /* ─── SIDEBAR ─── */
@@ -61,9 +66,54 @@
     object-fit: cover;
     flex-shrink: 0;
     border: 2px solid var(--pink-light);
+    display: block;
   }
 
-  .admin-role { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .admin-photo-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+
+  .admin-photo-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--pink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border: 2px solid #fff;
+    cursor: pointer;
+  }
+  .admin-photo-edit:hover { background: var(--pink-dark, var(--pink)); }
+  .admin-photo-edit input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .admin-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .admin-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .admin-role { font-size: 12px; font-weight: 400; color: var(--text-muted); }
 
   .sidebar-nav { flex: 1; padding: 10px 0; overflow-y: auto; }
 
@@ -108,36 +158,49 @@
     font-weight: 500;
   }
 
-  .nav-item.has-submenu {
-  justify-content: flex-start;
-}
+  /* ─── نان آیتم دارای زیرمنو (کاربران) ─── */
+  .nav-item-parent {
+    position: relative;
+  }
 
-.submenu-arrow {
-  margin-right: auto;
-  font-size: 11px !important;
-  width: auto !important;
-  transition: transform 0.25s ease;
-}
+  .nav-arrow {
+    margin-right: auto;
+    font-size: 11px !important;
+    width: auto !important;
+    transition: transform 0.2s ease;
+  }
 
-.nav-item.has-submenu.open .submenu-arrow {
-  transform: rotate(180deg);
-}
+  .nav-item-parent.open .nav-arrow {
+    transform: rotate(180deg);
+  }
 
-.submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  /*background: var(--surface-1);*/
-}
+  .nav-submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-.submenu.open {
-  max-height: 200px;
-}
+  .nav-submenu.open {
+    grid-template-rows: 1fr;
+  }
 
-.sub-item {
-  padding-right: 44px;
-  font-size: 13px;
-}
+  .nav-submenu-inner {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.25s ease, transform 0.3s ease;
+  }
+
+  .nav-submenu.open .nav-submenu-inner {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
+  }
+
+  .nav-subitem {
+    padding-right: 44px;
+    font-size: 13px;
+  }
 
   /* ─── SIDEBAR QUICK LINKS ─── */
   .sidebar-quick-links {
@@ -165,6 +228,7 @@
   .main-wrap {
     margin-right: var(--sidebar-w);
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -237,6 +301,12 @@
   @media (max-width: 700px) {
     .quick-links { display: none; }
   }
+
+  /* لینک‌های سریع همیشه در سایدبار (دسکتاپ) و منوی همبرگری (موبایل) نمایش داده می‌شوند */
+ /* .sidebar-quick-links {
+    border-top: 1px solid var(--border);
+    padding: 6px 0;
+  }*/
 
   .notif-dot::after {
     content: ''; position: absolute;
@@ -318,7 +388,6 @@
     font-weight: 500;
     color: var(--text-secondary);
   }
-
   input[type="text"],
   input[type="email"],
   input[type="tel"],
@@ -349,7 +418,7 @@
   }
 
   select[multiple] { padding: 6px; }
-
+  
   input:focus, textarea:focus, select:focus {
     border-color: var(--pink);
     box-shadow: 0 0 0 3px rgba(248,117,170,0.12);
@@ -371,7 +440,7 @@
   }
 
   .upload-zone:hover { border-color: var(--pink); background: var(--pink-bg); }
-  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; border: none; padding: 0; }
+  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
   .upload-zone i { font-size: 28px; color: var(--pink); margin-bottom: 8px; display: block; }
   .upload-zone p { font-size: 13px; color: var(--text-secondary); }
   .upload-zone small { font-size: 11px; color: var(--text-muted); }
@@ -405,7 +474,7 @@
     flex-shrink: 0;
   }
 
-  /* ─── ردیف‌های پویا (لینک‌های فوتر / شبکه‌های اجتماعی / دستاوردها / برنامه هفتگی / گالری) ─── */
+  /* ─── ردیف‌های پویا (لینک‌های فوتر / شبکه‌های اجتماعی) ─── */
   .dynamic-row {
     display: flex;
     align-items: flex-end;
@@ -438,6 +507,132 @@
     flex-shrink: 0;
     font-size: 15px;
   }
+
+  /* ─── باکس‌های معرفی (زیر بنر) ─── */
+  .info-box-edit {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .info-box-edit-top {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .info-box-edit-field {
+    flex: 1;
+    min-width: 160px;
+    max-width: 220px;
+  }
+
+  .info-box-icon-wrap {
+    flex-shrink: 0;
+  }
+
+  .info-box-icon-preview {
+    width: 56px; height: 56px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+  }
+
+  .info-box-icon-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .info-box-icon-upload,
+  input[type="file"].info-box-icon-upload {
+    margin-top: 6px;
+    font-size: 11px;
+    width: 160px;
+  }
+
+  .info-box-color-input {
+    width: 100%;
+    height: 38px;
+    padding: 2px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    .info-box-edit-field { max-width: 100%; }
+  }
+
+  /* ─── باکس‌های دسته‌بندی درس‌ها (feature-box) ─── */
+  .feature-box-edit {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .feature-box-edit-top {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .feature-box-edit-field {
+    flex: 1;
+    min-width: 160px;
+    max-width: 220px;
+  }
+
+  .feature-box-icon-wrap {
+    flex-shrink: 0;
+  }
+
+  .feature-box-icon-preview {
+    width: 56px; height: 56px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+  }
+
+  .feature-box-icon-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .feature-box-icon-upload,
+  input[type="file"].feature-box-icon-upload {
+    margin-top: 6px;
+    font-size: 11px;
+    width: 160px;
+  }
+
+  .feature-box-color-input {
+    width: 100%;
+    height: 38px;
+    padding: 2px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    .feature-box-edit-top { flex-wrap: wrap; }
+    .feature-box-edit-field { max-width: 100%; }
+  }
+
 
   @media (max-width: 600px) {
     .dynamic-row { flex-wrap: wrap; }
@@ -479,7 +674,6 @@
     margin-top: 20px;
     padding-top: 16px;
     border-top: 1px solid var(--border);
-    flex-wrap: wrap;
   }
 
   /* ─── CHIP ─── */
@@ -559,12 +753,23 @@
   .sec-header {
     display: flex; align-items: flex-start; justify-content: space-between;
     margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
   }
 
   .sec-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
   .sec-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+
+  /* ─── COLOR PICKER DISPLAY ─── */
+  /*.color-row {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .color-swatch {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    flex-shrink: 0;
+  }*/
 
   /* ─── MESSAGES ─── */
   .msg-pane { display: grid; grid-template-columns: 280px 1fr; gap: 0; height: 480px; }
@@ -675,7 +880,6 @@
     .sidebar { display: none; }
     .main-wrap { margin-right: 0; }
   }
-
 /* ===========================
    Mobile Sidebar
 =========================== */
@@ -740,4 +944,56 @@
         margin-right:0;
     }
 
+}
+/* ===== Thumbnail image card with edit/delete actions (used in sliders/galleries) ===== */
+.img-thumb-card{
+    position:relative;
+    aspect-ratio:1;
+    border-radius:8px;
+    border:1px solid var(--border);
+    overflow:hidden;
+}
+
+.img-thumb-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.img-thumb-actions{
+    position:absolute;
+    top:4px;
+    right:4px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.img-thumb-actions.actions-left{
+    right:auto;
+    left:4px;
+}
+
+.btn-icon-edit,
+.btn-icon-delete{
+    border:none;
+    border-radius:6px;
+    width:22px;
+    height:22px;
+    font-size:11px;
+    cursor:pointer;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+}
+
+.btn-icon-edit{
+    background:#4A90D9;
+}
+
+.btn-icon-delete{
+    background:#E24B4A;
 }
