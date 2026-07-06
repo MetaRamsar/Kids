@@ -12,8 +12,17 @@
 <!-- ═══════════ SIDEBAR ═══════════ -->
 <aside class="sidebar">
   <div class="sidebar-admin">
-    <img src="/img/profile-pic.jpg.jpeg" class="admin-photo" alt="ادمین">
-    <div class="admin-role">مدیر سیستم</div>
+    <div class="admin-photo-wrap">
+      <img src="/img/profile-pic.jpg.jpeg" class="admin-photo" id="admin-photo-preview" alt="ادمین">
+      <label class="admin-photo-edit" title="تغییر عکس پروفایل">
+        <i class="fa-solid fa-camera"></i>
+        <input type="file" accept="image/*" onchange="previewAdminPhoto(this)">
+      </label>
+    </div>
+    <div class="admin-info">
+      <div class="admin-name" id="admin-name">نام مدیر</div>
+      <div class="admin-role" id="admin-role">مدیر سیستم</div>
+    </div>
   </div>
 
   <nav class="sidebar-nav">
@@ -21,6 +30,9 @@
     <div class="nav-item active" onclick="showSection('site')">
       <i class="fa-solid fa-globe"></i> تنظیمات سایت
     </div>
+    <!--<div class="nav-item" onclick="showSection('appearance')">
+      <i class="fa-solid fa-palette"></i> ظاهر و طراحی
+    </div>-->
     <div class="nav-item" onclick="showSection('homepage')">
       <i class="fa-solid fa-house"></i> صفحه اصلی
     </div>
@@ -29,17 +41,19 @@
     </div>
 
     <div class="nav-section">مدیریت محتوا</div>
-    <div class="nav-item has-submenu" onclick="toggleSubmenu(this)">
-    <i class="fa-solid fa-users"></i> کاربران
-    <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+    <div class="nav-item nav-item-parent" onclick="toggleSubmenu(this)">
+      <i class="fa-solid fa-users"></i> کاربران
+      <i class="fa-solid fa-chevron-down nav-arrow"></i>
     </div>
-    <div class="submenu">
-    <div class="nav-item sub-item" onclick="showSection('students')">
-    <i class="fa-solid fa-child"></i> دانش‌آموزان
-    </div>
-    <div class="nav-item sub-item" onclick="showSection('teachers')">
-    <i class="fa-solid fa-chalkboard-user"></i> معلمان
-    </div>
+    <div class="nav-submenu">
+      <div class="nav-submenu-inner">
+        <div class="nav-item nav-subitem" onclick="showSection('students', event)">
+          <i class="fa-solid fa-child"></i> دانش‌آموزان
+        </div>
+        <div class="nav-item nav-subitem" onclick="showSection('teachers', event)">
+          <i class="fa-solid fa-chalkboard-user"></i> معلمان
+        </div>
+      </div>
     </div>
     <div class="nav-item" onclick="showSection('classes')">
       <i class="fa-solid fa-door-open"></i> کلاس‌ها
@@ -103,6 +117,7 @@
         </div>
       </div>
 
+      <!-- تنظیمات کلی سایت: نام، لوگو، فیوآیکون، متا دیسکریپشن -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
           <div>
@@ -163,6 +178,7 @@
         </div>
       </div>
 
+      <!-- لینک‌های کاربردی فوتر -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
           <div>
@@ -185,6 +201,7 @@
         </div>
       </div>
 
+      <!-- شبکه‌های اجتماعی -->
       <div class="card">
         <div class="card-head">
           <div>
@@ -208,6 +225,76 @@
       </div>
     </div>
 
+    <!-- ══ SECTION: ظاهر و طراحی ══ -->
+    <!--<div id="sec-appearance" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">ظاهر و طراحی</div>
+          <div class="sec-sub">رنگ‌ها، فونت و المان‌های بصری سایت</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title">رنگ‌های اصلی</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>رنگ اصلی (Primary)</label>
+              <div class="color-row">
+                <input type="color" value="#F875AA" class="color-swatch" id="color-primary" oninput="updateColorPreview()">
+                <input type="text" value="#F875AA" id="color-primary-text" style="flex:1;" oninput="syncColor('primary')">
+              </div>
+              <span class="hint">استفاده در دکمه‌ها، لینک‌ها و هایلایت‌ها</span>
+            </div>
+            <div class="field">
+              <label>رنگ پس‌زمینه هدر</label>
+              <div class="color-row">
+                <input type="color" value="#EDFFF0" class="color-swatch" id="color-bg">
+                <input type="text" value="#EDFFF0" style="flex:1;">
+              </div>
+            </div>
+            <div class="field">
+              <label>رنگ فوتر</label>
+              <div class="color-row">
+                <input type="color" value="#EDFFF0" class="color-swatch">
+                <input type="text" value="#EDFFF0" style="flex:1;">
+              </div>
+            </div>
+            <div class="field">
+              <label>رنگ متن اصلی</label>
+              <div class="color-row">
+                <input type="color" value="#333333" class="color-swatch">
+                <input type="text" value="#333333" style="flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">فاویکون سایت</div></div>
+        <div class="card-body">
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <img src="https://via.placeholder.com/48/F875AA/fff?text=K" style="width:48px;height:48px;border-radius:8px;border:1px solid var(--border);" alt="فاویکون">
+              <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">فاویکون فعلی</div>
+            </div>
+            <div style="flex:1;min-width:200px;">
+              <div class="upload-zone" style="padding:18px;">
+                <input type="file" accept="image/*">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size:20px;"></i>
+                <p style="font-size:12px;">آپلود فاویکون</p>
+                <small>۳۲×۳۲ یا ۶۴×۶۴ پیکسل — ICO یا PNG</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
     <!-- ══ SECTION: صفحه اصلی ══ -->
     <div id="sec-homepage" class="section">
       <div class="sec-header">
@@ -219,72 +306,121 @@
 
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
-          <div class="card-title">اسلایدر اصلی (Hero)</div>
+          <div>
+            <div class="card-title">بنر صفحه اصلی</div>
+            <div class="card-sub">عکس بنر، عنوان بنر و متن توضیحی زیر آن که بالای صفحه اصلی نمایش داده می‌شود</div>
+          </div>
         </div>
         <div class="card-body">
           <div class="form-grid">
-            <div class="field">
-              <label>عنوان اصلی</label>
-              <input type="text" value="مهدکودک کیدآپ">
-            </div>
-            <div class="field">
-              <label>زیرعنوان</label>
-              <input type="text" value="محیطی امن و شاد برای کودک شما">
-            </div>
+
             <div class="field full">
-              <label>متن توضیحی</label>
-              <textarea>با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطرافشان تشویق می‌کنیم.</textarea>
-            </div>
-            <div class="field full">
-              <label>تصویر اسلایدر</label>
-              <div class="upload-zone">
-                <input type="file" accept="image/*">
-                <i class="fa-solid fa-image"></i>
-                <p>آپلود تصویر پس‌زمینه اسلایدر</p>
-                <small>JPG یا PNG — حداقل ۱۲۰۰×۶۰۰ پیکسل</small>
+              <label>عکس بنر (تصویر پایین هدر)</label>
+              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                <img src="https://via.placeholder.com/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1" class="logo-preview" id="banner-image-preview" alt="عکس بنر" style="width:140px;height:90px;object-fit:cover;">
+                <div style="flex:1;min-width:160px;">
+                  <div class="upload-zone">
+                    <input type="file" accept="image/jpeg, image/png, image/webp" onchange="previewBannerImage(this)">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p>آپلود عکس بنر</p>
+                    <small>فرمت مجاز: JPG، PNG یا WEBP — حداقل ۱۲۰۰×۶۰۰ پیکسل</small>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <div class="field full">
+              <label>عنوان بنر</label>
+              <input type="text" id="banner-title-input" value="کودک شاد، کودک سالم!">
+              <span class="hint">عنوان بزرگی که روی عکس بنر نمایش داده می‌شود</span>
+            </div>
+
+            <div class="field full">
+              <label>متن توضیحی زیر عنوان بنر</label>
+              <textarea id="banner-desc-input">توضیحات بیشتر .......</textarea>
+            </div>
+
           </div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-primary" onclick="saveBanner()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost" onclick="cancelBanner()">انصراف</button>
           </div>
         </div>
       </div>
 
       <div class="card">
         <div class="card-head">
-          <div class="card-title">آمار و دستاوردها</div>
+          <div>
+            <div class="card-title">باکس‌های معرفی (زیر بنر)</div>
+            <div class="card-sub">آیکن، عنوان، توضیحات و رنگ هر یک از باکس‌های معرفی صفحه اصلی را ویرایش کنید</div>
+          </div>
         </div>
         <div class="card-body">
-          <div class="alert info"><i class="fa-solid fa-circle-info"></i> این اعداد در بخش آمار صفحه اصلی نمایش داده می‌شوند.</div>
+
+          <div id="info-boxes-list"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveInfoBoxes()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost" onclick="cancelInfoBoxes()">انصراف</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="card-head">
+          <div>
+            <div class="card-title">بخش اسلایدر</div>
+            <div class="card-sub">عکس‌های اسلایدشو، عنوان و توضیحات بخش اسلایدر صفحه اصلی را ویرایش کنید</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div style="margin-bottom:20px;">
+            <label style="display:block;margin-bottom:10px;">عکس‌های اسلایدر <span class="hint">(حداکثر ۳ عکس)</span></label>
+            <div id="home-slider-images-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;"></div>
+            <div class="upload-zone" id="home-slider-images-upload-zone">
+              <input type="file" accept="image/*" multiple id="home-slider-images-input" onchange="handleHomeSliderUpload(this)">
+              <i class="fa-solid fa-images"></i>
+              <p>آپلود عکس اسلایدر (حداکثر ۳ عکس)</p>
+              <small>JPG یا PNG — حداکثر ۵ مگابایت هر فایل</small>
+            </div>
+            <p class="hint" id="home-slider-images-full-msg" style="display:none;margin-top:6px;">
+              به حداکثر تعداد عکس رسیده‌اید. برای تغییر یک عکس، روی آیکن ✎ روی آن کلیک کنید یا آن را حذف کنید تا جای خالی برای آپلود عکس جدید باز شود.
+            </p>
+          </div>
+
           <div class="form-grid">
-            <div class="field">
-              <label>هنر‌آموزان</label>
-              <input type="text" value="۱۲۰+">
+            <div class="field full">
+              <label>عنوان بخش اسلایدر</label>
+              <input type="text" id="home-slider-title-input" value="تاریخچه">
             </div>
-            <div class="field">
-              <label>برچسب آمار اول</label>
-              <input type="text" value="هنرآموزی کودکان">
-            </div>
-            <div class="field">
-              <label>فارغ‌التحصیلان</label>
-              <input type="text" value="۸۵+">
-            </div>
-            <div class="field">
-              <label>برچسب آمار دوم</label>
-              <input type="text" value="فارغ‌التحصیل کودکان">
-            </div>
-            <div class="field">
-              <label>کودکان فعال</label>
-              <input type="text" value="۶۰">
-            </div>
-            <div class="field">
-              <label>برچسب آمار سوم</label>
-              <input type="text" value="کودکان حال حاضر">
+            <div class="field full">
+              <label>توضیحات بخش اسلایدر</label>
+              <textarea id="home-slider-desc-input">توضیحات...</textarea>
             </div>
           </div>
+
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-primary" onclick="saveHomeSlider()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost" onclick="cancelHomeSlider()">انصراف</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="card-head">
+          <div>
+            <div class="card-title">باکس‌های دسته‌بندی درس‌ها</div>
+            <div class="card-sub">رنگ، آیکن، عنوان، توضیحات و لینک هر یک از باکس‌های دسته‌بندی درس‌ها را ویرایش کنید</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div id="feature-boxes-list"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveFeatureBoxes()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-ghost" onclick="cancelFeatureBoxes()">انصراف</button>
           </div>
         </div>
       </div>
@@ -445,78 +581,7 @@
           <div class="sec-title">مدیریت معلمان</div>
           <div class="sec-sub">۱۲ معلم فعال</div>
         </div>
-        <button class="btn btn-primary" onclick="toggleTeacherForm()"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
-      </div>
-
-      <!-- ── فرم افزودن/ویرایش معلم ── -->
-      <div class="card" id="teacher-form-card" style="margin-bottom:16px;display:none;">
-        <div class="card-head">
-          <div>
-            <div class="card-title" id="teacher-form-title">افزودن معلم جدید</div>
-            <div class="card-sub">اطلاعات معلم را وارد کنید</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="form-grid">
-
-            <div class="field full">
-              <label>آواتار معلم</label>
-              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://via.placeholder.com/80/FDEDED/F875AA?text=%D9%85" class="preview-img" id="teacher-avatar-preview" alt="آواتار معلم" style="margin-bottom:0;">
-                <div style="flex:1;min-width:160px;">
-                  <div class="upload-zone">
-                    <input type="file" accept="image/*" onchange="previewGenericImage(this,'teacher-avatar-preview')">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <p>آپلود آواتار</p>
-                    <small>JPG یا PNG — عکس مربعی پیشنهاد می‌شود</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="field">
-              <label>نام کامل معلم</label>
-              <input type="text" id="teacher-name-input" placeholder="مثلاً: فریده موسوی">
-            </div>
-
-            <div class="field">
-              <label>شماره تلفن</label>
-              <input type="tel" id="teacher-phone-input" placeholder="۰۹۱۲۱۲۳۴۵۶۷">
-            </div>
-
-            <div class="field full">
-              <label>توضیحات</label>
-              <textarea id="teacher-desc-input" placeholder="توضیح کوتاهی درباره معلم..."></textarea>
-            </div>
-
-            <div class="field full">
-              <label>مدارک تحصیلی</label>
-              <textarea id="teacher-education-input" placeholder="مثلاً: کارشناسی روان‌شناسی کودک — دانشگاه تهران"></textarea>
-              <span class="hint">در صورت داشتن چند مدرک، هر مورد را در یک خط بنویسید</span>
-            </div>
-
-            <div class="field full">
-              <label>سابقه کاری</label>
-              <textarea id="teacher-experience-input" placeholder="مثلاً: ۵ سال سابقه تدریس نقاشی کودکان در آموزشگاه هنر"></textarea>
-              <span class="hint">در صورت داشتن چند سابقه، هر مورد را در یک خط بنویسید</span>
-            </div>
-
-          </div>
-
-          <!-- حساب‌های شبکه اجتماعی معلم -->
-          <div style="margin-top:20px;">
-            <label style="display:block;margin-bottom:10px;">حساب‌های شبکه اجتماعی معلم</label>
-            <div id="teacher-social-list"></div>
-            <button type="button" class="btn btn-ghost" style="margin-bottom:4px;" onclick="addTeacherSocial()">
-              <i class="fa-solid fa-plus"></i> افزودن حساب اجتماعی
-            </button>
-          </div>
-
-          <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveTeacher()"><i class="fa-solid fa-floppy-disk"></i> ذخیره معلم</button>
-            <button class="btn btn-ghost" onclick="toggleTeacherForm()">انصراف</button>
-          </div>
-        </div>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
       </div>
 
       <div class="card">
@@ -524,8 +589,8 @@
           <table class="data-table">
             <thead><tr><th>نام</th><th>تخصص</th><th>کلاس‌ها</th><th>تلفن</th><th>وضعیت</th><th>عملیات</th></tr></thead>
             <tbody>
-              <tr><td><div class="u-row"><div class="u-av blue">ف</div><div><div class="u-name">فریده موسوی</div><div class="u-sub">معلم نقاشی</div></div></div></td><td>هنر و نقاشی</td><td>۳ کلاس</td><td>۰۹۱۲۳۳۳۴۴۴۵</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="toggleTeacherForm()"><i class="fa-solid fa-pen"></i></button></div></td></tr>
-              <tr><td><div class="u-row"><div class="u-av green">ح</div><div><div class="u-name">حسین کرمی</div><div class="u-sub">معلم ورزش</div></div></div></td><td>ورزش و حرکت</td><td>۲ کلاس</td><td>۰۹۳۵۱۱۱۲۲۲۳</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="toggleTeacherForm()"><i class="fa-solid fa-pen"></i></button></div></td></tr>
+              <tr><td><div class="u-row"><div class="u-av blue">ف</div><div><div class="u-name">فریده موسوی</div><div class="u-sub">معلم نقاشی</div></div></div></td><td>هنر و نقاشی</td><td>۳ کلاس</td><td>۰۹۱۲۳۳۳۴۴۴۵</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button></div></td></tr>
+              <tr><td><div class="u-row"><div class="u-av green">ح</div><div><div class="u-name">حسین کرمی</div><div class="u-sub">معلم ورزش</div></div></div></td><td>ورزش و حرکت</td><td>۲ کلاس</td><td>۰۹۳۵۱۱۱۲۲۲۳</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button></div></td></tr>
             </tbody>
           </table>
         </div>
@@ -807,9 +872,373 @@
 <div id="toast">✓ تغییرات با موفقیت ذخیره شد</div>
 
 <script>
-/* ══════════════════════════════════════════
-   داده‌های پایه (در پروژه واقعی از API خوانده می‌شوند)
-   ══════════════════════════════════════════ */
+const sections = ['site','appearance','homepage','about','students','teachers','classes','events','messages'];
+const titles = {
+  site: ['تنظیمات سایت', 'پنل ادمین / تنظیمات سایت'],
+  appearance: ['ظاهر و طراحی', 'پنل ادمین / ظاهر و طراحی'],
+  homepage: ['صفحه اصلی', 'پنل ادمین / صفحه اصلی'],
+  about: ['درباره ما', 'پنل ادمین / درباره ما'],
+  students: ['دانش‌آموزان', 'پنل ادمین / مدیریت دانش‌آموزان'],
+  teachers: ['معلمان', 'پنل ادمین / مدیریت معلمان'],
+  classes: ['کلاس‌ها', 'پنل ادمین / مدیریت کلاس‌ها'],
+  events: ['رویدادها', 'پنل ادمین / مدیریت رویدادها'],
+  messages: ['پیام‌ها', 'پنل ادمین / پیام‌های والدین']
+};
+
+function showSection(name, evt) {
+  sections.forEach(s => {
+    const el = document.getElementById('sec-' + s);
+    if (el) el.classList.toggle('active', s === name);
+  });
+  document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active'));
+  const clicked = (evt || window.event).currentTarget;
+  clicked.classList.add('active');
+
+  /* اگر ایتم کلیک‌شده داخل زیرمنو باشه، ایتم والد (کاربران) رو هم فعال و باز نگه دار */
+  const parentSubmenu = clicked.closest('.nav-submenu');
+  if (parentSubmenu) {
+    const parentItem = parentSubmenu.previousElementSibling;
+    if (parentItem && parentItem.classList.contains('nav-item-parent')) {
+      parentItem.classList.add('active');
+      parentSubmenu.classList.add('open');
+      parentItem.classList.add('open');
+    }
+  }
+
+  if(window.innerWidth<=700){
+    closeSidebar();
+ }
+}
+
+function toggleSubmenu(el) {
+  const submenu = el.nextElementSibling;
+  const isOpen = submenu.classList.contains('open');
+  submenu.classList.toggle('open', !isOpen);
+  el.classList.toggle('open', !isOpen);
+}
+
+function saveToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function previewAdminPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('admin-photo-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+/* نام و نقش مدیر از بک‌اند خونده می‌شن و این‌جا مقداردهی می‌شن، مثال:
+   fetch('/api/admin/profile').then(r => r.json()).then(data => {
+     document.getElementById('admin-name').textContent = data.name;
+     document.getElementById('admin-role').textContent = data.role;
+     document.getElementById('admin-photo-preview').src = data.photoUrl;
+   });
+*/
+
+function previewLogo(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('logo-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function previewFavicon(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('favicon-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+/* مقادیر پیش‌فرض کارت «تنظیمات کلی سایت» برای دکمه انصراف */
+const generalSiteDefaults = {
+  siteName: 'کیدآپ — مهدکودک',
+  logoSrc: '/img/Logo.png',
+  faviconSrc: 'https://via.placeholder.com/48/F875AA/fff?text=K',
+  metaDesc: 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.'
+};
+
+function cancelGeneralSettings() {
+  document.getElementById('site-name-input').value = generalSiteDefaults.siteName;
+  document.getElementById('logo-preview').src = generalSiteDefaults.logoSrc;
+  document.getElementById('favicon-preview').src = generalSiteDefaults.faviconSrc;
+  document.getElementById('meta-desc-input').value = generalSiteDefaults.metaDesc;
+}
+
+/* ─── باکس‌های معرفی (زیر بنر) ─── */
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
+let infoBoxesDefaults = [
+  { icon: '/img/kids_3636298.png', title: 'آموزش و پرورش', desc: 'توضیحات...', color: '#ffb6c1' },
+  { icon: '/img/kid_10133636.png', title: 'خلاقیت', desc: 'توضیحات...', color: '#ffff4e' },
+  { icon: '/img/dough_9102578.png', title: 'مهارت‌های زندگی', desc: 'توضیحات...', color: '#90ee90' }
+];
+
+/* کپی کاری که با تایپ کاربر تغییر می‌کند */
+let infoBoxes = infoBoxesDefaults.map(b => ({ ...b }));
+
+function renderInfoBoxes() {
+  const wrap = document.getElementById('info-boxes-list');
+  wrap.innerHTML = infoBoxes.map((box, i) => `
+    <div class="info-box-edit">
+      <div class="info-box-edit-top">
+        <div class="info-box-icon-wrap">
+          <label>آیکن باکس</label>
+          <div class="info-box-icon-preview">
+            <img src="${box.icon}" id="info-box-icon-${i}">
+          </div>
+          <input type="file" accept="image/png, image/svg+xml, image/webp" class="info-box-icon-upload" onchange="uploadInfoBoxIcon(this, ${i})">
+        </div>
+        <div class="field info-box-edit-field">
+          <label>عنوان باکس</label>
+          <input type="text" value="${escapeAttr(box.title)}" oninput="infoBoxes[${i}].title = this.value">
+        </div>
+        <div class="field info-box-edit-field">
+          <label>رنگ باکس</label>
+          <input type="color" value="${box.color}" class="info-box-color-input" oninput="infoBoxes[${i}].color = this.value">
+        </div>
+      </div>
+      <div class="field">
+        <label>توضیحات باکس</label>
+        <textarea oninput="infoBoxes[${i}].desc = this.value">${escapeAttr(box.desc)}</textarea>
+      </div>
+    </div>
+  `).join('');
+}
+
+function uploadInfoBoxIcon(input, index) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      infoBoxes[index].icon = e.target.result;
+      document.getElementById(`info-box-icon-${index}`).src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function saveInfoBoxes() {
+  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
+  infoBoxesDefaults = infoBoxes.map(b => ({ ...b }));
+  saveToast();
+}
+
+function cancelInfoBoxes() {
+  infoBoxes = infoBoxesDefaults.map(b => ({ ...b }));
+  renderInfoBoxes();
+}
+
+renderInfoBoxes();
+
+/* ─── بخش اسلایدر (تاریخچه) ─── */
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
+let homeSliderDefaults = {
+  images: ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'],
+  title: 'تاریخچه',
+  desc: 'توضیحات...'
+};
+
+/* کپی کاری که با تایپ کاربر تغییر می‌کند */
+let homeSliderImages = [...homeSliderDefaults.images];
+
+function renderHomeSliderImages() {
+  const grid = document.getElementById('home-slider-images-grid');
+  grid.innerHTML = homeSliderImages.map((src, i) => `
+    <div class="img-thumb-card">
+      <img src="${src}">
+      <div class="img-thumb-actions">
+        <button type="button" onclick="document.getElementById('home-slider-replace-${i}').click()" class="btn-icon-edit" title="ویرایش عکس"><i class="fa-solid fa-pen"></i></button>
+        <button type="button" onclick="removeHomeSliderImage(${i})" class="btn-icon-delete" title="حذف">×</button>
+      </div>
+      <input type="file" accept="image/*" id="home-slider-replace-${i}" style="display:none;" onchange="replaceHomeSliderImage(this, ${i})">
+    </div>
+  `).join('');
+  const uploadZone = document.getElementById('home-slider-images-upload-zone');
+  const fullMsg = document.getElementById('home-slider-images-full-msg');
+  const isFull = homeSliderImages.length >= 3;
+  uploadZone.style.display = isFull ? 'none' : 'block';
+  if (fullMsg) fullMsg.style.display = isFull ? 'block' : 'none';
+}
+
+function replaceHomeSliderImage(input, index) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      homeSliderImages[index] = e.target.result;
+      renderHomeSliderImages();
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+  input.value = '';
+}
+
+function handleHomeSliderUpload(input) {
+  if (!input.files) return;
+  const remainingSlots = 3 - homeSliderImages.length;
+  if (remainingSlots <= 0) {
+    alert('حداکثر ۳ عکس برای بخش اسلایدر مجاز است.');
+    input.value = '';
+    return;
+  }
+  const files = Array.from(input.files).slice(0, remainingSlots);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      homeSliderImages.push(e.target.result);
+      renderHomeSliderImages();
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+function removeHomeSliderImage(index) {
+  homeSliderImages.splice(index, 1);
+  renderHomeSliderImages();
+}
+
+function saveHomeSlider() {
+  homeSliderDefaults = {
+    images: [...homeSliderImages],
+    title: document.getElementById('home-slider-title-input').value,
+    desc: document.getElementById('home-slider-desc-input').value
+  };
+  saveToast();
+}
+
+function cancelHomeSlider() {
+  homeSliderImages = [...homeSliderDefaults.images];
+  document.getElementById('home-slider-title-input').value = homeSliderDefaults.title;
+  document.getElementById('home-slider-desc-input').value = homeSliderDefaults.desc;
+  renderHomeSliderImages();
+}
+
+renderHomeSliderImages();
+
+/* ─── باکس‌های دسته‌بندی درس‌ها (feature-box) ─── */
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
+let featureBoxesDefaults = [
+  { icon: '/img/alphabet_3898075.png', title: 'زبان انگلیسی', desc: 'توضیحات...', color: '#AEDEFC', link: '/archive.html' },
+  { icon: '/img/colour_2708174 (1).png', title: 'نقاشی', desc: 'توضیحات...', color: '#FFD6E8', link: '' },
+  { icon: '/img/dough_9102578.png', title: 'آشپزی', desc: 'توضیحات...', color: '#FFF3B0', link: '' },
+  { icon: '/img/sport_12693567.png', title: 'ورزش', desc: 'توضیحات...', color: '#C8F4C8', link: '' },
+  { icon: '/img/xylophone_6977852.png', title: 'نواختن ساز', desc: 'توضیحات...', color: '#E3D1FF', link: '' },
+  { icon: '/img/bonjour_9541518.png', title: 'زبان فرانسه', desc: 'توضیحات...', color: '#FFD1B8', link: '' }
+];
+
+/* کپی کاری که با تایپ کاربر تغییر می‌کند */
+let featureBoxes = featureBoxesDefaults.map(b => ({ ...b }));
+
+function renderFeatureBoxes() {
+  const wrap = document.getElementById('feature-boxes-list');
+  wrap.innerHTML = featureBoxes.map((box, i) => `
+    <div class="feature-box-edit">
+      <div class="feature-box-edit-top">
+        <div class="feature-box-icon-wrap">
+          <label>آیکن باکس</label>
+          <div class="feature-box-icon-preview">
+            <img src="${box.icon}" id="feature-box-icon-${i}">
+          </div>
+          <input type="file" accept="image/png, image/svg+xml, image/webp" class="feature-box-icon-upload" onchange="uploadFeatureBoxIcon(this, ${i})">
+        </div>
+        <div class="field feature-box-edit-field">
+          <label>عنوان باکس</label>
+          <input type="text" value="${escapeAttr(box.title)}" oninput="featureBoxes[${i}].title = this.value">
+        </div>
+        <div class="field feature-box-edit-field">
+          <label>رنگ باکس</label>
+          <input type="color" value="${box.color}" class="feature-box-color-input" oninput="featureBoxes[${i}].color = this.value">
+        </div>
+        <div class="field feature-box-edit-field">
+          <label>لینک باکس</label>
+          <input type="text" placeholder="مثلاً: /archive.html" value="${escapeAttr(box.link)}" oninput="featureBoxes[${i}].link = this.value">
+        </div>
+      </div>
+      <div class="field">
+        <label>توضیحات باکس</label>
+        <textarea oninput="featureBoxes[${i}].desc = this.value">${escapeAttr(box.desc)}</textarea>
+      </div>
+    </div>
+  `).join('');
+}
+
+function uploadFeatureBoxIcon(input, index) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      featureBoxes[index].icon = e.target.result;
+      document.getElementById(`feature-box-icon-${index}`).src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function saveFeatureBoxes() {
+  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
+  featureBoxesDefaults = featureBoxes.map(b => ({ ...b }));
+  saveToast();
+}
+
+function cancelFeatureBoxes() {
+  featureBoxes = featureBoxesDefaults.map(b => ({ ...b }));
+  renderFeatureBoxes();
+}
+
+renderFeatureBoxes();
+
+/* آپلود عکس بنر — فقط JPG، PNG یا WEBP مجاز است (نه فقط PNG/SVG) */
+function previewBannerImage(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!allowedTypes.includes(file.type)) {
+    alert('فرمت تصویر مجاز نیست. لطفاً یکی از فرمت‌های JPG، PNG یا WEBP را انتخاب کنید.');
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => document.getElementById('banner-image-preview').src = e.target.result;
+  reader.readAsDataURL(file);
+}
+
+/* ─── بنر صفحه اصلی (هدر) ─── */
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
+const bannerDefaults = {
+  imageSrc: 'https://via.placeholder.com/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1',
+  title: 'کودک شاد، کودک سالم!',
+  desc: 'توضیحات بیشتر .......'
+};
+
+function saveBanner() {
+  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
+  bannerDefaults.imageSrc = document.getElementById('banner-image-preview').src;
+  bannerDefaults.title = document.getElementById('banner-title-input').value;
+  bannerDefaults.desc = document.getElementById('banner-desc-input').value;
+  saveToast();
+}
+
+function cancelBanner() {
+  document.getElementById('banner-image-preview').src = bannerDefaults.imageSrc;
+  document.getElementById('banner-title-input').value = bannerDefaults.title;
+  document.getElementById('banner-desc-input').value = bannerDefaults.desc;
+}
+
+/* پیش‌نمایش عمومی برای هر تصویری (عکس اصلی کلاس و ...) */
+function previewGenericImage(input, targetId) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById(targetId).src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
 /* لیست معلم‌ها برای انتخاب در فرم کلاس */
 const teachersData = [
@@ -843,104 +1272,16 @@ const classAxesOptions = [
   { key: 'social', label: 'مهارت‌های اجتماعی' },
 ];
 
-/* آیکون‌های شبکه اجتماعی قابل انتخاب برای معلم */
-const teacherSocialPlatforms = [
-  { key: 'instagram', label: 'اینستاگرام', icon: 'fa-brands fa-instagram', color: '#E1306C', placeholder: 'https://instagram.com/...' },
-  { key: 'telegram',  label: 'تلگرام',      icon: 'fa-brands fa-telegram',  color: '#229ED9', placeholder: 'https://t.me/...' },
-  { key: 'whatsapp',  label: 'واتساپ',      icon: 'fa-brands fa-whatsapp',  color: '#25D366', placeholder: 'https://wa.me/...' },
-  { key: 'linkedin',  label: 'لینکدین',     icon: 'fa-brands fa-linkedin',  color: '#0A66C2', placeholder: 'https://linkedin.com/...' },
-  { key: 'other',     label: 'سایر',        icon: 'fa-solid fa-link',       color: '#555555', placeholder: 'https://...' }
-];
-
-const sections = ['site','appearance','homepage','about','students','teachers','classes','events','messages'];
-
-/* ══════════════════════════════════════════
-   منوی کشویی سایدبار (کاربران > دانش‌آموزان / معلمان)
-   ══════════════════════════════════════════ */
-function toggleSubmenu(el) {
-  const submenu = el.nextElementSibling;
-  el.classList.toggle('open');
-  submenu.classList.toggle('open');
-}
-
-function showSection(name) {
-  sections.forEach(s => {
-    const el = document.getElementById('sec-' + s);
-    if (el) el.classList.toggle('active', s === name);
-  });
-  document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-
-  /* اگر بخش انتخاب‌شده زیرمجموعه «کاربران» است، دراپ‌داون باز نگه داشته می‌شود */
-  if (name === 'students' || name === 'teachers') {
-    const parent = document.querySelector('.nav-item.has-submenu');
-    if (parent) {
-      const submenu = parent.nextElementSibling;
-      parent.classList.add('open');
-      if (submenu) submenu.classList.add('open');
-    }
-  }
-
-  if (window.innerWidth <= 700) {
-    closeSidebar();
-  }
-}
-
-function saveToast() {
-  const t = document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-function escapeAttr(str) {
-  return String(str ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function previewLogo(input) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => document.getElementById('logo-preview').src = e.target.result;
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-function previewFavicon(input) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => document.getElementById('favicon-preview').src = e.target.result;
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-/* پیش‌نمایش عمومی برای هر تصویری (آواتار معلم، عکس اصلی کلاس و ...) */
-function previewGenericImage(input, targetId) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => document.getElementById(targetId).src = e.target.result;
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-/* مقادیر پیش‌فرض کارت «تنظیمات کلی سایت» برای دکمه انصراف */
-const generalSiteDefaults = {
-  siteName: 'کیدآپ — مهدکودک',
-  logoSrc: '/img/Logo.png',
-  faviconSrc: 'https://via.placeholder.com/48/F875AA/fff?text=K',
-  metaDesc: 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.'
-};
-
-function cancelGeneralSettings() {
-  document.getElementById('site-name-input').value = generalSiteDefaults.siteName;
-  document.getElementById('logo-preview').src = generalSiteDefaults.logoSrc;
-  document.getElementById('favicon-preview').src = generalSiteDefaults.faviconSrc;
-  document.getElementById('meta-desc-input').value = generalSiteDefaults.metaDesc;
-}
-
 /* ─── لینک‌های کاربردی فوتر ─── */
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
 let footerLinksDefaults = [
   { title: 'خانه', url: '/main.html' },
   { title: 'درباره ما', url: '/about.html' },
   { title: 'کلاس‌ها', url: '/archive.html' }
 ];
+
+/* کپی کاری که با تایپ کاربر تغییر می‌کند */
 let footerLinks = footerLinksDefaults.map(l => ({ ...l }));
 
 function renderFooterLinks() {
@@ -964,6 +1305,10 @@ function renderFooterLinks() {
   `).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز لینکی اضافه نشده است.</p>';
 }
 
+function escapeAttr(str) {
+  return String(str ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
 function addFooterLink() {
   footerLinks.push({ title: '', url: '' });
   renderFooterLinks();
@@ -971,21 +1316,27 @@ function addFooterLink() {
   const lastRow = rows[rows.length - 1];
   if (lastRow) lastRow.querySelector('input').focus();
 }
+
 function removeFooterLink(index) {
   footerLinks.splice(index, 1);
   renderFooterLinks();
 }
+
 function saveFooterLinks() {
+  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
   footerLinksDefaults = footerLinks.map(l => ({ ...l }));
   saveToast();
 }
+
 function cancelFooterLinks() {
   footerLinks = footerLinksDefaults.map(l => ({ ...l }));
   renderFooterLinks();
 }
+
 renderFooterLinks();
 
-/* ─── شبکه‌های اجتماعی سایت ─── */
+/* ─── شبکه‌های اجتماعی ─── */
+
 const socialPlatforms = [
   { key: 'instagram', label: 'اینستاگرام', icon: 'fa-brands fa-instagram', color: '#E1306C', placeholder: 'https://instagram.com/...' },
   { key: 'telegram',  label: 'تلگرام',      icon: 'fa-brands fa-telegram',  color: '#229ED9', placeholder: 'https://t.me/...' },
@@ -997,15 +1348,20 @@ const socialPlatforms = [
   { key: 'eitaa',     label: 'ایتا',        icon: 'fa-solid fa-paper-plane', color: '#3EB049', placeholder: 'https://eitaa.com/...' },
   { key: 'other',     label: 'سایر',        icon: 'fa-solid fa-link',       color: '#555555', placeholder: 'https://...' }
 ];
+
 function getSocialPlatform(key) {
   return socialPlatforms.find(p => p.key === key) || socialPlatforms[socialPlatforms.length - 1];
 }
+
+/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
 let socialLinksDefaults = [
   { platform: 'instagram', url: '' },
   { platform: 'telegram', url: '' },
   { platform: 'whatsapp', url: '' },
   { platform: 'youtube', url: '' }
 ];
+
+/* کپی کاری که با تایپ/انتخاب کاربر تغییر می‌کند */
 let socialLinks = socialLinksDefaults.map(l => ({ ...l }));
 
 function renderSocialLinks() {
@@ -1037,6 +1393,7 @@ function renderSocialLinks() {
     </div>`;
   }).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز شبکه اجتماعی‌ای اضافه نشده است.</p>';
 }
+
 function addSocialLink() {
   socialLinks.push({ platform: 'instagram', url: '' });
   renderSocialLinks();
@@ -1044,18 +1401,22 @@ function addSocialLink() {
   const lastRow = rows[rows.length - 1];
   if (lastRow) lastRow.querySelector('input[type="url"]').focus();
 }
+
 function removeSocialLink(index) {
   socialLinks.splice(index, 1);
   renderSocialLinks();
 }
+
 function saveSocialLinks() {
   socialLinksDefaults = socialLinks.map(l => ({ ...l }));
   saveToast();
 }
+
 function cancelSocialLinks() {
   socialLinks = socialLinksDefaults.map(l => ({ ...l }));
   renderSocialLinks();
 }
+
 renderSocialLinks();
 
 /* ══════════════════════════════════════════
@@ -1108,71 +1469,6 @@ function cancelAchievements() {
   renderAchievements();
 }
 renderAchievements();
-
-/* ══════════════════════════════════════════
-   معلمان — فرم افزودن/ویرایش
-   ══════════════════════════════════════════ */
-let teacherSocialLinks = [];
-
-function toggleTeacherForm() {
-  const card = document.getElementById('teacher-form-card');
-  const isHidden = card.style.display === 'none';
-  card.style.display = isHidden ? 'block' : 'none';
-  if (isHidden) {
-    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (teacherSocialLinks.length === 0) {
-      teacherSocialLinks = [{ platform: 'instagram', url: '' }];
-      renderTeacherSocialLinks();
-    }
-  }
-}
-
-function renderTeacherSocialLinks() {
-  const wrap = document.getElementById('teacher-social-list');
-  wrap.innerHTML = teacherSocialLinks.map((link, i) => {
-    const platform = teacherSocialPlatforms.find(p => p.key === link.platform) || teacherSocialPlatforms[teacherSocialPlatforms.length - 1];
-    const options = teacherSocialPlatforms.map(p =>
-      `<option value="${p.key}" ${p.key === link.platform ? 'selected' : ''}>${p.label}</option>`
-    ).join('');
-    return `
-    <div class="dynamic-row">
-      <div class="field">
-        <label>آیکون شبکه اجتماعی</label>
-        <div class="social-platform-picker">
-          <span class="social-icon-preview" style="color:${platform.color};"><i class="${platform.icon}"></i></span>
-          <select style="flex:1;" onchange="teacherSocialLinks[${i}].platform = this.value; renderTeacherSocialLinks();">
-            ${options}
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label>لینک شبکه اجتماعی</label>
-        <input type="url" placeholder="${platform.placeholder}" value="${escapeAttr(link.url)}"
-               oninput="teacherSocialLinks[${i}].url = this.value">
-      </div>
-      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف" onclick="removeTeacherSocial(${i})">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-    </div>`;
-  }).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز حساب اجتماعی‌ای اضافه نشده است.</p>';
-}
-function addTeacherSocial() {
-  teacherSocialLinks.push({ platform: 'instagram', url: '' });
-  renderTeacherSocialLinks();
-}
-function removeTeacherSocial(index) {
-  teacherSocialLinks.splice(index, 1);
-  renderTeacherSocialLinks();
-}
-function saveTeacher() {
-  const name = document.getElementById('teacher-name-input').value.trim();
-  if (!name) {
-    alert('لطفاً نام کامل معلم را وارد کنید.');
-    return;
-  }
-  saveToast();
-  toggleTeacherForm();
-}
 
 /* ══════════════════════════════════════════
    کلاس‌ها — فرم افزودن/ویرایش
@@ -1316,9 +1612,9 @@ function handleClassSlideUpload(input) {
 function renderClassSlides() {
   const grid = document.getElementById('class-slides-grid');
   grid.innerHTML = classSlideImages.map((src, i) => `
-    <div style="position:relative;aspect-ratio:1;border-radius:8px;border:1px solid var(--border);overflow:hidden;">
-      <img src="${src}" style="width:100%;height:100%;object-fit:cover;display:block;">
-      <button type="button" onclick="removeClassSlide(${i})" style="position:absolute;top:4px;left:4px;background:#E24B4A;color:#fff;border:none;border-radius:6px;width:22px;height:22px;font-size:11px;cursor:pointer;" title="حذف">×</button>
+    <div class="img-thumb-card">
+      <img src="${src}">
+      <button type="button" onclick="removeClassSlide(${i})" class="btn-icon-delete img-thumb-actions actions-left" title="حذف">×</button>
     </div>
   `).join('');
   const uploadZone = document.getElementById('class-slides-upload-zone');
@@ -1406,9 +1702,6 @@ function removeGalleryItem(index) {
   renderClassGallery();
 }
 
-/* ══════════════════════════════════════════
-   پیام‌ها
-   ══════════════════════════════════════════ */
 function selectMsg(el, name, text) {
   document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
@@ -1417,6 +1710,7 @@ function selectMsg(el, name, text) {
   document.getElementById('chat-msg-text').textContent = text;
   document.getElementById('chat-bubble-area').innerHTML = `<div><div class="chat-bubble">${text}</div><div class="chat-time">الان</div></div>`;
 }
+
 function sendReply() {
   const input = document.getElementById('reply-input');
   const val = input.value.trim();
@@ -1426,41 +1720,23 @@ function sendReply() {
   input.value = '';
   area.scrollTop = area.scrollHeight;
 }
+const sidebar=document.querySelector(".sidebar");
+const overlay=document.querySelector(".sidebar-overlay");
 
-/* ══════════════════════════════════════════
-   سایدبار موبایل
-   ══════════════════════════════════════════ */
-const sidebar = document.querySelector(".sidebar");
-const overlay = document.querySelector(".sidebar-overlay");
-function toggleSidebar() {
-  sidebar.classList.toggle("open");
-  overlay.classList.toggle("show");
-}
-function closeSidebar() {
-  sidebar.classList.remove("open");
-  overlay.classList.remove("show");
+function toggleSidebar(){
+
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("show");
+
 }
 
-/* ══════════════════════════════════════════
-   مودال ساده (برای دکمه‌های موجودی که به مودال اشاره می‌کنند)
-   ══════════════════════════════════════════ */
-function openModal(id) {
-  /* در صورت نبود مودال مربوطه، پیام راهنما نمایش داده می‌شود */
-  const modal = document.getElementById(id);
-  if (modal) {
-    modal.classList.add('show');
-  } else {
-    console.warn('مودال با شناسه', id, 'یافت نشد.');
-  }
-}
-function closeModal(id) {
-  const modal = document.getElementById(id);
-  if (modal) modal.classList.remove('show');
+function closeSidebar(){
+
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+
 }
 
-/* ══════════════════════════════════════════
-   مقداردهی اولیه
-   ══════════════════════════════════════════ */
 fillClassSelects();
 renderClassAxisChips();
 renderClassSlides();
