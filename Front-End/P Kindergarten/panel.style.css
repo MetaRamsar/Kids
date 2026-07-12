@@ -264,12 +264,13 @@
 
   .quick-links a:hover { color: #185FA5; }
 
-  /* ─── TOPBAR ACTIONS (glass pill) ─── */
+  /* ─── TOPBAR ACTIONS ─── */
 .topbar-brand {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
+  position: relative;
 }
   .icon-btn {
     width: 44px; height: 44px;
@@ -286,7 +287,24 @@
   }
   .icon-btn:hover { background: rgba(255, 255, 255, 0.8); }
 
-  /* ─── TOPBAR LOGO (سمت چپ هدر) ─── */
+  .notif-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--pink);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+  }
+
+  /* ─── TOPBAR LOGO ─── */
   .topbar-logo {
     display: flex;
     align-items: center;
@@ -301,12 +319,6 @@
   @media (max-width: 700px) {
     .quick-links { display: none; }
   }
-
-  /* لینک‌های سریع همیشه در سایدبار (دسکتاپ) و منوی همبرگری (موبایل) نمایش داده می‌شوند */
- /* .sidebar-quick-links {
-    border-top: 1px solid var(--border);
-    padding: 6px 0;
-  }*/
 
   .notif-dot::after {
     content: ''; position: absolute;
@@ -474,7 +486,7 @@
     flex-shrink: 0;
   }
 
-  /* ─── ردیف‌های پویا (لینک‌های فوتر / شبکه‌های اجتماعی) ─── */
+  /* ─── ردیف‌های پویا ─── */
   .dynamic-row {
     display: flex;
     align-items: flex-end;
@@ -508,132 +520,6 @@
     font-size: 15px;
   }
 
-  /* ─── باکس‌های معرفی (زیر بنر) ─── */
-  .info-box-edit {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 14px;
-  }
-
-  .info-box-edit-top {
-    display: flex;
-    gap: 14px;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-
-  .info-box-edit-field {
-    flex: 1;
-    min-width: 160px;
-    max-width: 220px;
-  }
-
-  .info-box-icon-wrap {
-    flex-shrink: 0;
-  }
-
-  .info-box-icon-preview {
-    width: 56px; height: 56px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 6px;
-  }
-
-  .info-box-icon-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .info-box-icon-upload,
-  input[type="file"].info-box-icon-upload {
-    margin-top: 6px;
-    font-size: 11px;
-    width: 160px;
-  }
-
-  .info-box-color-input {
-    width: 100%;
-    height: 38px;
-    padding: 2px;
-    cursor: pointer;
-  }
-
-  @media (max-width: 600px) {
-    .info-box-edit-field { max-width: 100%; }
-  }
-
-  /* ─── باکس‌های دسته‌بندی درس‌ها (feature-box) ─── */
-  .feature-box-edit {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 14px;
-  }
-
-  .feature-box-edit-top {
-    display: flex;
-    gap: 14px;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-
-  .feature-box-edit-field {
-    flex: 1;
-    min-width: 160px;
-    max-width: 220px;
-  }
-
-  .feature-box-icon-wrap {
-    flex-shrink: 0;
-  }
-
-  .feature-box-icon-preview {
-    width: 56px; height: 56px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 6px;
-  }
-
-  .feature-box-icon-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .feature-box-icon-upload,
-  input[type="file"].feature-box-icon-upload {
-    margin-top: 6px;
-    font-size: 11px;
-    width: 160px;
-  }
-
-  .feature-box-color-input {
-    width: 100%;
-    height: 38px;
-    padding: 2px;
-    cursor: pointer;
-  }
-
-  @media (max-width: 600px) {
-    .feature-box-edit-top { flex-wrap: wrap; }
-    .feature-box-edit-field { max-width: 100%; }
-  }
-
-
   @media (max-width: 600px) {
     .dynamic-row { flex-wrap: wrap; }
     .dynamic-row .field { flex-basis: 100%; }
@@ -657,6 +543,7 @@
 
   .btn-primary { background: var(--pink); color: #fff; }
   .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .btn-ghost {
     background: transparent;
@@ -665,6 +552,7 @@
   }
 
   .btn-ghost:hover { background: var(--surface-1); }
+  .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .btn-danger { background: #E24B4A; color: #fff; }
   .btn-danger:hover { opacity: 0.9; }
@@ -729,26 +617,6 @@
   .u-name { font-size: 13px; font-weight: 500; }
   .u-sub { font-size: 11px; color: var(--text-muted); }
 
-  /* ─── TABS ─── */
-  .tabs-row {
-    display: flex; gap: 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
-  }
-
-  .tab {
-    padding: 9px 18px;
-    font-size: 13px;
-    color: var(--text-muted);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: color 0.15s;
-  }
-
-  .tab:hover { color: var(--text-primary); }
-  .tab.active { color: var(--pink); border-bottom-color: var(--pink); font-weight: 500; }
-
   /* ─── SECTION HEADERS ─── */
   .sec-header {
     display: flex; align-items: flex-start; justify-content: space-between;
@@ -757,19 +625,6 @@
 
   .sec-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
   .sec-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
-
-  /* ─── COLOR PICKER DISPLAY ─── */
-  /*.color-row {
-    display: flex; align-items: center; gap: 10px;
-  }
-
-  .color-swatch {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    flex-shrink: 0;
-  }*/
 
   /* ─── MESSAGES ─── */
   .msg-pane { display: grid; grid-template-columns: 280px 1fr; gap: 0; height: 480px; }
@@ -833,25 +688,6 @@
     border-top: 1px solid var(--border);
   }
 
-  /* ─── DIVIDER ─── */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 20px 0;
-  }
-
-  /* ─── ALERT ─── */
-  .alert {
-    padding: 10px 14px;
-    border-radius: var(--radius);
-    font-size: 13px;
-    display: flex; align-items: center; gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  .alert.success { background: var(--success-bg); color: var(--success); }
-  .alert.info { background: #E6F1FB; color: #185FA5; }
-
   /* ─── TOAST ─── */
   #toast {
     position: fixed;
@@ -880,6 +716,7 @@
     .sidebar { display: none; }
     .main-wrap { margin-right: 0; }
   }
+
 /* ===========================
    Mobile Sidebar
 =========================== */
@@ -925,16 +762,12 @@
     }
 
     .sidebar{
-
         display:flex;
         position:fixed;
-
         right:0;
         top:0;
-
         width:260px;
         height:100%;
-
         transform:translateX(100%);
         transition:.3s;
         z-index:100;
@@ -943,9 +776,9 @@
     .main-wrap{
         margin-right:0;
     }
-
 }
-/* ===== Thumbnail image card with edit/delete actions (used in sliders/galleries) ===== */
+
+/* ===== Thumbnail image card ===== */
 .img-thumb-card{
     position:relative;
     aspect-ratio:1;
@@ -996,4 +829,174 @@
 
 .btn-icon-delete{
     background:#E24B4A;
+}
+
+/* ===== Info Box & Feature Box card styles ===== */
+.info-box {
+    background: #fff;
+    color: #333;
+    text-align: center;
+    padding: 30px 22px;
+    border-radius: 20px;
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 280px;
+    transition: all 0.25s ease;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.info-box:hover {
+    box-shadow: 0 8px 22px rgba(251, 190, 75, 0.25);
+    border-color: #333;
+}
+
+.info-box .category-img {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px auto;
+}
+
+.info-box .category-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-box h3 {
+    margin: 8px 0 6px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.info-box .desc {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+.feature-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;
+    max-width: 280px;
+    flex: 1 1 200px;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.feature-box:hover {
+    box-shadow: 0 6px 20px rgba(251, 190, 75, 0.25);
+    border-color: #333;
+}
+
+.feature-box .feature-text {
+    flex: 3;
+}
+
+.feature-box .feature-text h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: #333;
+}
+
+.feature-box .feature-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.feature-box .feature-icon {
+    flex: 1;
+    text-align: center;
+}
+
+.feature-box .feature-icon img {
+    width: 100%;
+    height: 100%;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+/* ===== Modal ===== */
+#delete-modal, #form-modal {
+    display: none;
+}
+
+#delete-modal[style*="display:flex"],
+#form-modal[style*="display:flex"] {
+    display: flex !important;
+}
+
+/* ===== Empty state ===== */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--surface-1);
+    border-radius: 8px;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+    color: var(--pink);
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* ===== Notification dropdown ===== */
+#notif-dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 200;
+    padding: 12px 0;
+    border: 1px solid var(--border);
+}
+
+#notif-dropdown .notif-item:hover {
+    background: var(--surface-1);
+}
+
+/* ===== Responsive fixes ===== */
+@media (max-width: 992px) {
+    .info-box { width: calc(50% - 10px); }
+    .feature-box { min-width: 160px; max-width: 220px; }
+    #classes-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    #classes-grid { grid-template-columns: 1fr; }
+    #notif-dropdown { width: 280px; left: -80px; }
+}
+
+@media (max-width: 600px) {
+    .info-box { width: 100% !important; }
+    .feature-box { width: 100% !important; max-width: 100%; }
+    #classes-grid { grid-template-columns: 1fr; }
+    .msg-pane { grid-template-columns: 1fr; height: auto; }
+    #notif-dropdown { width: 260px; left: -100px; }
 }

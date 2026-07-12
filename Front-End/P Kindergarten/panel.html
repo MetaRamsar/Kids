@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>پنل ادمین — کیدآپ</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="/panel.style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل ادمین — کیدآپ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="panel.style.css">
 </head>
 <body>
 
@@ -20,8 +20,8 @@
       </label>
     </div>
     <div class="admin-info">
-      <div class="admin-name" id="admin-name">نام مدیر</div>
-      <div class="admin-role" id="admin-role">مدیر سیستم</div>
+      <div class="admin-name" id="admin-name">مدیر سیستم</div>
+      <div class="admin-role" id="admin-role">مدیر ارشد</div>
     </div>
   </div>
 
@@ -30,9 +30,6 @@
     <div class="nav-item active" onclick="showSection('site')">
       <i class="fa-solid fa-globe"></i> تنظیمات سایت
     </div>
-    <!--<div class="nav-item" onclick="showSection('appearance')">
-      <i class="fa-solid fa-palette"></i> ظاهر و طراحی
-    </div>-->
     <div class="nav-item" onclick="showSection('homepage')">
       <i class="fa-solid fa-house"></i> صفحه اصلی
     </div>
@@ -58,14 +55,18 @@
     <div class="nav-item" onclick="showSection('classes')">
       <i class="fa-solid fa-door-open"></i> کلاس‌ها
     </div>
-    <div class="nav-item" onclick="showSection('events')">
-      <i class="fa-solid fa-calendar-days"></i> وبلاگ
+    <div class="nav-item" onclick="showSection('blog')">
+      <i class="fa-solid fa-newspaper"></i> وبلاگ
     </div>
 
     <div class="nav-section">ارتباطات</div>
     <div class="nav-item" onclick="showSection('messages')">
       <i class="fa-solid fa-envelope"></i> پیام‌ها
       <span class="nav-badge">۳</span>
+    </div>
+    <div class="nav-item" onclick="showSection('notifications')">
+      <i class="fa-solid fa-bell"></i> اعلان‌ها
+      <span class="nav-badge" id="notif-sidebar-badge">۳</span>
     </div>
   </nav>
 
@@ -83,6 +84,7 @@
   </div>
 </aside>
 <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
 <!-- ═══════════ MAIN ═══════════ -->
 <div class="main-wrap">
 
@@ -97,45 +99,72 @@
       <a href="/archive.html">کلاس‌ها</a>
     </nav>
 
-<div class="topbar-brand">
-  <div class="icon-btn notif-dot" title="اعلان‌ها"><i class="fa-regular fa-bell"></i></div>
-  <a href="/main.html" class="topbar-logo">
-    <img src="/img/Logo.png" alt="لوگو">
-  </a>
-</div>
+    <div class="topbar-brand">
+      <div class="icon-btn notif-dot" title="اعلان‌ها" onclick="toggleNotifications()">
+        <i class="fa-regular fa-bell"></i>
+        <span class="notif-count" id="notif-header-count">۳</span>
+      </div>
+      <a href="/main.html" class="topbar-logo">
+        <img src="/img/Logo.png" alt="لوگو">
+      </a>
+    </div>
+  </div>
+
+  <!-- Notification Dropdown -->
+  <div id="notif-dropdown">
+    <div style="padding:0 16px 10px;border-bottom:1px solid var(--border);font-weight:600;font-size:14px;">اعلان‌ها</div>
+    <div class="notif-item" style="padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="markNotifRead(this, 1)">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span style="background:var(--pink-bg);color:var(--pink);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-user"></i></span>
+        <div><div style="font-size:13px;font-weight:500;">ثبت‌نام جدید</div><div style="font-size:12px;color:var(--text-muted);">سارا احمدی ثبت‌نام کرد</div></div>
+      </div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۲ دقیقه پیش</div>
+    </div>
+    <div class="notif-item" style="padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="markNotifRead(this, 2)">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span style="background:var(--green-bg);color:var(--success);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-check"></i></span>
+        <div><div style="font-size:13px;font-weight:500;">تأیید کلاس</div><div style="font-size:12px;color:var(--text-muted);">کلاس نقاشی تأیید شد</div></div>
+      </div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۱ ساعت پیش</div>
+    </div>
+    <div class="notif-item" style="padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="markNotifRead(this, 3)">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span style="background:var(--warning-bg);color:var(--warning);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-clock"></i></span>
+        <div><div style="font-size:13px;font-weight:500;">یادآوری</div><div style="font-size:12px;color:var(--text-muted);">جلسه فردا ساعت ۱۰</div></div>
+      </div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۳ ساعت پیش</div>
+    </div>
+    <div style="padding:8px 16px;text-align:center;font-size:12px;color:var(--pink);cursor:pointer;" onclick="viewAllNotifications()">مشاهده همه</div>
   </div>
 
   <!-- CONTENT -->
-  <div class="content">
+  <div class="content" id="main-content">
 
     <!-- ══ SECTION: تنظیمات سایت ══ -->
     <div id="sec-site" class="section active">
       <div class="sec-header">
         <div>
           <div class="sec-title">تنظیمات سایت</div>
-          <div class="sec-sub">اطلاعات اصلی سایت مهدکودک را ویرایش کنید</div>
+          <div class="sec-sub">اطلاعات اصلی سایت را ویرایش کنید</div>
         </div>
       </div>
 
-      <!-- تنظیمات کلی سایت: نام، لوگو، فیوآیکون، متا دیسکریپشن -->
+      <!-- تنظیمات کلی سایت -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
           <div>
-            <div class="card-title">تنظیمات کلی سایت</div>
-            <div class="card-sub">نام سایت، لوگو، فیوآیکون و توضیح متا (سئو) را ویرایش کنید</div>
+            <div class="card-title">تنظیمات کلی</div>
+            <div class="card-sub">نام سایت، لوگو و فیوآیکون</div>
           </div>
         </div>
         <div class="card-body">
           <div class="form-grid">
-
             <div class="field full">
               <label>نام سایت</label>
               <input type="text" id="site-name-input" value="کیدآپ — مهدکودک">
-              <span class="hint">نمایش داده‌شده در تب مرورگر و هدر سایت</span>
             </div>
-
             <div class="field">
-              <label>لوگو سایت</label>
+              <label>لوگو</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
                 <img src="/img/Logo.png" class="logo-preview" id="logo-preview" alt="لوگو">
                 <div style="flex:1;min-width:160px;">
@@ -148,9 +177,8 @@
                 </div>
               </div>
             </div>
-
             <div class="field">
-              <label>فیوآیکون سایت</label>
+              <label>فیوآیکون</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
                 <img src="https://via.placeholder.com/48/F875AA/fff?text=K" class="favicon-preview" id="favicon-preview" alt="فیوآیکون">
                 <div style="flex:1;min-width:160px;">
@@ -158,44 +186,35 @@
                     <input type="file" accept="image/*" onchange="previewFavicon(this)">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <p>آپلود فیوآیکون</p>
-                    <small>۳۲×۳۲ یا ۶۴×۶۴ پیکسل — ICO یا PNG</small>
+                    <small>۳۲×۳۲ یا ۶۴×۶۴ — ICO یا PNG</small>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="field full">
-              <label>متا دیسکریپشن (توضیح متا برای موتورهای جستجو)</label>
-              <textarea id="meta-desc-input" maxlength="160">مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.</textarea>
-              <span class="hint">حداکثر ۱۶۰ کاراکتر — در نتایج جستجوی گوگل نمایش داده می‌شود</span>
-            </div>
-
           </div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveGeneralSettings()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelGeneralSettings()">انصراف</button>
           </div>
         </div>
       </div>
 
-      <!-- لینک‌های کاربردی فوتر -->
+      <!-- لینک‌های فوتر (حداکثر ۵) -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
           <div>
-            <div class="card-title">لینک‌های کاربردی فوتر</div>
-            <div class="card-sub">لینک‌هایی که در بخش «لینک‌های کاربردی» فوتر سایت نمایش داده می‌شوند</div>
+            <div class="card-title">لینک‌های فوتر</div>
+            <div class="card-sub">لینک‌های بخش «لینک‌های کاربردی» فوتر (حداکثر ۵ عدد)</div>
           </div>
         </div>
         <div class="card-body">
-
           <div id="footer-links-list"></div>
-
-          <button type="button" class="btn btn-ghost" style="margin-bottom:4px;" onclick="addFooterLink()">
+          <button type="button" class="btn btn-ghost" id="add-footer-link-btn" onclick="addFooterLink()">
             <i class="fa-solid fa-plus"></i> افزودن لینک
           </button>
-
+          <span id="footer-link-counter" style="font-size:12px;color:var(--text-muted);margin-right:8px;"></span>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveFooterLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveFooterLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelFooterLinks()">انصراف</button>
           </div>
         </div>
@@ -206,116 +225,44 @@
         <div class="card-head">
           <div>
             <div class="card-title">شبکه‌های اجتماعی</div>
-            <div class="card-sub">شبکه‌های اجتماعی و لینک صفحه مربوطه را اضافه یا مدیریت کنید</div>
+            <div class="card-sub">شبکه‌های اجتماعی و لینک آنها (حداکثر ۹ عدد)</div>
           </div>
         </div>
         <div class="card-body">
-
           <div id="social-links-list"></div>
-
-          <button type="button" class="btn btn-ghost" style="margin-bottom:4px;" onclick="addSocialLink()">
-            <i class="fa-solid fa-plus"></i> افزودن شبکه اجتماعی
+          <button type="button" class="btn btn-ghost" id="add-social-link-btn" onclick="addSocialLink()">
+            <i class="fa-solid fa-plus"></i> افزودن شبکه
           </button>
-
+          <span id="social-link-counter" style="font-size:12px;color:var(--text-muted);margin-right:8px;"></span>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveSocialLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveSocialLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelSocialLinks()">انصراف</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ SECTION: ظاهر و طراحی ══ -->
-    <!--<div id="sec-appearance" class="section">
-      <div class="sec-header">
-        <div>
-          <div class="sec-title">ظاهر و طراحی</div>
-          <div class="sec-sub">رنگ‌ها، فونت و المان‌های بصری سایت</div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-bottom:16px;">
-        <div class="card-head"><div class="card-title">رنگ‌های اصلی</div></div>
-        <div class="card-body">
-          <div class="form-grid">
-            <div class="field">
-              <label>رنگ اصلی (Primary)</label>
-              <div class="color-row">
-                <input type="color" value="#F875AA" class="color-swatch" id="color-primary" oninput="updateColorPreview()">
-                <input type="text" value="#F875AA" id="color-primary-text" style="flex:1;" oninput="syncColor('primary')">
-              </div>
-              <span class="hint">استفاده در دکمه‌ها، لینک‌ها و هایلایت‌ها</span>
-            </div>
-            <div class="field">
-              <label>رنگ پس‌زمینه هدر</label>
-              <div class="color-row">
-                <input type="color" value="#EDFFF0" class="color-swatch" id="color-bg">
-                <input type="text" value="#EDFFF0" style="flex:1;">
-              </div>
-            </div>
-            <div class="field">
-              <label>رنگ فوتر</label>
-              <div class="color-row">
-                <input type="color" value="#EDFFF0" class="color-swatch">
-                <input type="text" value="#EDFFF0" style="flex:1;">
-              </div>
-            </div>
-            <div class="field">
-              <label>رنگ متن اصلی</label>
-              <div class="color-row">
-                <input type="color" value="#333333" class="color-swatch">
-                <input type="text" value="#333333" style="flex:1;">
-              </div>
-            </div>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><div class="card-title">فاویکون سایت</div></div>
-        <div class="card-body">
-          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-            <div style="text-align:center;">
-              <img src="https://via.placeholder.com/48/F875AA/fff?text=K" style="width:48px;height:48px;border-radius:8px;border:1px solid var(--border);" alt="فاویکون">
-              <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">فاویکون فعلی</div>
-            </div>
-            <div style="flex:1;min-width:200px;">
-              <div class="upload-zone" style="padding:18px;">
-                <input type="file" accept="image/*">
-                <i class="fa-solid fa-cloud-arrow-up" style="font-size:20px;"></i>
-                <p style="font-size:12px;">آپلود فاویکون</p>
-                <small>۳۲×۳۲ یا ۶۴×۶۴ پیکسل — ICO یا PNG</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>-->
-
     <!-- ══ SECTION: صفحه اصلی ══ -->
     <div id="sec-homepage" class="section">
       <div class="sec-header">
         <div>
           <div class="sec-title">ویرایش صفحه اصلی</div>
-          <div class="sec-sub">محتوای اسلایدر، بخش‌ها و متن‌های صفحه اصلی</div>
+          <div class="sec-sub">محتوای بنر، اسلایدر و باکس‌های صفحه اصلی</div>
         </div>
       </div>
 
+      <!-- بنر -->
       <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
           <div>
-            <div class="card-title">بنر صفحه اصلی</div>
-            <div class="card-sub">عکس بنر، عنوان بنر و متن توضیحی زیر آن که بالای صفحه اصلی نمایش داده می‌شود</div>
+            <div class="card-title">بنر اصلی</div>
+            <div class="card-sub">عکس و عنوان بنر بالای صفحه</div>
           </div>
         </div>
         <div class="card-body">
           <div class="form-grid">
-
             <div class="field full">
-              <label>عکس بنر (تصویر پایین هدر)</label>
+              <label>عکس بنر</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
                 <img src="https://via.placeholder.com/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1" class="logo-preview" id="banner-image-preview" alt="عکس بنر" style="width:140px;height:90px;object-fit:cover;">
                 <div style="flex:1;min-width:160px;">
@@ -323,103 +270,94 @@
                     <input type="file" accept="image/jpeg, image/png, image/webp" onchange="previewBannerImage(this)">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <p>آپلود عکس بنر</p>
-                    <small>فرمت مجاز: JPG، PNG یا WEBP — حداقل ۱۲۰۰×۶۰۰ پیکسل</small>
+                    <small>JPG، PNG یا WEBP — حداقل ۱۲۰۰×۶۰۰</small>
                   </div>
                 </div>
               </div>
             </div>
-
             <div class="field full">
               <label>عنوان بنر</label>
               <input type="text" id="banner-title-input" value="کودک شاد، کودک سالم!">
-              <span class="hint">عنوان بزرگی که روی عکس بنر نمایش داده می‌شود</span>
             </div>
-
             <div class="field full">
-              <label>متن توضیحی زیر عنوان بنر</label>
-              <textarea id="banner-desc-input">توضیحات بیشتر .......</textarea>
+              <label>متن زیر عنوان</label>
+              <textarea id="banner-desc-input">محیطی شاد و امن برای رشد و شکوفایی استعدادهای کودکان</textarea>
             </div>
-
           </div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveBanner()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveBanner()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelBanner()">انصراف</button>
           </div>
         </div>
       </div>
 
+      <!-- باکس‌های معرفی (کارت‌های قهرمان) -->
       <div class="card">
         <div class="card-head">
           <div>
-            <div class="card-title">باکس‌های معرفی (زیر بنر)</div>
-            <div class="card-sub">آیکن، عنوان، توضیحات و رنگ هر یک از باکس‌های معرفی صفحه اصلی را ویرایش کنید</div>
+            <div class="card-title">باکس‌های معرفی</div>
+            <div class="card-sub">کارت‌های زیر بنر (حداکثر ۳ عدد)</div>
           </div>
         </div>
-        <div class="card-body">
-
-          <div id="info-boxes-list"></div>
-
+        <div class="card-body" id="info-boxes-wrapper">
+          <div id="info-boxes-list" style="display:flex;flex-wrap:wrap;gap:16px;"></div>
+          <div id="info-boxes-add-container" style="margin-top:16px;"></div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveInfoBoxes()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveInfoBoxes()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelInfoBoxes()">انصراف</button>
           </div>
         </div>
       </div>
 
+      <!-- اسلایدر -->
       <div class="card" style="margin-top:16px;">
         <div class="card-head">
           <div>
-            <div class="card-title">بخش اسلایدر</div>
-            <div class="card-sub">عکس‌های اسلایدشو، عنوان و توضیحات بخش اسلایدر صفحه اصلی را ویرایش کنید</div>
+            <div class="card-title">اسلایدر</div>
+            <div class="card-sub">عکس‌های اسلایدشو (حداکثر ۳ عکس)</div>
           </div>
         </div>
         <div class="card-body">
-
           <div style="margin-bottom:20px;">
-            <label style="display:block;margin-bottom:10px;">عکس‌های اسلایدر <span class="hint">(حداکثر ۳ عکس)</span></label>
             <div id="home-slider-images-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;"></div>
             <div class="upload-zone" id="home-slider-images-upload-zone">
               <input type="file" accept="image/*" multiple id="home-slider-images-input" onchange="handleHomeSliderUpload(this)">
               <i class="fa-solid fa-images"></i>
-              <p>آپلود عکس اسلایدر (حداکثر ۳ عکس)</p>
-              <small>JPG یا PNG — حداکثر ۵ مگابایت هر فایل</small>
+              <p>آپلود عکس اسلایدر</p>
+              <small>JPG یا PNG — حداکثر ۵ مگابایت</small>
             </div>
-            <p class="hint" id="home-slider-images-full-msg" style="display:none;margin-top:6px;">
-              به حداکثر تعداد عکس رسیده‌اید. برای تغییر یک عکس، روی آیکن ✎ روی آن کلیک کنید یا آن را حذف کنید تا جای خالی برای آپلود عکس جدید باز شود.
-            </p>
+            <p class="hint" id="home-slider-images-full-msg" style="display:none;margin-top:6px;">حداکثر ۳ عکس مجاز است</p>
           </div>
-
           <div class="form-grid">
             <div class="field full">
-              <label>عنوان بخش اسلایدر</label>
+              <label>عنوان اسلایدر</label>
               <input type="text" id="home-slider-title-input" value="تاریخچه">
             </div>
             <div class="field full">
-              <label>توضیحات بخش اسلایدر</label>
-              <textarea id="home-slider-desc-input">توضیحات...</textarea>
+              <label>توضیحات</label>
+              <textarea id="home-slider-desc-input">داستان شکل‌گیری مهدکودک کیدآپ از ابتدا تا امروز</textarea>
             </div>
           </div>
-
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveHomeSlider()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveHomeSlider()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelHomeSlider()">انصراف</button>
           </div>
         </div>
       </div>
 
+      <!-- باکس‌های دسته‌بندی درس‌ها -->
       <div class="card" style="margin-top:16px;">
         <div class="card-head">
           <div>
-            <div class="card-title">باکس‌های دسته‌بندی درس‌ها</div>
-            <div class="card-sub">رنگ، آیکن، عنوان، توضیحات و لینک هر یک از باکس‌های دسته‌بندی درس‌ها را ویرایش کنید</div>
+            <div class="card-title">دسته‌بندی درس‌ها</div>
+            <div class="card-sub">باکس‌های دسته‌بندی (حداکثر ۶ عدد)</div>
           </div>
         </div>
-        <div class="card-body">
-
-          <div id="feature-boxes-list"></div>
-
+        <div class="card-body" id="feature-boxes-wrapper">
+          <div id="feature-boxes-list" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:flex-start;"></div>
+          <div id="feature-boxes-add-container" style="margin-top:16px;"></div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveFeatureBoxes()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveFeatureBoxes()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelFeatureBoxes()">انصراف</button>
           </div>
         </div>
@@ -430,8 +368,8 @@
     <div id="sec-about" class="section">
       <div class="sec-header">
         <div>
-          <div class="sec-title">ویرایش صفحه درباره ما</div>
-          <div class="sec-sub">متن، تصویر، اطلاعات تماس و دستاوردهای مهدکودک</div>
+          <div class="sec-title">درباره ما</div>
+          <div class="sec-sub">متن، اطلاعات تماس و دستاوردها</div>
         </div>
       </div>
 
@@ -440,24 +378,16 @@
         <div class="card-body">
           <div class="form-grid full">
             <div class="field">
-              <label>عنوان صفحه</label>
+              <label>عنوان</label>
               <input type="text" value="درباره ما">
             </div>
             <div class="field">
               <label>توضیحات</label>
-              <textarea style="min-height:120px;">مهدکودک ما محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطرافشان تشویق می‌کنیم. تیم ما متعهد است با خلاقیت و عشق، بهترین تجربه کودکی را فراهم کند.</textarea>
-            </div>
-            <div class="field">
-              <label>تصویر بخش معرفی</label>
-              <div class="upload-zone" style="padding:18px;">
-                <input type="file" accept="image/*">
-                <i class="fa-solid fa-image" style="font-size:20px;"></i>
-                <p style="font-size:12px;">آپلود تصویر</p>
-              </div>
+              <textarea style="min-height:120px;">مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطراف تشویق می‌کنیم.</textarea>
             </div>
           </div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-primary" onclick="showToast('ذخیره شد')"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
           </div>
         </div>
       </div>
@@ -466,43 +396,32 @@
         <div class="card-head"><div class="card-title">اطلاعات تماس</div></div>
         <div class="card-body">
           <div class="form-grid">
-            <div class="field">
-              <label>آدرس</label>
-              <input type="text" value="تهران، خیابان کودکستان">
-            </div>
-            <div class="field">
-              <label>شماره تلفن</label>
-              <input type="tel" value="021-12345678">
-            </div>
-            <div class="field full">
-              <label>ایمیل</label>
-              <input type="email" value="info@kidup.com">
-            </div>
+            <div class="field"><label>آدرس</label><input type="text" value="تهران، خیابان کودکستان"></div>
+            <div class="field"><label>تلفن</label><input type="tel" value="۰۲۱-۱۲۳۴۵۶۷۸"></div>
+            <div class="field full"><label>ایمیل</label><input type="email" value="info@kidup.com"></div>
           </div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveToast()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-primary" onclick="showToast('ذخیره شد')"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
           </div>
         </div>
       </div>
 
-      <!-- دستاوردها -->
+      <!-- دستاوردها (حداکثر ۳) -->
       <div class="card">
         <div class="card-head">
           <div>
             <div class="card-title">دستاوردها</div>
-            <div class="card-sub">دستاوردهایی که در صفحه «درباره ما» نمایش داده می‌شوند (عنوان و مقدار)</div>
+            <div class="card-sub">عنوان و مقدار (حداکثر ۳ عدد)</div>
           </div>
         </div>
         <div class="card-body">
-
           <div id="achievements-list"></div>
-
-          <button type="button" class="btn btn-ghost" style="margin-bottom:4px;" onclick="addAchievement()">
+          <button type="button" class="btn btn-ghost" id="add-achievement-btn" onclick="addAchievement()">
             <i class="fa-solid fa-plus"></i> افزودن دستاورد
           </button>
-
+          <span id="achievement-counter" style="font-size:12px;color:var(--text-muted);margin-right:8px;"></span>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveAchievements()"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات</button>
+            <button class="btn btn-primary" onclick="saveAchievements()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelAchievements()">انصراف</button>
           </div>
         </div>
@@ -513,62 +432,29 @@
     <div id="sec-students" class="section">
       <div class="sec-header">
         <div>
-          <div class="sec-title">مدیریت دانش‌آموزان</div>
-          <div class="sec-sub">۶۰ دانش‌آموز ثبت‌نام‌شده</div>
+          <div class="sec-title">دانش‌آموزان</div>
+          <div class="sec-sub" id="students-count">۳ دانش‌آموز</div>
         </div>
-        <button class="btn btn-primary" onclick="openModal('modal-add-student')"><i class="fa-solid fa-plus"></i> ثبت دانش‌آموز</button>
+        <button class="btn btn-primary" onclick="openStudentModal()"><i class="fa-solid fa-plus"></i> ثبت دانش‌آموز</button>
       </div>
-
       <div class="card">
         <div class="card-head">
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-            <input type="text" placeholder="جستجو نام..." style="width:180px;">
-            <select style="width:130px;">
-              <option>همه کلاس‌ها</option>
-              <option>نقاشی</option>
-              <option>موسیقی</option>
-              <option>ورزش</option>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input type="text" id="students-search-input" placeholder="جستجو..." style="width:180px;" oninput="filterStudents()">
+            <select id="students-class-filter" style="width:130px;" onchange="filterStudents()">
+              <option value="">همه کلاس‌ها</option>
+              <option>نقاشی</option><option>موسیقی</option><option>ورزش</option>
             </select>
-            <select style="width:120px;">
-              <option>همه وضعیت‌ها</option>
-              <option>فعال</option>
-              <option>در انتظار</option>
+            <select id="students-status-filter" style="width:120px;" onchange="filterStudents()">
+              <option value="">همه وضعیت‌ها</option>
+              <option>فعال</option><option>در انتظار</option>
             </select>
           </div>
         </div>
         <div style="overflow-x:auto;">
           <table class="data-table">
-            <thead>
-              <tr>
-                <th>نام دانش‌آموز</th>
-                <th>سن</th>
-                <th>کلاس</th>
-                <th>ولی امر</th>
-                <th>تلفن</th>
-                <th>وضعیت</th>
-                <th>عملیات</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><div class="u-row"><div class="u-av pink">ن</div><div><div class="u-name">نیلوفر رضایی</div></div></div></td>
-                <td>۴</td><td>نقاشی</td><td>زهرا رضایی</td><td>۰۹۱۲۱۲۳۴۵۶۷</td>
-                <td><span class="chip green">فعال</span></td>
-                <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td>
-              </tr>
-              <tr>
-                <td><div class="u-row"><div class="u-av blue">ع</div><div><div class="u-name">علی محمدی</div></div></div></td>
-                <td>۵</td><td>موسیقی</td><td>محمد محمدی</td><td>۰۹۳۵۹۸۷۶۵۴۳</td>
-                <td><span class="chip green">فعال</span></td>
-                <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td>
-              </tr>
-              <tr>
-                <td><div class="u-row"><div class="u-av green">س</div><div><div class="u-name">سارا احمدی</div></div></div></td>
-                <td>۳</td><td>ورزش</td><td>فاطمه احمدی</td><td>۰۹۱۰۴۴۴۵۵۵۶</td>
-                <td><span class="chip amber">در انتظار</span></td>
-                <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td>
-              </tr>
-            </tbody>
+            <thead><tr><th>نام</th><th>سن</th><th>کلاس</th><th>ولی امر</th><th>تلفن</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+            <tbody id="students-table-body"></tbody>
           </table>
         </div>
       </div>
@@ -578,20 +464,16 @@
     <div id="sec-teachers" class="section">
       <div class="sec-header">
         <div>
-          <div class="sec-title">مدیریت معلمان</div>
-          <div class="sec-sub">۱۲ معلم فعال</div>
+          <div class="sec-title">معلمان</div>
+          <div class="sec-sub" id="teachers-count">۲ معلم</div>
         </div>
-        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
+        <button class="btn btn-primary" onclick="openTeacherModal()"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
       </div>
-
       <div class="card">
         <div style="overflow-x:auto;">
           <table class="data-table">
             <thead><tr><th>نام</th><th>تخصص</th><th>کلاس‌ها</th><th>تلفن</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-            <tbody>
-              <tr><td><div class="u-row"><div class="u-av blue">ف</div><div><div class="u-name">فریده موسوی</div><div class="u-sub">معلم نقاشی</div></div></div></td><td>هنر و نقاشی</td><td>۳ کلاس</td><td>۰۹۱۲۳۳۳۴۴۴۵</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button></div></td></tr>
-              <tr><td><div class="u-row"><div class="u-av green">ح</div><div><div class="u-name">حسین کرمی</div><div class="u-sub">معلم ورزش</div></div></div></td><td>ورزش و حرکت</td><td>۲ کلاس</td><td>۰۹۳۵۱۱۱۲۲۲۳</td><td><span class="chip green">فعال</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button></div></td></tr>
-            </tbody>
+            <tbody id="teachers-table-body"></tbody>
           </table>
         </div>
       </div>
@@ -601,264 +483,206 @@
     <div id="sec-classes" class="section">
       <div class="sec-header">
         <div>
-          <div class="sec-title">مدیریت کلاس‌ها</div>
-          <div class="sec-sub">۸ کلاس فعال</div>
+          <div class="sec-title">کلاس‌ها</div>
+          <div class="sec-sub">۳ کلاس فعال</div>
         </div>
         <button class="btn btn-primary" onclick="toggleClassForm()"><i class="fa-solid fa-plus"></i> افزودن کلاس</button>
       </div>
 
-      <!-- ── فرم افزودن/ویرایش کلاس ── -->
+      <!-- فرم کلاس -->
       <div class="card" id="class-form-card" style="margin-bottom:16px;display:none;">
         <div class="card-head">
           <div>
-            <div class="card-title" id="class-form-title">افزودن کلاس جدید</div>
-            <div class="card-sub">اطلاعات کامل کلاس را وارد کنید</div>
+            <div class="card-title" id="class-form-title">افزودن کلاس</div>
+            <div class="card-sub">اطلاعات کامل کلاس</div>
           </div>
         </div>
         <div class="card-body">
           <div class="form-grid">
-
             <div class="field full">
-              <label>عکس اصلی کلاس</label>
+              <label>عکس اصلی</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://via.placeholder.com/100x70/FFF0F7/F875AA?text=کلاس" class="logo-preview" id="class-main-image-preview" alt="عکس اصلی کلاس">
+                <img src="https://via.placeholder.com/100x70/FFF0F7/F875AA?text=کلاس" class="logo-preview" id="class-main-image-preview">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/*" onchange="previewGenericImage(this,'class-main-image-preview')">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <p>آپلود عکس اصلی</p>
-                    <small>JPG یا PNG — حداکثر ۵ مگابایت</small>
+                    <p>آپلود عکس</p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="field">
-              <label>عنوان کلاس</label>
-              <input type="text" id="class-title-input" placeholder="مثلاً: نقاشی">
-            </div>
-
-            <div class="field">
-              <label>مکان</label>
-              <input type="text" id="class-location-input" placeholder="مثلاً: سالن هنر">
-            </div>
-
-            <div class="field full">
-              <label>توضیحات کلاس</label>
-              <textarea id="class-desc-input" placeholder="توضیح کوتاهی درباره کلاس..."></textarea>
-            </div>
-
-            <div class="field">
-              <label>ظرفیت</label>
-              <input type="number" min="1" id="class-capacity-input" placeholder="مثلاً: ۱۵">
-            </div>
-
-            <div class="field">
-              <label>شهریه (تومان)</label>
-              <input type="number" min="0" id="class-fee-input" placeholder="مثلاً: ۱۵۰۰۰۰۰">
-            </div>
-
-            <div class="field">
-              <label>حداقل سن</label>
-              <input type="number" min="0" id="class-min-age-input" placeholder="مثلاً: ۳">
-            </div>
-
-            <div class="field">
-              <label>حداکثر سن</label>
-              <input type="number" min="0" id="class-max-age-input" placeholder="مثلاً: ۷">
-            </div>
-
-            <div class="field">
-              <label>سطح کلاس</label>
-              <select id="class-level-select">
-                <option value="">انتخاب سطح...</option>
-              </select>
-              <span class="hint">از بین سطوح تعریف‌شده در سیستم انتخاب می‌شود</span>
-            </div>
-
-            <div class="field">
-              <label>وضعیت کلاس</label>
-              <select id="class-status-select">
-                <option value="">انتخاب وضعیت...</option>
-              </select>
-              <span class="hint">از بین وضعیت‌های تعریف‌شده در سیستم انتخاب می‌شود</span>
-            </div>
-
-            <div class="field">
-              <label>تاریخ شروع</label>
-              <input type="date" id="class-start-date-input">
-            </div>
-
-            <div class="field">
-              <label>معلم‌ها</label>
-              <select id="class-teacher-select" multiple size="4">
-              </select>
-              <span class="hint">برای انتخاب چند معلم، کلید Ctrl (یا Cmd) را نگه دارید</span>
-            </div>
-
-            <div class="field">
-              <label>تاریخ ایجاد کلاس</label>
-              <input type="text" id="class-created-at" disabled placeholder="به‌صورت خودکار ثبت می‌شود">
-            </div>
-
-            <div class="field">
-              <label>تاریخ آخرین آپدیت کلاس</label>
-              <input type="text" id="class-updated-at" disabled placeholder="به‌صورت خودکار ثبت می‌شود">
-            </div>
-
+            <div class="field"><label>عنوان</label><input type="text" id="class-title-input" placeholder="مثلاً: نقاشی"></div>
+            <div class="field"><label>مکان</label><input type="text" id="class-location-input" placeholder="مثلاً: سالن هنر"></div>
+            <div class="field full"><label>توضیحات</label><textarea id="class-desc-input"></textarea></div>
+            <div class="field"><label>ظرفیت</label><input type="number" id="class-capacity-input" placeholder="۱۵"></div>
+            <div class="field"><label>شهریه (تومان)</label><input type="number" id="class-fee-input" placeholder="۱۵۰۰۰۰۰"></div>
+            <div class="field"><label>حداقل سن</label><input type="number" id="class-min-age-input" placeholder="۳"></div>
+            <div class="field"><label>حداکثر سن</label><input type="number" id="class-max-age-input" placeholder="۷"></div>
+            <div class="field"><label>سطح</label><select id="class-level-select"><option value="">انتخاب...</option></select></div>
+            <div class="field"><label>وضعیت</label><select id="class-status-select"><option value="">انتخاب...</option></select></div>
+            <div class="field"><label>تاریخ شروع</label><input type="date" id="class-start-date-input"></div>
+            <div class="field"><label>معلم‌ها</label><select id="class-teacher-select" multiple size="4"></select></div>
+            <div class="field"><label>ایجاد</label><input type="text" id="class-created-at" disabled></div>
+            <div class="field"><label>آخرین بروزرسانی</label><input type="text" id="class-updated-at" disabled></div>
           </div>
 
-          <!-- محورهای کلاس -->
+          <!-- محورها -->
           <div style="margin-top:20px;">
-            <label style="display:block;margin-bottom:10px;">محورهای کلاس</label>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:10px;">
+            <label>محورهای کلاس</label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:8px;">
               <div class="field" style="flex:1;min-width:200px;">
-                <select id="class-axis-select">
-                  <option value="">انتخاب محور...</option>
-                </select>
+                <select id="class-axis-select"><option value="">انتخاب محور...</option></select>
               </div>
-              <button type="button" class="btn btn-ghost" onclick="addClassAxis()">
-                <i class="fa-solid fa-plus"></i> افزودن محور
-              </button>
+              <button type="button" class="btn btn-ghost" onclick="addClassAxis()"><i class="fa-solid fa-plus"></i> افزودن</button>
             </div>
-            <div id="class-axis-chips" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+            <div id="class-axis-chips" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;"></div>
           </div>
 
-          <!-- عکس‌های اسلایدی کلاس -->
+          <!-- عکس‌های اسلایدی -->
           <div style="margin-top:20px;">
-            <label style="display:block;margin-bottom:10px;">عکس‌های اسلایدی کلاس <span class="hint">(حداکثر ۴ عکس)</span></label>
-            <div id="class-slides-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px;"></div>
+            <label>عکس‌های اسلایدی (حداکثر ۴)</label>
+            <div id="class-slides-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0;"></div>
             <div class="upload-zone" id="class-slides-upload-zone">
               <input type="file" accept="image/*" multiple id="class-slides-input" onchange="handleClassSlideUpload(this)">
               <i class="fa-solid fa-images"></i>
-              <p>آپلود عکس اسلایدی (حداکثر ۴ عکس)</p>
-              <small>JPG یا PNG — حداکثر ۵ مگابایت هر فایل</small>
+              <p>آپلود عکس</p>
             </div>
           </div>
 
-          <!-- برنامه هفتگی کلاس -->
+          <!-- برنامه هفتگی -->
           <div style="margin-top:20px;">
-            <label style="display:block;margin-bottom:10px;">برنامه هفتگی کلاس</label>
+            <label>برنامه هفتگی</label>
             <div id="class-schedule-list"></div>
-            <button type="button" class="btn btn-ghost" style="margin-bottom:4px;" onclick="addScheduleRow()">
-              <i class="fa-solid fa-plus"></i> افزودن روز به برنامه هفتگی
-            </button>
+            <button type="button" class="btn btn-ghost" onclick="addScheduleRow()"><i class="fa-solid fa-plus"></i> افزودن روز</button>
           </div>
 
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="saveClass()"><i class="fa-solid fa-floppy-disk"></i> ذخیره کلاس</button>
+            <button class="btn btn-primary" onclick="saveClass()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="toggleClassForm()">انصراف</button>
           </div>
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-        <div class="card"><div class="card-head"><div class="card-title">نقاشی</div><span class="chip green">فعال</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> فریده موسوی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> شنبه‌ها — ۱۰:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۵ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;" onclick="toggleClassForm()">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;" onclick="scrollToGallery()"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
-        <div class="card"><div class="card-head"><div class="card-title">موسیقی</div><span class="chip green">فعال</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> احمد صادقی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> دوشنبه — ۱۴:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۲ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;" onclick="toggleClassForm()">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;" onclick="scrollToGallery()"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
-        <div class="card"><div class="card-head"><div class="card-title">ورزش</div><span class="chip amber">در انتظار</span></div><div class="card-body"><div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;"><div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> حسین کرمی</div><div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> سه‌شنبه — ۱۱:۰۰</div><div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ۱۰ دانش‌آموز</div></div><div style="display:flex;gap:6px;margin-top:12px;"><button class="btn btn-ghost" style="font-size:12px;" onclick="toggleClassForm()">ویرایش</button><button class="btn btn-ghost" style="font-size:12px;" onclick="scrollToGallery()"><i class="fa-solid fa-images"></i> گالری</button></div></div></div>
-      </div>
+      <!-- لیست کلاس‌ها -->
+      <div id="classes-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;"></div>
 
-      <!-- ── گالری کلاس‌ها ── -->
-      <div class="sec-header" id="class-gallery-section" style="margin-top:24px;">
+      <!-- گالری کلاس‌ها - هر کلاس جدا -->
+      <div class="sec-header" style="margin-top:24px;">
         <div>
-          <div class="sec-title">مدیریت گالری کلاس</div>
-          <div class="sec-sub">هر عکس گالری دارای نام و توضیحات مخصوص به خود است</div>
-        </div>
-        <div style="display:flex;gap:8px;">
-          <select id="gallery-class-filter" style="width:130px;"><option>همه کلاس‌ها</option><option>نقاشی</option><option>موسیقی</option><option>ورزش</option></select>
+          <div class="sec-title">گالری کلاس‌ها</div>
+          <div class="sec-sub">برای مشاهده گالری هر کلاس، روی نام کلاس کلیک کنید</div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
 
-          <div id="class-gallery-list"></div>
-
-          <button type="button" class="btn btn-ghost" onclick="addGalleryItem()">
-            <i class="fa-solid fa-plus"></i> افزودن آیتم گالری
-          </button>
-
-        </div>
+      <div id="class-gallery-container">
+        <!-- توسط JS پر می‌شود -->
       </div>
     </div>
 
     <!-- ══ SECTION: وبلاگ ══ -->
-    <div id="sec-events" class="section">
+    <div id="sec-blog" class="section">
       <div class="sec-header">
         <div>
-          <div class="sec-title">مدیریت وبلاگ</div>
-          <div class="sec-sub">وبلاگ‌ها در صفحه اصلی و صفحه وبلاگ نمایش داده می‌شوند</div>
+          <div class="sec-title">وبلاگ</div>
+          <div class="sec-sub">مدیریت مقالات</div>
         </div>
-        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> وبلاگ جدید</button>
+        <button class="btn btn-primary" onclick="openBlogModal()"><i class="fa-solid fa-plus"></i> مقاله جدید</button>
       </div>
       <div class="card">
         <div style="overflow-x:auto;">
           <table class="data-table">
-            <thead><tr><th>عنوان</th><th>تاریخ</th><th>مکان</th><th>کلاس</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-            <tbody>
-              <tr><td>روز نقاشی</td><td>۲۰ آذر ۱۴۰۳</td><td>سالن اصلی</td><td>نقاشی</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
-              <tr><td>جشن یلدا</td><td>۳۰ آذر ۱۴۰۳</td><td>حیاط</td><td>همه</td><td><span class="chip green">منتشر</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
-              <tr><td>کارگاه خمیربازی</td><td>۵ دی ۱۴۰۳</td><td>کلاس خلاقیت</td><td>خلاقیت</td><td><span class="chip amber">پیش‌نویس</span></td><td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;"><i class="fa-solid fa-trash"></i></button></div></td></tr>
-            </tbody>
+            <thead><tr><th>تصویر</th><th>عنوان</th><th>دسته</th><th>تاریخ</th><th>برچسب‌ها</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+            <tbody id="blog-table-body"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-
     <!-- ══ SECTION: پیام‌ها ══ -->
     <div id="sec-messages" class="section">
       <div class="sec-header">
         <div>
-          <div class="sec-title">پیام‌های والدین</div>
+          <div class="sec-title">پیام‌ها</div>
           <div class="sec-sub">۳ پیام خوانده‌نشده</div>
         </div>
       </div>
       <div class="card">
         <div class="msg-pane">
           <div class="msg-list-pane">
-            <div class="msg-item unread active" onclick="selectMsg(this,'زهرا رضایی','درباره حضور و غیاب فرزندم می‌خواستم سوال کنم. آیا نیلوفر هفته گذشته غیبت داشته؟')">
+            <div class="msg-item unread active" onclick="selectMsg(this,'زهرا رضایی','درباره حضور و غیاب فرزندم می‌خواستم سوال کنم.')">
               <div class="msg-av">ز</div>
-              <div class="msg-meta">
-                <div class="msg-sender">زهرا رضایی</div>
-                <div class="msg-preview">درباره حضور و غیاب...</div>
-              </div>
+              <div class="msg-meta"><div class="msg-sender">زهرا رضایی</div><div class="msg-preview">درباره حضور و غیاب...</div></div>
               <div class="msg-time">۱۰:۳۲</div>
             </div>
-            <div class="msg-item unread" onclick="selectMsg(this,'محمد محمدی','آیا کلاس فردا به خاطر هوای سرد برگزار می‌شود؟')">
+            <div class="msg-item unread" onclick="selectMsg(this,'محمد محمدی','آیا کلاس فردا برگزار می‌شود؟')">
               <div class="msg-av">م</div>
-              <div class="msg-meta">
-                <div class="msg-sender">محمد محمدی</div>
-                <div class="msg-preview">آیا کلاس فردا...</div>
-              </div>
+              <div class="msg-meta"><div class="msg-sender">محمد محمدی</div><div class="msg-preview">آیا کلاس فردا...</div></div>
               <div class="msg-time">دیروز</div>
             </div>
-            <div class="msg-item" onclick="selectMsg(this,'فاطمه احمدی','ممنون از توجه شما و همکاری خوب تیم مهدکودک.')">
+            <div class="msg-item" onclick="selectMsg(this,'فاطمه احمدی','ممنون از همکاری خوب تیم')">
               <div class="msg-av">ف</div>
-              <div class="msg-meta">
-                <div class="msg-sender">فاطمه احمدی</div>
-                <div class="msg-preview">ممنون از توجه...</div>
-              </div>
+              <div class="msg-meta"><div class="msg-sender">فاطمه احمدی</div><div class="msg-preview">ممنون از همکاری...</div></div>
               <div class="msg-time">شنبه</div>
             </div>
           </div>
-
           <div class="msg-chat" id="msg-chat-area">
             <div class="msg-chat-head">
               <div class="msg-av">ز</div>
-              <div>
-                <div class="u-name" id="chat-name">زهرا رضایی</div>
-                <div class="u-sub">والدین نیلوفر رضایی</div>
-              </div>
+              <div><div class="u-name" id="chat-name">زهرا رضایی</div><div class="u-sub">والدین نیلوفر</div></div>
             </div>
             <div id="chat-bubble-area" style="flex:1;display:flex;flex-direction:column;gap:8px;overflow-y:auto;">
-              <div>
-                <div class="chat-bubble" id="chat-msg-text">درباره حضور و غیاب فرزندم می‌خواستم سوال کنم. آیا نیلوفر هفته گذشته غیبت داشته؟</div>
-                <div class="chat-time">۱۰:۳۲</div>
-              </div>
+              <div><div class="chat-bubble" id="chat-msg-text">درباره حضور و غیاب فرزندم می‌خواستم سوال کنم.</div><div class="chat-time">۱۰:۳۲</div></div>
             </div>
             <div class="chat-input-row">
-              <input type="text" placeholder="پاسخ بنویسید..." id="reply-input" style="flex:1;" onkeydown="if(event.key==='Enter')sendReply()">
+              <input type="text" placeholder="پاسخ..." id="reply-input" style="flex:1;" onkeydown="if(event.key==='Enter')sendReply()">
               <button class="btn btn-primary" onclick="sendReply()"><i class="fa-solid fa-paper-plane"></i> ارسال</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION: اعلان‌ها ══ -->
+    <div id="sec-notifications" class="section">
+      <div class="sec-header">
+        <div>
+          <div class="sec-title">اعلان‌ها</div>
+          <div class="sec-sub">مدیریت اعلان‌های سیستم</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div id="notifications-list">
+            <div class="notif-item" style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <span style="background:var(--pink-bg);color:var(--pink);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-user"></i></span>
+                  <div><div style="font-size:13px;font-weight:500;">ثبت‌نام جدید</div><div style="font-size:12px;color:var(--text-muted);">سارا احمدی ثبت‌نام کرد</div></div>
+                </div>
+                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۲ دقیقه پیش</div>
+              </div>
+              <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px;" onclick="removeNotification(this)">حذف</button>
+            </div>
+            <div class="notif-item" style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <span style="background:var(--green-bg);color:var(--success);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-check"></i></span>
+                  <div><div style="font-size:13px;font-weight:500;">تأیید کلاس</div><div style="font-size:12px;color:var(--text-muted);">کلاس نقاشی تأیید شد</div></div>
+                </div>
+                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۱ ساعت پیش</div>
+              </div>
+              <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px;" onclick="removeNotification(this)">حذف</button>
+            </div>
+            <div class="notif-item" style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <span style="background:var(--warning-bg);color:var(--warning);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-clock"></i></span>
+                  <div><div style="font-size:13px;font-weight:500;">یادآوری</div><div style="font-size:12px;color:var(--text-muted);">جلسه فردا ساعت ۱۰</div></div>
+                </div>
+                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۳ ساعت پیش</div>
+              </div>
+              <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px;" onclick="removeNotification(this)">حذف</button>
             </div>
           </div>
         </div>
@@ -869,21 +693,265 @@
 </div><!-- /main-wrap -->
 
 <!-- TOAST -->
-<div id="toast">✓ تغییرات با موفقیت ذخیره شد</div>
+<div id="toast">✓ ذخیره شد</div>
+
+<!-- DELETE MODAL -->
+<div id="delete-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:24px;max-width:400px;width:90%;">
+    <h3>تأیید حذف</h3>
+    <p style="margin:12px 0 20px;">آیا از حذف این آیتم اطمینان دارید؟</p>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeDeleteModal()">انصراف</button>
+      <button class="btn btn-danger" id="confirm-delete-btn">حذف</button>
+    </div>
+  </div>
+</div>
+
+<!-- FORM MODAL -->
+<div id="form-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;overflow-y:auto;padding:20px;">
+  <div style="background:#fff;border-radius:12px;padding:24px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;">
+    <div id="form-modal-content"></div>
+  </div>
+</div>
 
 <script>
-const sections = ['site','appearance','homepage','about','students','teachers','classes','events','messages'];
-const titles = {
-  site: ['تنظیمات سایت', 'پنل ادمین / تنظیمات سایت'],
-  appearance: ['ظاهر و طراحی', 'پنل ادمین / ظاهر و طراحی'],
-  homepage: ['صفحه اصلی', 'پنل ادمین / صفحه اصلی'],
-  about: ['درباره ما', 'پنل ادمین / درباره ما'],
-  students: ['دانش‌آموزان', 'پنل ادمین / مدیریت دانش‌آموزان'],
-  teachers: ['معلمان', 'پنل ادمین / مدیریت معلمان'],
-  classes: ['کلاس‌ها', 'پنل ادمین / مدیریت کلاس‌ها'],
-  events: ['رویدادها', 'پنل ادمین / مدیریت رویدادها'],
-  messages: ['پیام‌ها', 'پنل ادمین / پیام‌های والدین']
+// ============================================================
+// 1. CORE DATA
+// ============================================================
+
+const sections = ['site','homepage','about','students','teachers','classes','blog','messages','notifications'];
+
+// ---------- Students ----------
+let studentsData = [
+  { id: 1, name: 'نیلوفر رضایی', age: 4, class: 'نقاشی', parent: 'زهرا رضایی', phone: '۰۹۱۲۱۲۳۴۵۶۷', status: 'فعال' },
+  { id: 2, name: 'علی محمدی', age: 5, class: 'موسیقی', parent: 'محمد محمدی', phone: '۰۹۳۵۹۸۷۶۵۴۳', status: 'فعال' },
+  { id: 3, name: 'سارا احمدی', age: 3, class: 'ورزش', parent: 'فاطمه احمدی', phone: '۰۹۱۰۴۴۴۵۵۵۶', status: 'در انتظار' },
+];
+let nextStudentId = 4;
+
+// ---------- Teachers ----------
+let teachersData = [
+  { id: 1, name: 'فریده موسوی', specialty: 'هنر و نقاشی', classes: 'نقاشی، خلاقیت', phone: '۰۹۱۲۳۳۳۴۴۴۵', status: 'فعال' },
+  { id: 2, name: 'حسین کرمی', specialty: 'ورزش و حرکت', classes: 'ورزش، حرکت', phone: '۰۹۳۵۱۱۱۲۲۲۳', status: 'فعال' },
+];
+let nextTeacherId = 3;
+
+// ---------- Blog ----------
+let blogData = [
+  { id: 1, title: 'روز نقاشی', category: 'هنر', date: '۲۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/photo_2025-11-19_03-51-58.jpg', tags: 'نقاشی, خلاقیت', content: 'امروز روز نقاشی در مهدکودک بود...' },
+  { id: 2, title: 'جشن یلدا', category: 'مناسبت‌ها', date: '۳۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/download (9).jpg', tags: 'یلدا, جشن', content: 'جشن یلدا با حضور کودکان برگزار شد...' },
+  { id: 3, title: 'کارگاه خمیربازی', category: 'خلاقیت', date: '۵ دی ۱۴۰۳', status: 'پیش‌نویس', image: '/img/Cute.jpg', tags: 'خمیربازی, خلاقیت', content: 'کارگاه خمیربازی برای کودکان برگزار شد...' },
+];
+let nextBlogId = 4;
+
+// ---------- Gallery (per class) ----------
+let galleryData = {
+  'نقاشی': [
+    { id: 1, image: '/img/photo_2025-11-19_03-51-58.jpg', name: 'نقاشی خانواده', desc: 'اثر نقاشی یکی از هنرآموزان' },
+    { id: 2, image: '/img/download (9).jpg', name: 'تابلوی دوستی', desc: 'تابلوی گروهی کلاس نقاشی' },
+  ],
+  'موسیقی': [
+    { id: 3, image: '/img/Cute.jpg', name: 'تمرین سنتور', desc: 'جلسه تمرین گروهی' },
+  ],
+  'ورزش': [
+    { id: 4, image: '/img/sport_12693567.png', name: 'تمرین ورزشی', desc: 'تمرین مهارت‌های حرکتی' },
+  ],
 };
+let nextGalleryId = 5;
+
+// ---------- Classes ----------
+let classesData = [
+  { id: 1, title: 'نقاشی', location: 'سالن هنر', desc: 'آموزش نقاشی با تکنیک‌های مختلف', capacity: 15, fee: 1500000, minAge: 3, maxAge: 7, level: 'beginner', status: 'active', startDate: '2025-01-10', teacher: 'فریده موسوی', axes: ['art', 'social'], schedule: [{day:'شنبه',start:'10:00',end:'12:00'}], slides: [] },
+  { id: 2, title: 'موسیقی', location: 'کلاس موسیقی', desc: 'آموزش سازهای مختلف و آواز', capacity: 12, fee: 1200000, minAge: 4, maxAge: 8, level: 'intermediate', status: 'active', startDate: '2025-01-12', teacher: 'احمد صادقی', axes: ['music'], schedule: [{day:'دوشنبه',start:'14:00',end:'16:00'}], slides: [] },
+  { id: 3, title: 'ورزش', location: 'سالن ورزش', desc: 'آموزش مهارت‌های حرکتی', capacity: 10, fee: 800000, minAge: 3, maxAge: 6, level: 'beginner', status: 'pending', startDate: '2025-01-15', teacher: 'حسین کرمی', axes: ['sport'], schedule: [{day:'سه‌شنبه',start:'11:00',end:'13:00'}], slides: [] },
+];
+let nextClassId = 4;
+
+// ---------- Info Boxes (Hero Cards) ----------
+const infoBoxColors = [
+  { value: '#ffb6c1', label: 'صورتی' },
+  { value: '#ffff4e', label: 'زرد' },
+  { value: '#90ee90', label: 'سبز روشن' },
+  { value: '#AEDEFC', label: 'آبی روشن' },
+  { value: '#FFD6E8', label: 'صورتی ملایم' },
+  { value: '#FFF3B0', label: 'کرم' },
+  { value: '#C8F4C8', label: 'سبز ملایم' },
+  { value: '#E3D1FF', label: 'بنفش ملایم' },
+  { value: '#FFD1B8', label: 'هلو' },
+];
+
+let infoBoxesData = [
+  { id: 1, icon: '/img/kids_3636298.png', title: 'آموزش و پرورش', desc: 'پرورش همه‌جانبه کودکان در فضایی امن', color: '#ffb6c1' },
+  { id: 2, icon: '/img/kid_10133636.png', title: 'خلاقیت', desc: 'شکوفایی استعدادهای خلاقانه', color: '#ffff4e' },
+  { id: 3, icon: '/img/dough_9102578.png', title: 'مهارت‌های زندگی', desc: 'آموزش مهارت‌های روزمره و اجتماعی', color: '#90ee90' },
+];
+let nextInfoBoxId = 4;
+
+// ---------- Feature Boxes ----------
+const featureBoxColors = [
+  { value: '#ffb6c1', label: 'صورتی' },
+  { value: '#ffff4e', label: 'زرد' },
+  { value: '#90ee90', label: 'سبز روشن' },
+  { value: '#AEDEFC', label: 'آبی روشن' },
+  { value: '#FFD6E8', label: 'صورتی ملایم' },
+  { value: '#FFF3B0', label: 'کرم' },
+  { value: '#C8F4C8', label: 'سبز ملایم' },
+  { value: '#E3D1FF', label: 'بنفش ملایم' },
+  { value: '#FFD1B8', label: 'هلو' },
+];
+
+let featureBoxesData = [
+  { id: 1, icon: '/img/alphabet_3898075.png', title: 'زبان انگلیسی', desc: 'آموزش پایه زبان انگلیسی', color: '#AEDEFC', link: '/archive.html' },
+  { id: 2, icon: '/img/colour_2708174 (1).png', title: 'نقاشی', desc: 'آموزش نقاشی و خلاقیت', color: '#FFD6E8', link: '' },
+  { id: 3, icon: '/img/dough_9102578.png', title: 'آشپزی', desc: 'آموزش آشپزی ساده و سالم', color: '#FFF3B0', link: '' },
+  { id: 4, icon: '/img/sport_12693567.png', title: 'ورزش', desc: 'فعالیت‌های ورزشی و حرکتی', color: '#C8F4C8', link: '' },
+  { id: 5, icon: '/img/xylophone_6977852.png', title: 'نواختن ساز', desc: 'آموزش موسیقی و ساز', color: '#E3D1FF', link: '' },
+  { id: 6, icon: '/img/bonjour_9541518.png', title: 'زبان فرانسه', desc: 'آموزش مکالمه فرانسه', color: '#FFD1B8', link: '' },
+];
+let nextFeatureBoxId = 7;
+
+// ---------- Footer Links (max 5) ----------
+let footerLinksData = [
+  { id: 1, title: 'خانه', url: '/main.html' },
+  { id: 2, title: 'درباره ما', url: '/about.html' },
+  { id: 3, title: 'کلاس‌ها', url: '/archive.html' },
+];
+let nextFooterLinkId = 4;
+
+// ---------- Social Links (max 9) ----------
+let socialLinksData = [
+  { id: 1, platform: 'instagram', url: 'https://instagram.com/kidup' },
+  { id: 2, platform: 'telegram', url: 'https://t.me/kidup' },
+  { id: 3, platform: 'whatsapp', url: 'https://wa.me/1234567890' },
+  { id: 4, platform: 'youtube', url: 'https://youtube.com/kidup' },
+];
+let nextSocialLinkId = 5;
+
+// ---------- Achievements (max 3) ----------
+let achievementsData = [
+  { id: 1, title: 'سال سابقه', value: '۱۰+' },
+  { id: 2, title: 'کودک فارغ‌التحصیل', value: '۸۵' },
+  { id: 3, title: 'معلم متخصص', value: '۱۲' },
+];
+let nextAchievementId = 4;
+
+// ---------- Social Platforms ----------
+const socialPlatforms = [
+  { key: 'instagram', label: 'اینستاگرام', icon: 'fa-brands fa-instagram', color: '#E1306C', placeholder: 'https://instagram.com/...' },
+  { key: 'telegram', label: 'تلگرام', icon: 'fa-brands fa-telegram', color: '#229ED9', placeholder: 'https://t.me/...' },
+  { key: 'whatsapp', label: 'واتساپ', icon: 'fa-brands fa-whatsapp', color: '#25D366', placeholder: 'https://wa.me/...' },
+  { key: 'youtube', label: 'یوتیوب', icon: 'fa-brands fa-youtube', color: '#FF0000', placeholder: 'https://youtube.com/...' },
+  { key: 'twitter', label: 'ایکس', icon: 'fa-brands fa-x-twitter', color: '#000000', placeholder: 'https://x.com/...' },
+  { key: 'linkedin', label: 'لینکدین', icon: 'fa-brands fa-linkedin', color: '#0A66C2', placeholder: 'https://linkedin.com/...' },
+  { key: 'aparat', label: 'آپارات', icon: 'fa-solid fa-clapperboard', color: '#FF3333', placeholder: 'https://aparat.com/...' },
+  { key: 'eitaa', label: 'ایتا', icon: 'fa-solid fa-paper-plane', color: '#3EB049', placeholder: 'https://eitaa.com/...' },
+  { key: 'other', label: 'سایر', icon: 'fa-solid fa-link', color: '#555555', placeholder: 'https://...' }
+];
+
+function getSocialPlatform(key) {
+  return socialPlatforms.find(p => p.key === key) || socialPlatforms[socialPlatforms.length - 1];
+}
+
+// ---------- Class Levels & Statuses ----------
+const classLevels = [
+  { key: 'beginner', label: 'مبتدی' },
+  { key: 'intermediate', label: 'متوسط' },
+  { key: 'advanced', label: 'پیشرفته' },
+];
+
+const classStatuses = [
+  { key: 'active', label: 'فعال' },
+  { key: 'pending', label: 'در انتظار' },
+  { key: 'full', label: 'تکمیل' },
+  { key: 'inactive', label: 'غیرفعال' },
+];
+
+const classAxesOptions = [
+  { key: 'art', label: 'هنر و خلاقیت' },
+  { key: 'music', label: 'موسیقی' },
+  { key: 'sport', label: 'ورزش و حرکت' },
+  { key: 'language', label: 'زبان' },
+  { key: 'science', label: 'علوم' },
+  { key: 'social', label: 'مهارت‌های اجتماعی' },
+];
+
+// ============================================================
+// 2. UTILITY FUNCTIONS
+// ============================================================
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg || '✓ ذخیره شد';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// 3. NOTIFICATIONS
+// ============================================================
+
+let notifOpen = false;
+let notifCount = 3;
+
+function toggleNotifications() {
+  const dropdown = document.getElementById('notif-dropdown');
+  notifOpen = !notifOpen;
+  dropdown.style.display = notifOpen ? 'block' : 'none';
+}
+
+function markNotifRead(el, id) {
+  el.style.background = 'var(--surface-1)';
+  notifCount--;
+  updateNotifBadge();
+  showToast('اعلان خوانده شد');
+}
+
+function updateNotifBadge() {
+  const headerCount = document.getElementById('notif-header-count');
+  const sidebarBadge = document.getElementById('notif-sidebar-badge');
+  const count = notifCount > 0 ? notifCount : '۰';
+  if (headerCount) headerCount.textContent = count;
+  if (sidebarBadge) sidebarBadge.textContent = count;
+  if (notifCount <= 0) {
+    document.querySelector('.notif-dot').classList.remove('notif-dot');
+  }
+}
+
+function viewAllNotifications() {
+  document.getElementById('notif-dropdown').style.display = 'none';
+  notifOpen = false;
+  showSection('notifications');
+}
+
+function removeNotification(el) {
+  const item = el.closest('.notif-item');
+  if (item) {
+    openDeleteModal(() => {
+      item.remove();
+      notifCount--;
+      updateNotifBadge();
+      showToast('اعلان حذف شد');
+    });
+  }
+}
+
+// Close notification on outside click
+document.addEventListener('click', function(e) {
+  const dropdown = document.getElementById('notif-dropdown');
+  const btn = document.querySelector('.icon-btn.notif-dot');
+  if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.style.display = 'none';
+    notifOpen = false;
+  }
+});
+
+// ============================================================
+// 4. SIDEBAR
+// ============================================================
 
 function showSection(name, evt) {
   sections.forEach(s => {
@@ -892,10 +960,9 @@ function showSection(name, evt) {
   });
   document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active'));
   const clicked = (evt || window.event).currentTarget;
-  clicked.classList.add('active');
+  if (clicked) clicked.classList.add('active');
 
-  /* اگر ایتم کلیک‌شده داخل زیرمنو باشه، ایتم والد (کاربران) رو هم فعال و باز نگه دار */
-  const parentSubmenu = clicked.closest('.nav-submenu');
+  const parentSubmenu = clicked ? clicked.closest('.nav-submenu') : null;
   if (parentSubmenu) {
     const parentItem = parentSubmenu.previousElementSibling;
     if (parentItem && parentItem.classList.contains('nav-item-parent')) {
@@ -904,10 +971,7 @@ function showSection(name, evt) {
       parentItem.classList.add('open');
     }
   }
-
-  if(window.innerWidth<=700){
-    closeSidebar();
- }
+  if(window.innerWidth<=700) closeSidebar();
 }
 
 function toggleSubmenu(el) {
@@ -917,566 +981,525 @@ function toggleSubmenu(el) {
   el.classList.toggle('open', !isOpen);
 }
 
-function saveToast() {
-  const t = document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+const sidebar = document.querySelector(".sidebar");
+const overlay = document.querySelector(".sidebar-overlay");
+
+function toggleSidebar() {
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
 }
 
-function previewAdminPhoto(input) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => document.getElementById('admin-photo-preview').src = e.target.result;
-    reader.readAsDataURL(input.files[0]);
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+// ============================================================
+// 5. DELETE MODAL
+// ============================================================
+
+let deleteCallback = null;
+
+function openDeleteModal(callback) {
+  deleteCallback = callback;
+  document.getElementById('delete-modal').style.display = 'flex';
+}
+
+function closeDeleteModal() {
+  document.getElementById('delete-modal').style.display = 'none';
+  deleteCallback = null;
+}
+
+document.getElementById('confirm-delete-btn').addEventListener('click', function() {
+  if (deleteCallback) {
+    deleteCallback();
+    deleteCallback = null;
   }
+  closeDeleteModal();
+});
+
+// ============================================================
+// 6. FORM MODAL
+// ============================================================
+
+function openFormModal(html) {
+  document.getElementById('form-modal-content').innerHTML = html;
+  document.getElementById('form-modal').style.display = 'flex';
 }
 
-/* نام و نقش مدیر از بک‌اند خونده می‌شن و این‌جا مقداردهی می‌شن، مثال:
-   fetch('/api/admin/profile').then(r => r.json()).then(data => {
-     document.getElementById('admin-name').textContent = data.name;
-     document.getElementById('admin-role').textContent = data.role;
-     document.getElementById('admin-photo-preview').src = data.photoUrl;
-   });
-*/
-
-function previewLogo(input) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => document.getElementById('logo-preview').src = e.target.result;
-    reader.readAsDataURL(input.files[0]);
-  }
+function closeFormModal() {
+  document.getElementById('form-modal').style.display = 'none';
 }
 
-function previewFavicon(input) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => document.getElementById('favicon-preview').src = e.target.result;
-    reader.readAsDataURL(input.files[0]);
-  }
-}
+// ============================================================
+// 7. STUDENTS
+// ============================================================
 
-/* مقادیر پیش‌فرض کارت «تنظیمات کلی سایت» برای دکمه انصراف */
-const generalSiteDefaults = {
-  siteName: 'کیدآپ — مهدکودک',
-  logoSrc: '/img/Logo.png',
-  faviconSrc: 'https://via.placeholder.com/48/F875AA/fff?text=K',
-  metaDesc: 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است.'
-};
+function renderStudents() {
+  const tbody = document.getElementById('students-table-body');
+  const search = document.getElementById('students-search-input').value.toLowerCase();
+  const classFilter = document.getElementById('students-class-filter').value;
+  const statusFilter = document.getElementById('students-status-filter').value;
 
-function cancelGeneralSettings() {
-  document.getElementById('site-name-input').value = generalSiteDefaults.siteName;
-  document.getElementById('logo-preview').src = generalSiteDefaults.logoSrc;
-  document.getElementById('favicon-preview').src = generalSiteDefaults.faviconSrc;
-  document.getElementById('meta-desc-input').value = generalSiteDefaults.metaDesc;
-}
-
-/* ─── باکس‌های معرفی (زیر بنر) ─── */
-
-/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
-let infoBoxesDefaults = [
-  { icon: '/img/kids_3636298.png', title: 'آموزش و پرورش', desc: 'توضیحات...', color: '#ffb6c1' },
-  { icon: '/img/kid_10133636.png', title: 'خلاقیت', desc: 'توضیحات...', color: '#ffff4e' },
-  { icon: '/img/dough_9102578.png', title: 'مهارت‌های زندگی', desc: 'توضیحات...', color: '#90ee90' }
-];
-
-/* کپی کاری که با تایپ کاربر تغییر می‌کند */
-let infoBoxes = infoBoxesDefaults.map(b => ({ ...b }));
-
-function renderInfoBoxes() {
-  const wrap = document.getElementById('info-boxes-list');
-  wrap.innerHTML = infoBoxes.map((box, i) => `
-    <div class="info-box-edit">
-      <div class="info-box-edit-top">
-        <div class="info-box-icon-wrap">
-          <label>آیکن باکس</label>
-          <div class="info-box-icon-preview">
-            <img src="${box.icon}" id="info-box-icon-${i}">
-          </div>
-          <input type="file" accept="image/png, image/svg+xml, image/webp" class="info-box-icon-upload" onchange="uploadInfoBoxIcon(this, ${i})">
-        </div>
-        <div class="field info-box-edit-field">
-          <label>عنوان باکس</label>
-          <input type="text" value="${escapeAttr(box.title)}" oninput="infoBoxes[${i}].title = this.value">
-        </div>
-        <div class="field info-box-edit-field">
-          <label>رنگ باکس</label>
-          <input type="color" value="${box.color}" class="info-box-color-input" oninput="infoBoxes[${i}].color = this.value">
-        </div>
-      </div>
-      <div class="field">
-        <label>توضیحات باکس</label>
-        <textarea oninput="infoBoxes[${i}].desc = this.value">${escapeAttr(box.desc)}</textarea>
-      </div>
-    </div>
-  `).join('');
-}
-
-function uploadInfoBoxIcon(input, index) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      infoBoxes[index].icon = e.target.result;
-      document.getElementById(`info-box-icon-${index}`).src = e.target.result;
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-function saveInfoBoxes() {
-  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
-  infoBoxesDefaults = infoBoxes.map(b => ({ ...b }));
-  saveToast();
-}
-
-function cancelInfoBoxes() {
-  infoBoxes = infoBoxesDefaults.map(b => ({ ...b }));
-  renderInfoBoxes();
-}
-
-renderInfoBoxes();
-
-/* ─── بخش اسلایدر (تاریخچه) ─── */
-
-/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
-let homeSliderDefaults = {
-  images: ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'],
-  title: 'تاریخچه',
-  desc: 'توضیحات...'
-};
-
-/* کپی کاری که با تایپ کاربر تغییر می‌کند */
-let homeSliderImages = [...homeSliderDefaults.images];
-
-function renderHomeSliderImages() {
-  const grid = document.getElementById('home-slider-images-grid');
-  grid.innerHTML = homeSliderImages.map((src, i) => `
-    <div class="img-thumb-card">
-      <img src="${src}">
-      <div class="img-thumb-actions">
-        <button type="button" onclick="document.getElementById('home-slider-replace-${i}').click()" class="btn-icon-edit" title="ویرایش عکس"><i class="fa-solid fa-pen"></i></button>
-        <button type="button" onclick="removeHomeSliderImage(${i})" class="btn-icon-delete" title="حذف">×</button>
-      </div>
-      <input type="file" accept="image/*" id="home-slider-replace-${i}" style="display:none;" onchange="replaceHomeSliderImage(this, ${i})">
-    </div>
-  `).join('');
-  const uploadZone = document.getElementById('home-slider-images-upload-zone');
-  const fullMsg = document.getElementById('home-slider-images-full-msg');
-  const isFull = homeSliderImages.length >= 3;
-  uploadZone.style.display = isFull ? 'none' : 'block';
-  if (fullMsg) fullMsg.style.display = isFull ? 'block' : 'none';
-}
-
-function replaceHomeSliderImage(input, index) {
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      homeSliderImages[index] = e.target.result;
-      renderHomeSliderImages();
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-  input.value = '';
-}
-
-function handleHomeSliderUpload(input) {
-  if (!input.files) return;
-  const remainingSlots = 3 - homeSliderImages.length;
-  if (remainingSlots <= 0) {
-    alert('حداکثر ۳ عکس برای بخش اسلایدر مجاز است.');
-    input.value = '';
-    return;
-  }
-  const files = Array.from(input.files).slice(0, remainingSlots);
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      homeSliderImages.push(e.target.result);
-      renderHomeSliderImages();
-    };
-    reader.readAsDataURL(file);
+  let filtered = studentsData.filter(s => {
+    const matchName = s.name.includes(search);
+    const matchClass = classFilter === '' || s.class === classFilter;
+    const matchStatus = statusFilter === '' || s.status === statusFilter;
+    return matchName && matchClass && matchStatus;
   });
-  input.value = '';
-}
 
-function removeHomeSliderImage(index) {
-  homeSliderImages.splice(index, 1);
-  renderHomeSliderImages();
-}
+  document.getElementById('students-count').textContent = filtered.length + ' دانش‌آموز';
 
-function saveHomeSlider() {
-  homeSliderDefaults = {
-    images: [...homeSliderImages],
-    title: document.getElementById('home-slider-title-input').value,
-    desc: document.getElementById('home-slider-desc-input').value
-  };
-  saveToast();
-}
-
-function cancelHomeSlider() {
-  homeSliderImages = [...homeSliderDefaults.images];
-  document.getElementById('home-slider-title-input').value = homeSliderDefaults.title;
-  document.getElementById('home-slider-desc-input').value = homeSliderDefaults.desc;
-  renderHomeSliderImages();
-}
-
-renderHomeSliderImages();
-
-/* ─── باکس‌های دسته‌بندی درس‌ها (feature-box) ─── */
-
-/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
-let featureBoxesDefaults = [
-  { icon: '/img/alphabet_3898075.png', title: 'زبان انگلیسی', desc: 'توضیحات...', color: '#AEDEFC', link: '/archive.html' },
-  { icon: '/img/colour_2708174 (1).png', title: 'نقاشی', desc: 'توضیحات...', color: '#FFD6E8', link: '' },
-  { icon: '/img/dough_9102578.png', title: 'آشپزی', desc: 'توضیحات...', color: '#FFF3B0', link: '' },
-  { icon: '/img/sport_12693567.png', title: 'ورزش', desc: 'توضیحات...', color: '#C8F4C8', link: '' },
-  { icon: '/img/xylophone_6977852.png', title: 'نواختن ساز', desc: 'توضیحات...', color: '#E3D1FF', link: '' },
-  { icon: '/img/bonjour_9541518.png', title: 'زبان فرانسه', desc: 'توضیحات...', color: '#FFD1B8', link: '' }
-];
-
-/* کپی کاری که با تایپ کاربر تغییر می‌کند */
-let featureBoxes = featureBoxesDefaults.map(b => ({ ...b }));
-
-function renderFeatureBoxes() {
-  const wrap = document.getElementById('feature-boxes-list');
-  wrap.innerHTML = featureBoxes.map((box, i) => `
-    <div class="feature-box-edit">
-      <div class="feature-box-edit-top">
-        <div class="feature-box-icon-wrap">
-          <label>آیکن باکس</label>
-          <div class="feature-box-icon-preview">
-            <img src="${box.icon}" id="feature-box-icon-${i}">
-          </div>
-          <input type="file" accept="image/png, image/svg+xml, image/webp" class="feature-box-icon-upload" onchange="uploadFeatureBoxIcon(this, ${i})">
-        </div>
-        <div class="field feature-box-edit-field">
-          <label>عنوان باکس</label>
-          <input type="text" value="${escapeAttr(box.title)}" oninput="featureBoxes[${i}].title = this.value">
-        </div>
-        <div class="field feature-box-edit-field">
-          <label>رنگ باکس</label>
-          <input type="color" value="${box.color}" class="feature-box-color-input" oninput="featureBoxes[${i}].color = this.value">
-        </div>
-        <div class="field feature-box-edit-field">
-          <label>لینک باکس</label>
-          <input type="text" placeholder="مثلاً: /archive.html" value="${escapeAttr(box.link)}" oninput="featureBoxes[${i}].link = this.value">
-        </div>
-      </div>
-      <div class="field">
-        <label>توضیحات باکس</label>
-        <textarea oninput="featureBoxes[${i}].desc = this.value">${escapeAttr(box.desc)}</textarea>
-      </div>
-    </div>
+  tbody.innerHTML = filtered.map(s => `
+    <tr>
+      <td><div class="u-row"><div class="u-av pink">${s.name.charAt(0)}</div><div><div class="u-name">${s.name}</div></div></div></td>
+      <td>${s.age}</td><td>${s.class}</td><td>${s.parent}</td><td>${s.phone}</td>
+      <td><span class="chip ${s.status === 'فعال' ? 'green' : 'amber'}">${s.status}</span></td>
+      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editStudent(${s.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+    </tr>
   `).join('');
 }
 
-function uploadFeatureBoxIcon(input, index) {
+function filterStudents() { renderStudents(); }
+
+function openStudentModal(data) {
+  const isEdit = !!data;
+  const s = data || { name: '', age: '', class: '', parent: '', phone: '', status: 'فعال' };
+  const html = `
+    <h3>${isEdit ? 'ویرایش' : 'ثبت'} دانش‌آموز</h3>
+    <div class="form-grid" style="margin-top:16px;">
+      <div class="field"><label>نام</label><input type="text" id="student-name" value="${escapeHtml(s.name)}"></div>
+      <div class="field"><label>سن</label><input type="number" id="student-age" value="${s.age}"></div>
+      <div class="field"><label>کلاس</label><input type="text" id="student-class" value="${escapeHtml(s.class)}"></div>
+      <div class="field"><label>ولی امر</label><input type="text" id="student-parent" value="${escapeHtml(s.parent)}"></div>
+      <div class="field"><label>تلفن</label><input type="text" id="student-phone" value="${escapeHtml(s.phone)}"></div>
+      <div class="field"><label>وضعیت</label>
+        <select id="student-status">
+          <option value="فعال" ${s.status === 'فعال' ? 'selected' : ''}>فعال</option>
+          <option value="در انتظار" ${s.status === 'در انتظار' ? 'selected' : ''}>در انتظار</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveStudent(${isEdit ? s.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeFormModal()">انصراف</button>
+    </div>
+  `;
+  openFormModal(html);
+}
+
+function saveStudent(id) {
+  const name = document.getElementById('student-name').value.trim();
+  const age = parseInt(document.getElementById('student-age').value);
+  const cls = document.getElementById('student-class').value.trim();
+  const parent = document.getElementById('student-parent').value.trim();
+  const phone = document.getElementById('student-phone').value.trim();
+  const status = document.getElementById('student-status').value;
+
+  if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
+  if (!age || age < 1) { alert('سن معتبر وارد کنید.'); return; }
+
+  if (id) {
+    const idx = studentsData.findIndex(s => s.id === id);
+    if (idx !== -1) studentsData[idx] = { ...studentsData[idx], name, age, class: cls, parent, phone, status };
+  } else {
+    studentsData.push({ id: nextStudentId++, name, age, class: cls, parent, phone, status });
+  }
+  closeFormModal();
+  renderStudents();
+  showToast('دانش‌آموز ذخیره شد');
+}
+
+function editStudent(id) {
+  const s = studentsData.find(s => s.id === id);
+  if (s) openStudentModal(s);
+}
+
+function deleteStudent(id) {
+  openDeleteModal(() => {
+    studentsData = studentsData.filter(s => s.id !== id);
+    renderStudents();
+    showToast('حذف شد');
+  });
+}
+
+// ============================================================
+// 8. TEACHERS
+// ============================================================
+
+function renderTeachers() {
+  const tbody = document.getElementById('teachers-table-body');
+  document.getElementById('teachers-count').textContent = teachersData.length + ' معلم';
+  tbody.innerHTML = teachersData.map(t => `
+    <tr>
+      <td><div class="u-row"><div class="u-av blue">${t.name.charAt(0)}</div><div><div class="u-name">${t.name}</div><div class="u-sub">${t.specialty}</div></div></div></td>
+      <td>${t.specialty}</td><td>${t.classes}</td><td>${t.phone}</td>
+      <td><span class="chip green">${t.status}</span></td>
+      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editTeacher(${t.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteTeacher(${t.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+    </tr>
+  `).join('');
+}
+
+function openTeacherModal(data) {
+  const isEdit = !!data;
+  const t = data || { name: '', specialty: '', classes: '', phone: '', status: 'فعال' };
+  const html = `
+    <h3>${isEdit ? 'ویرایش' : 'افزودن'} معلم</h3>
+    <div class="form-grid" style="margin-top:16px;">
+      <div class="field"><label>نام</label><input type="text" id="teacher-name" value="${escapeHtml(t.name)}"></div>
+      <div class="field"><label>تخصص</label><input type="text" id="teacher-specialty" value="${escapeHtml(t.specialty)}"></div>
+      <div class="field"><label>کلاس‌ها</label><input type="text" id="teacher-classes" value="${escapeHtml(t.classes)}"></div>
+      <div class="field"><label>تلفن</label><input type="text" id="teacher-phone" value="${escapeHtml(t.phone)}"></div>
+      <div class="field"><label>وضعیت</label>
+        <select id="teacher-status">
+          <option value="فعال" ${t.status === 'فعال' ? 'selected' : ''}>فعال</option>
+          <option value="غیرفعال" ${t.status === 'غیرفعال' ? 'selected' : ''}>غیرفعال</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveTeacher(${isEdit ? t.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeFormModal()">انصراف</button>
+    </div>
+  `;
+  openFormModal(html);
+}
+
+function saveTeacher(id) {
+  const name = document.getElementById('teacher-name').value.trim();
+  const specialty = document.getElementById('teacher-specialty').value.trim();
+  const classes = document.getElementById('teacher-classes').value.trim();
+  const phone = document.getElementById('teacher-phone').value.trim();
+  const status = document.getElementById('teacher-status').value;
+
+  if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
+
+  if (id) {
+    const idx = teachersData.findIndex(t => t.id === id);
+    if (idx !== -1) teachersData[idx] = { ...teachersData[idx], name, specialty, classes, phone, status };
+  } else {
+    teachersData.push({ id: nextTeacherId++, name, specialty, classes, phone, status });
+  }
+  closeFormModal();
+  renderTeachers();
+  showToast('معلم ذخیره شد');
+}
+
+function editTeacher(id) {
+  const t = teachersData.find(t => t.id === id);
+  if (t) openTeacherModal(t);
+}
+
+function deleteTeacher(id) {
+  openDeleteModal(() => {
+    teachersData = teachersData.filter(t => t.id !== id);
+    renderTeachers();
+    showToast('حذف شد');
+  });
+}
+
+// ============================================================
+// 9. BLOG
+// ============================================================
+
+function renderBlog() {
+  const tbody = document.getElementById('blog-table-body');
+  tbody.innerHTML = blogData.map(b => `
+    <tr>
+      <td><img src="${b.image || 'https://via.placeholder.com/50/FFF0F7/F875AA?text=img'}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"></td>
+      <td><strong>${b.title}</strong></td>
+      <td>${b.category}</td>
+      <td>${b.date}</td>
+      <td><span style="font-size:12px;color:var(--text-muted);">${b.tags || ''}</span></td>
+      <td><span class="chip ${b.status === 'منتشر' ? 'green' : 'amber'}">${b.status}</span></td>
+      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+    </tr>
+  `).join('');
+}
+
+function openBlogModal(data) {
+  const isEdit = !!data;
+  const b = data || { title: '', category: '', date: '', status: 'منتشر', image: '', tags: '', content: '' };
+  const html = `
+    <h3>${isEdit ? 'ویرایش' : 'مقاله جدید'}</h3>
+    <div class="form-grid" style="margin-top:16px;">
+      <div class="field full"><label>عنوان</label><input type="text" id="blog-title" value="${escapeHtml(b.title)}"></div>
+      <div class="field"><label>دسته</label><input type="text" id="blog-category" value="${escapeHtml(b.category)}"></div>
+      <div class="field"><label>تاریخ</label><input type="text" id="blog-date" value="${escapeHtml(b.date)}"></div>
+      <div class="field"><label>برچسب‌ها</label><input type="text" id="blog-tags" value="${escapeHtml(b.tags)}" placeholder="مثلاً: نقاشی, خلاقیت"></div>
+      <div class="field"><label>وضعیت</label>
+        <select id="blog-status">
+          <option value="منتشر" ${b.status === 'منتشر' ? 'selected' : ''}>منتشر</option>
+          <option value="پیش‌نویس" ${b.status === 'پیش‌نویس' ? 'selected' : ''}>پیش‌نویس</option>
+        </select>
+      </div>
+      <div class="field full"><label>متن مقاله</label><textarea id="blog-content" rows="5">${escapeHtml(b.content)}</textarea></div>
+      <div class="field full"><label>تصویر</label>
+        <div class="upload-zone" style="padding:12px;">
+          <input type="file" accept="image/*" onchange="previewBlogImage(this)">
+          <i class="fa-solid fa-image"></i>
+          <p style="font-size:12px;">آپلود تصویر</p>
+        </div>
+        <img id="blog-image-preview" src="${b.image || ''}" style="max-width:100px;max-height:60px;margin-top:6px;display:${b.image ? 'block' : 'none'};">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveBlog(${isEdit ? b.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeFormModal()">انصراف</button>
+    </div>
+  `;
+  openFormModal(html);
+  if (data && data.image) {
+    document.getElementById('blog-image-preview').src = data.image;
+    document.getElementById('blog-image-preview').style.display = 'block';
+  }
+}
+
+function previewBlogImage(input) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = e => {
-      featureBoxes[index].icon = e.target.result;
-      document.getElementById(`feature-box-icon-${index}`).src = e.target.result;
+      document.getElementById('blog-image-preview').src = e.target.result;
+      document.getElementById('blog-image-preview').style.display = 'block';
     };
     reader.readAsDataURL(input.files[0]);
   }
 }
 
-function saveFeatureBoxes() {
-  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
-  featureBoxesDefaults = featureBoxes.map(b => ({ ...b }));
-  saveToast();
+function saveBlog(id) {
+  const title = document.getElementById('blog-title').value.trim();
+  const category = document.getElementById('blog-category').value.trim();
+  const date = document.getElementById('blog-date').value.trim();
+  const status = document.getElementById('blog-status').value;
+  const tags = document.getElementById('blog-tags').value.trim();
+  const content = document.getElementById('blog-content').value.trim();
+  const image = document.getElementById('blog-image-preview').src || '';
+
+  if (!title) { alert('لطفاً عنوان را وارد کنید.'); return; }
+
+  if (id) {
+    const idx = blogData.findIndex(b => b.id === id);
+    if (idx !== -1) blogData[idx] = { ...blogData[idx], title, category, date, status, tags, content, image };
+  } else {
+    blogData.push({ id: nextBlogId++, title, category, date, status, tags, content, image });
+  }
+  closeFormModal();
+  renderBlog();
+  showToast('مقاله ذخیره شد');
 }
 
-function cancelFeatureBoxes() {
-  featureBoxes = featureBoxesDefaults.map(b => ({ ...b }));
-  renderFeatureBoxes();
+function editBlog(id) {
+  const b = blogData.find(b => b.id === id);
+  if (b) openBlogModal(b);
 }
 
-renderFeatureBoxes();
+function deleteBlog(id) {
+  openDeleteModal(() => {
+    blogData = blogData.filter(b => b.id !== id);
+    renderBlog();
+    showToast('حذف شد');
+  });
+}
 
-/* آپلود عکس بنر — فقط JPG، PNG یا WEBP مجاز است (نه فقط PNG/SVG) */
-function previewBannerImage(input) {
-  if (!input.files || !input.files[0]) return;
-  const file = input.files[0];
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-  if (!allowedTypes.includes(file.type)) {
-    alert('فرمت تصویر مجاز نیست. لطفاً یکی از فرمت‌های JPG، PNG یا WEBP را انتخاب کنید.');
-    input.value = '';
+// ============================================================
+// 10. GALLERY (Per Class - Expandable)
+// ============================================================
+
+function renderGallery() {
+  const container = document.getElementById('class-gallery-container');
+  const classNames = Object.keys(galleryData);
+
+  if (classNames.length === 0) {
+    container.innerHTML = `<div class="empty-state"><i class="fa-solid fa-images"></i><p>هیچ کلاسی برای گالری وجود ندارد</p></div>`;
     return;
   }
-  const reader = new FileReader();
-  reader.onload = e => document.getElementById('banner-image-preview').src = e.target.result;
-  reader.readAsDataURL(file);
+
+  container.innerHTML = classNames.map(className => {
+    const items = galleryData[className] || [];
+    const isOpen = window._openGallery === className;
+    return `
+      <div style="margin-bottom:16px;border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--surface-1);cursor:pointer;" onclick="toggleGallery('${className}')">
+          <h4 style="color:var(--pink);margin:0;">گالری کلاس ${className} <span style="font-size:12px;color:var(--text-muted);font-weight:400;">(${items.length} عکس)</span></h4>
+          <div>
+            <button class="btn btn-ghost" style="font-size:12px;padding:4px 12px;" onclick="event.stopPropagation();openGalleryModal('${className}')"><i class="fa-solid fa-plus"></i> افزودن</button>
+            <span style="margin-right:8px;font-size:12px;color:var(--text-muted);">${isOpen ? '▼' : '◀'}</span>
+          </div>
+        </div>
+        <div id="gallery-content-${className}" style="padding:16px;display:${isOpen ? 'block' : 'none'};">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+            ${items.length === 0 ? `<div class="empty-state" style="grid-column:1/-1;padding:20px;"><p>هیچ عکسی در این گالری وجود ندارد</p></div>` : ''}
+            ${items.map(item => `
+              <div class="card" style="overflow:hidden;">
+                <div style="position:relative;aspect-ratio:4/3;background:var(--surface-1);">
+                  ${item.image ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://via.placeholder.com/200x150/F0F0F0/999?text=بدون+تصویر'">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);"><i class="fa-solid fa-image" style="font-size:32px;"></i></div>`}
+                  <div style="position:absolute;top:4px;left:4px;display:flex;gap:4px;">
+                    <button class="btn-icon-edit" onclick="editGalleryItem('${className}', ${item.id})"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-icon-delete" onclick="deleteGalleryItem('${className}', ${item.id})">×</button>
+                  </div>
+                </div>
+                <div style="padding:8px;">
+                  <div style="font-weight:600;font-size:13px;">${item.name}</div>
+                  <div style="font-size:11px;color:var(--text-muted);">${item.desc}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
-/* ─── بنر صفحه اصلی (هدر) ─── */
-
-/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
-const bannerDefaults = {
-  imageSrc: 'https://via.placeholder.com/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1',
-  title: 'کودک شاد، کودک سالم!',
-  desc: 'توضیحات بیشتر .......'
-};
-
-function saveBanner() {
-  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
-  bannerDefaults.imageSrc = document.getElementById('banner-image-preview').src;
-  bannerDefaults.title = document.getElementById('banner-title-input').value;
-  bannerDefaults.desc = document.getElementById('banner-desc-input').value;
-  saveToast();
+function toggleGallery(className) {
+  const content = document.getElementById('gallery-content-' + className);
+  if (content) {
+    const isOpen = content.style.display === 'block';
+    content.style.display = isOpen ? 'none' : 'block';
+    window._openGallery = isOpen ? null : className;
+    renderGallery();
+  }
 }
 
-function cancelBanner() {
-  document.getElementById('banner-image-preview').src = bannerDefaults.imageSrc;
-  document.getElementById('banner-title-input').value = bannerDefaults.title;
-  document.getElementById('banner-desc-input').value = bannerDefaults.desc;
+function openGalleryModal(className, data) {
+  const isEdit = !!data;
+  const item = data || { name: '', desc: '', image: '' };
+  const html = `
+    <h3>${isEdit ? 'ویرایش' : 'افزودن'} عکس گالری - ${className}</h3>
+    <div class="form-grid" style="margin-top:16px;">
+      <div class="field full"><label>نام</label><input type="text" id="gallery-name" value="${escapeHtml(item.name)}"></div>
+      <div class="field full"><label>توضیحات</label><input type="text" id="gallery-desc" value="${escapeHtml(item.desc)}"></div>
+      <div class="field full"><label>تصویر</label>
+        <div class="upload-zone" style="padding:12px;">
+          <input type="file" accept="image/*" onchange="previewGalleryImage(this)">
+          <i class="fa-solid fa-image"></i>
+          <p style="font-size:12px;">آپلود تصویر</p>
+        </div>
+        <img id="gallery-image-preview" src="${item.image || ''}" style="max-width:100px;max-height:60px;margin-top:6px;display:${item.image ? 'block' : 'none'};">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveGalleryItem('${className}', ${isEdit ? item.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeFormModal()">انصراف</button>
+    </div>
+  `;
+  openFormModal(html);
+  if (data && data.image) {
+    document.getElementById('gallery-image-preview').src = data.image;
+    document.getElementById('gallery-image-preview').style.display = 'block';
+  }
 }
 
-/* پیش‌نمایش عمومی برای هر تصویری (عکس اصلی کلاس و ...) */
-function previewGenericImage(input, targetId) {
+function previewGalleryImage(input) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
-    reader.onload = e => document.getElementById(targetId).src = e.target.result;
+    reader.onload = e => {
+      document.getElementById('gallery-image-preview').src = e.target.result;
+      document.getElementById('gallery-image-preview').style.display = 'block';
+    };
     reader.readAsDataURL(input.files[0]);
   }
 }
 
-/* لیست معلم‌ها برای انتخاب در فرم کلاس */
-const teachersData = [
-  { id: 't1', name: 'فریده موسوی' },
-  { id: 't2', name: 'احمد صادقی' },
-  { id: 't3', name: 'حسین کرمی' },
-];
+function saveGalleryItem(className, id) {
+  const name = document.getElementById('gallery-name').value.trim();
+  const desc = document.getElementById('gallery-desc').value.trim();
+  const image = document.getElementById('gallery-image-preview').src || '';
 
-/* سطوح کلاس (از سرور برگردانده می‌شود) */
-const classLevels = [
-  { key: 'beginner', label: 'مبتدی' },
-  { key: 'intermediate', label: 'متوسط' },
-  { key: 'advanced', label: 'پیشرفته' },
-];
+  if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
 
-/* وضعیت‌های کلاس (از سرور برگردانده می‌شود) */
-const classStatuses = [
-  { key: 'active', label: 'فعال' },
-  { key: 'pending', label: 'در انتظار' },
-  { key: 'full', label: 'تکمیل ظرفیت' },
-  { key: 'inactive', label: 'غیرفعال' },
-];
+  if (!galleryData[className]) galleryData[className] = [];
 
-/* محورهای کلاس (از سرور برگردانده می‌شود) */
-const classAxesOptions = [
-  { key: 'art', label: 'هنر و خلاقیت' },
-  { key: 'music', label: 'موسیقی' },
-  { key: 'sport', label: 'ورزش و حرکت' },
-  { key: 'language', label: 'زبان' },
-  { key: 'science', label: 'علوم و آزمایش' },
-  { key: 'social', label: 'مهارت‌های اجتماعی' },
-];
+  if (id) {
+    const idx = galleryData[className].findIndex(i => i.id === id);
+    if (idx !== -1) galleryData[className][idx] = { ...galleryData[className][idx], name, desc, image };
+  } else {
+    galleryData[className].push({ id: nextGalleryId++, name, desc, image });
+  }
+  closeFormModal();
+  renderGallery();
+  showToast('آیتم گالری ذخیره شد');
+}
 
-/* ─── لینک‌های کاربردی فوتر ─── */
+function editGalleryItem(className, id) {
+  const item = galleryData[className]?.find(i => i.id === id);
+  if (item) openGalleryModal(className, item);
+}
 
-/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
-let footerLinksDefaults = [
-  { title: 'خانه', url: '/main.html' },
-  { title: 'درباره ما', url: '/about.html' },
-  { title: 'کلاس‌ها', url: '/archive.html' }
-];
+function deleteGalleryItem(className, id) {
+  openDeleteModal(() => {
+    if (galleryData[className]) {
+      galleryData[className] = galleryData[className].filter(i => i.id !== id);
+    }
+    renderGallery();
+    showToast('حذف شد');
+  });
+}
 
-/* کپی کاری که با تایپ کاربر تغییر می‌کند */
-let footerLinks = footerLinksDefaults.map(l => ({ ...l }));
+// ============================================================
+// 11. CLASSES
+// ============================================================
 
-function renderFooterLinks() {
-  const wrap = document.getElementById('footer-links-list');
-  wrap.innerHTML = footerLinks.map((link, i) => `
-    <div class="dynamic-row">
-      <div class="field">
-        <label>عنوان لینک</label>
-        <input type="text" placeholder="مثلاً: تماس با ما" value="${escapeAttr(link.title)}"
-               oninput="footerLinks[${i}].title = this.value">
+function renderClasses() {
+  const grid = document.getElementById('classes-grid');
+  grid.innerHTML = classesData.map(c => `
+    <div class="card" style="height:100%;display:flex;flex-direction:column;">
+      <div class="card-head">
+        <div class="card-title">${c.title}</div>
+        <span class="chip ${c.status === 'active' ? 'green' : 'amber'}">${c.status === 'active' ? 'فعال' : 'در انتظار'}</span>
       </div>
-      <div class="field">
-        <label>آدرس لینک</label>
-        <input type="text" placeholder="مثلاً: /contact.html" value="${escapeAttr(link.url)}"
-               oninput="footerLinks[${i}].url = this.value">
-      </div>
-      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف لینک" onclick="removeFooterLink(${i})">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-    </div>
-  `).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز لینکی اضافه نشده است.</p>';
-}
-
-function escapeAttr(str) {
-  return String(str ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function addFooterLink() {
-  footerLinks.push({ title: '', url: '' });
-  renderFooterLinks();
-  const rows = document.querySelectorAll('#footer-links-list .dynamic-row');
-  const lastRow = rows[rows.length - 1];
-  if (lastRow) lastRow.querySelector('input').focus();
-}
-
-function removeFooterLink(index) {
-  footerLinks.splice(index, 1);
-  renderFooterLinks();
-}
-
-function saveFooterLinks() {
-  /* ذخیره به‌عنوان آخرین حالت معتبر (برای انصراف بعدی) */
-  footerLinksDefaults = footerLinks.map(l => ({ ...l }));
-  saveToast();
-}
-
-function cancelFooterLinks() {
-  footerLinks = footerLinksDefaults.map(l => ({ ...l }));
-  renderFooterLinks();
-}
-
-renderFooterLinks();
-
-/* ─── شبکه‌های اجتماعی ─── */
-
-const socialPlatforms = [
-  { key: 'instagram', label: 'اینستاگرام', icon: 'fa-brands fa-instagram', color: '#E1306C', placeholder: 'https://instagram.com/...' },
-  { key: 'telegram',  label: 'تلگرام',      icon: 'fa-brands fa-telegram',  color: '#229ED9', placeholder: 'https://t.me/...' },
-  { key: 'whatsapp',  label: 'واتساپ',      icon: 'fa-brands fa-whatsapp',  color: '#25D366', placeholder: 'https://wa.me/...' },
-  { key: 'youtube',   label: 'یوتیوب',      icon: 'fa-brands fa-youtube',   color: '#FF0000', placeholder: 'https://youtube.com/...' },
-  { key: 'twitter',   label: 'ایکس (توییتر)', icon: 'fa-brands fa-x-twitter', color: '#000000', placeholder: 'https://x.com/...' },
-  { key: 'linkedin',  label: 'لینکدین',     icon: 'fa-brands fa-linkedin',  color: '#0A66C2', placeholder: 'https://linkedin.com/...' },
-  { key: 'aparat',    label: 'آپارات',      icon: 'fa-solid fa-clapperboard', color: '#FF3333', placeholder: 'https://aparat.com/...' },
-  { key: 'eitaa',     label: 'ایتا',        icon: 'fa-solid fa-paper-plane', color: '#3EB049', placeholder: 'https://eitaa.com/...' },
-  { key: 'other',     label: 'سایر',        icon: 'fa-solid fa-link',       color: '#555555', placeholder: 'https://...' }
-];
-
-function getSocialPlatform(key) {
-  return socialPlatforms.find(p => p.key === key) || socialPlatforms[socialPlatforms.length - 1];
-}
-
-/* مقادیر پیش‌فرض (آخرین حالت ذخیره‌شده) برای دکمه انصراف */
-let socialLinksDefaults = [
-  { platform: 'instagram', url: '' },
-  { platform: 'telegram', url: '' },
-  { platform: 'whatsapp', url: '' },
-  { platform: 'youtube', url: '' }
-];
-
-/* کپی کاری که با تایپ/انتخاب کاربر تغییر می‌کند */
-let socialLinks = socialLinksDefaults.map(l => ({ ...l }));
-
-function renderSocialLinks() {
-  const wrap = document.getElementById('social-links-list');
-  wrap.innerHTML = socialLinks.map((link, i) => {
-    const platform = getSocialPlatform(link.platform);
-    const options = socialPlatforms.map(p =>
-      `<option value="${p.key}" ${p.key === link.platform ? 'selected' : ''}>${p.label}</option>`
-    ).join('');
-    return `
-    <div class="dynamic-row">
-      <div class="field">
-        <label>شبکه اجتماعی</label>
-        <div class="social-platform-picker">
-          <span class="social-icon-preview" style="color:${platform.color};"><i class="${platform.icon}"></i></span>
-          <select style="flex:1;" onchange="socialLinks[${i}].platform = this.value; renderSocialLinks();">
-            ${options}
-          </select>
+      <div class="card-body" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+        <div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;">
+          <div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> ${c.teacher}</div>
+          <div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> ${c.schedule.length > 0 ? c.schedule[0].day + ' — ' + c.schedule[0].start : 'زمان نامشخص'}</div>
+          <div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ${c.capacity} دانش‌آموز</div>
+          <div><i class="fa-solid fa-location-dot" style="color:var(--pink);"></i> ${c.location || 'نامشخص'}</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:12px;">
+          <button class="btn btn-ghost" style="font-size:12px;" onclick="editClass(${c.id})">ویرایش</button>
+          <button class="btn btn-ghost" style="font-size:12px;color:#E24B4A;" onclick="deleteClass(${c.id})">حذف</button>
         </div>
       </div>
-      <div class="field">
-        <label>لینک شبکه اجتماعی</label>
-        <input type="url" placeholder="${platform.placeholder}" value="${escapeAttr(link.url)}"
-               oninput="socialLinks[${i}].url = this.value">
-      </div>
-      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف" onclick="removeSocialLink(${i})">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-    </div>`;
-  }).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز شبکه اجتماعی‌ای اضافه نشده است.</p>';
-}
-
-function addSocialLink() {
-  socialLinks.push({ platform: 'instagram', url: '' });
-  renderSocialLinks();
-  const rows = document.querySelectorAll('#social-links-list .dynamic-row');
-  const lastRow = rows[rows.length - 1];
-  if (lastRow) lastRow.querySelector('input[type="url"]').focus();
-}
-
-function removeSocialLink(index) {
-  socialLinks.splice(index, 1);
-  renderSocialLinks();
-}
-
-function saveSocialLinks() {
-  socialLinksDefaults = socialLinks.map(l => ({ ...l }));
-  saveToast();
-}
-
-function cancelSocialLinks() {
-  socialLinks = socialLinksDefaults.map(l => ({ ...l }));
-  renderSocialLinks();
-}
-
-renderSocialLinks();
-
-/* ══════════════════════════════════════════
-   درباره ما — دستاوردها
-   ══════════════════════════════════════════ */
-let achievementsDefaults = [
-  { title: 'سال سابقه فعالیت', value: '۱۰+' },
-  { title: 'کودک فارغ‌التحصیل', value: '۸۵' },
-  { title: 'معلم متخصص', value: '۱۲' }
-];
-let achievements = achievementsDefaults.map(a => ({ ...a }));
-
-function renderAchievements() {
-  const wrap = document.getElementById('achievements-list');
-  wrap.innerHTML = achievements.map((a, i) => `
-    <div class="dynamic-row">
-      <div class="field">
-        <label>عنوان دستاورد</label>
-        <input type="text" placeholder="مثلاً: کودک فارغ‌التحصیل" value="${escapeAttr(a.title)}"
-               oninput="achievements[${i}].title = this.value">
-      </div>
-      <div class="field">
-        <label>مقدار</label>
-        <input type="text" placeholder="مثلاً: ۸۵+" value="${escapeAttr(a.value)}"
-               oninput="achievements[${i}].value = this.value">
-      </div>
-      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف دستاورد" onclick="removeAchievement(${i})">
-        <i class="fa-solid fa-trash"></i>
-      </button>
     </div>
-  `).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز دستاوردی اضافه نشده است.</p>';
+  `).join('');
 }
-function addAchievement() {
-  achievements.push({ title: '', value: '' });
-  renderAchievements();
-  const rows = document.querySelectorAll('#achievements-list .dynamic-row');
-  const lastRow = rows[rows.length - 1];
-  if (lastRow) lastRow.querySelector('input').focus();
-}
-function removeAchievement(index) {
-  achievements.splice(index, 1);
-  renderAchievements();
-}
-function saveAchievements() {
-  achievementsDefaults = achievements.map(a => ({ ...a }));
-  saveToast();
-}
-function cancelAchievements() {
-  achievements = achievementsDefaults.map(a => ({ ...a }));
-  renderAchievements();
-}
-renderAchievements();
 
-/* ══════════════════════════════════════════
-   کلاس‌ها — فرم افزودن/ویرایش
-   ══════════════════════════════════════════ */
-let classSchedule = [];
-let classAxesSelected = [];
-let classSlideImages = [];
+function editClass(id) {
+  const c = classesData.find(cls => cls.id === id);
+  if (c) {
+    toggleClassForm();
+    document.getElementById('class-form-title').textContent = 'ویرایش کلاس';
+    document.getElementById('class-title-input').value = c.title;
+    document.getElementById('class-location-input').value = c.location || '';
+    document.getElementById('class-desc-input').value = c.desc || '';
+    document.getElementById('class-capacity-input').value = c.capacity || '';
+    document.getElementById('class-fee-input').value = c.fee || '';
+    document.getElementById('class-min-age-input').value = c.minAge || '';
+    document.getElementById('class-max-age-input').value = c.maxAge || '';
+    document.getElementById('class-level-select').value = c.level || '';
+    document.getElementById('class-status-select').value = c.status || '';
+    document.getElementById('class-start-date-input').value = c.startDate || '';
+    classAxesSelected = c.axes || [];
+    renderClassAxisChips();
+    classSchedule = c.schedule || [{ day: '', start: '', end: '' }];
+    renderClassSchedule();
+    classSlideImages = c.slides || [];
+    renderClassSlides();
+    document.getElementById('class-created-at').value = new Date().toLocaleDateString('fa-IR');
+    document.getElementById('class-updated-at').value = new Date().toLocaleDateString('fa-IR');
+    document.getElementById('class-form-card').dataset.editId = id;
+  }
+}
 
+function deleteClass(id) {
+  openDeleteModal(() => {
+    classesData = classesData.filter(c => c.id !== id);
+    renderClasses();
+    showToast('حذف شد');
+  });
+}
+
+// Class form functions
 function fillClassSelects() {
   const levelSelect = document.getElementById('class-level-select');
   classLevels.forEach(l => {
@@ -1511,6 +1534,10 @@ function fillClassSelects() {
   });
 }
 
+let classSchedule = [];
+let classAxesSelected = [];
+let classSlideImages = [];
+
 function toggleClassForm() {
   const card = document.getElementById('class-form-card');
   const isHidden = card.style.display === 'none';
@@ -1524,6 +1551,24 @@ function toggleClassForm() {
       classSchedule = [{ day: '', start: '', end: '' }];
       renderClassSchedule();
     }
+    document.getElementById('class-form-title').textContent = 'افزودن کلاس';
+    delete card.dataset.editId;
+    document.getElementById('class-title-input').value = '';
+    document.getElementById('class-location-input').value = '';
+    document.getElementById('class-desc-input').value = '';
+    document.getElementById('class-capacity-input').value = '';
+    document.getElementById('class-fee-input').value = '';
+    document.getElementById('class-min-age-input').value = '';
+    document.getElementById('class-max-age-input').value = '';
+    document.getElementById('class-level-select').value = '';
+    document.getElementById('class-status-select').value = '';
+    document.getElementById('class-start-date-input').value = '';
+    classAxesSelected = [];
+    renderClassAxisChips();
+    classSchedule = [{ day: '', start: '', end: '' }];
+    renderClassSchedule();
+    classSlideImages = [];
+    renderClassSlides();
   }
 }
 
@@ -1535,31 +1580,19 @@ function renderClassSchedule() {
     const dayOptions = weekDays.map(d => `<option value="${d}" ${d === row.day ? 'selected' : ''}>${d}</option>`).join('');
     return `
     <div class="dynamic-row">
-      <div class="field">
-        <label>روز</label>
-        <select onchange="classSchedule[${i}].day = this.value">
-          <option value="">انتخاب روز...</option>
-          ${dayOptions}
-        </select>
-      </div>
-      <div class="field">
-        <label>ساعت شروع</label>
-        <input type="time" value="${escapeAttr(row.start)}" oninput="classSchedule[${i}].start = this.value">
-      </div>
-      <div class="field">
-        <label>ساعت پایان</label>
-        <input type="time" value="${escapeAttr(row.end)}" oninput="classSchedule[${i}].end = this.value">
-      </div>
-      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف ردیف" onclick="removeScheduleRow(${i})">
-        <i class="fa-solid fa-trash"></i>
-      </button>
+      <div class="field"><label>روز</label><select onchange="classSchedule[${i}].day = this.value"><option value="">انتخاب...</option>${dayOptions}</select></div>
+      <div class="field"><label>شروع</label><input type="time" value="${escapeHtml(row.start)}" oninput="classSchedule[${i}].start = this.value"></div>
+      <div class="field"><label>پایان</label><input type="time" value="${escapeHtml(row.end)}" oninput="classSchedule[${i}].end = this.value"></div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" onclick="removeScheduleRow(${i})"><i class="fa-solid fa-trash"></i></button>
     </div>`;
-  }).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز روزی به برنامه هفتگی اضافه نشده است.</p>';
+  }).join('') || '<p class="hint">هنوز روزی اضافه نشده است.</p>';
 }
+
 function addScheduleRow() {
   classSchedule.push({ day: '', start: '', end: '' });
   renderClassSchedule();
 }
+
 function removeScheduleRow(index) {
   classSchedule.splice(index, 1);
   renderClassSchedule();
@@ -1569,12 +1602,10 @@ function renderClassAxisChips() {
   const wrap = document.getElementById('class-axis-chips');
   wrap.innerHTML = classAxesSelected.map((key, i) => {
     const axis = classAxesOptions.find(a => a.key === key);
-    return `<span class="chip pink" style="display:inline-flex;align-items:center;gap:6px;">
-      ${axis ? axis.label : key}
-      <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="removeClassAxis(${i})"></i>
-    </span>`;
+    return `<span class="chip pink"><span>${axis ? axis.label : key}</span> <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="removeClassAxis(${i})"></i></span>`;
   }).join('');
 }
+
 function addClassAxis() {
   const select = document.getElementById('class-axis-select');
   const val = select.value;
@@ -1585,16 +1616,34 @@ function addClassAxis() {
   }
   select.value = '';
 }
+
 function removeClassAxis(index) {
   classAxesSelected.splice(index, 1);
   renderClassAxisChips();
+}
+
+function renderClassSlides() {
+  const grid = document.getElementById('class-slides-grid');
+  grid.innerHTML = classSlideImages.map((src, i) => `
+    <div class="img-thumb-card">
+      <img src="${src}" onerror="this.src='https://via.placeholder.com/100/F0F0F0/999?text=بدون+تصویر'">
+      <button type="button" onclick="removeClassSlide(${i})" class="btn-icon-delete img-thumb-actions actions-left">×</button>
+    </div>
+  `).join('');
+  const uploadZone = document.getElementById('class-slides-upload-zone');
+  uploadZone.style.display = classSlideImages.length >= 4 ? 'none' : 'block';
+}
+
+function removeClassSlide(index) {
+  classSlideImages.splice(index, 1);
+  renderClassSlides();
 }
 
 function handleClassSlideUpload(input) {
   if (!input.files) return;
   const remainingSlots = 4 - classSlideImages.length;
   if (remainingSlots <= 0) {
-    alert('حداکثر ۴ عکس اسلایدی مجاز است.');
+    alert('حداکثر ۴ عکس مجاز است.');
     input.value = '';
     return;
   }
@@ -1609,98 +1658,485 @@ function handleClassSlideUpload(input) {
   });
   input.value = '';
 }
-function renderClassSlides() {
-  const grid = document.getElementById('class-slides-grid');
-  grid.innerHTML = classSlideImages.map((src, i) => `
-    <div class="img-thumb-card">
-      <img src="${src}">
-      <button type="button" onclick="removeClassSlide(${i})" class="btn-icon-delete img-thumb-actions actions-left" title="حذف">×</button>
-    </div>
-  `).join('');
-  const uploadZone = document.getElementById('class-slides-upload-zone');
-  uploadZone.style.display = classSlideImages.length >= 4 ? 'none' : 'block';
-}
-function removeClassSlide(index) {
-  classSlideImages.splice(index, 1);
-  renderClassSlides();
-}
 
 function saveClass() {
   const title = document.getElementById('class-title-input').value.trim();
-  if (!title) {
-    alert('لطفاً عنوان کلاس را وارد کنید.');
-    return;
+  if (!title) { alert('لطفاً عنوان را وارد کنید.'); return; }
+
+  const data = {
+    title,
+    location: document.getElementById('class-location-input').value.trim(),
+    desc: document.getElementById('class-desc-input').value.trim(),
+    capacity: parseInt(document.getElementById('class-capacity-input').value) || 0,
+    fee: parseInt(document.getElementById('class-fee-input').value) || 0,
+    minAge: parseInt(document.getElementById('class-min-age-input').value) || 0,
+    maxAge: parseInt(document.getElementById('class-max-age-input').value) || 0,
+    level: document.getElementById('class-level-select').value,
+    status: document.getElementById('class-status-select').value || 'pending',
+    startDate: document.getElementById('class-start-date-input').value,
+    teacher: teachersData.length > 0 ? teachersData[0].name : '',
+    axes: classAxesSelected,
+    schedule: classSchedule.filter(r => r.day && r.start && r.end),
+    slides: classSlideImages,
+  };
+
+  const editId = document.getElementById('class-form-card').dataset.editId;
+  if (editId) {
+    const idx = classesData.findIndex(c => c.id === parseInt(editId));
+    if (idx !== -1) classesData[idx] = { ...classesData[idx], ...data };
+  } else {
+    classesData.push({ id: nextClassId++, ...data });
   }
+
   document.getElementById('class-updated-at').value = new Date().toLocaleDateString('fa-IR');
-  saveToast();
   toggleClassForm();
+  renderClasses();
+  showToast('کلاس ذخیره شد');
 }
 
-function scrollToGallery() {
-  const el = document.getElementById('class-gallery-section');
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+// ============================================================
+// 12. INFO BOXES (Hero Cards)
+// ============================================================
 
-/* ══════════════════════════════════════════
-   گالری کلاس — هر آیتم دارای عکس، نام و توضیحات
-   ══════════════════════════════════════════ */
-let classGalleryItems = [
-  { image: '', className: 'نقاشی', name: 'نقاشی خانواده', desc: 'اثر نقاشی یکی از هنرآموزان کلاس نقاشی' },
-  { image: '', className: 'موسیقی', name: 'تمرین گروهی سنتور', desc: 'جلسه تمرین گروهی کلاس موسیقی' }
-];
+function renderInfoBoxes() {
+  const list = document.getElementById('info-boxes-list');
+  const addContainer = document.getElementById('info-boxes-add-container');
 
-function renderClassGallery() {
-  const wrap = document.getElementById('class-gallery-list');
-  wrap.innerHTML = classGalleryItems.map((item, i) => `
-    <div class="dynamic-row" style="align-items:flex-start;">
-      <div style="flex-shrink:0;">
-        <label>عکس</label>
-        <div style="width:90px;height:90px;border-radius:8px;border:1px solid var(--border);overflow:hidden;background:var(--pink-bg);display:flex;align-items:center;justify-content:center;margin-top:6px;">
-          ${item.image
-            ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;">`
-            : `<i class="fa-solid fa-image" style="font-size:26px;color:var(--pink);"></i>`}
-        </div>
-        <input type="file" accept="image/*" style="margin-top:6px;font-size:11px;" onchange="uploadGalleryImage(this, ${i})">
+  list.innerHTML = infoBoxesData.map(box => `
+    <div class="info-box" style="background:${box.color};width:280px;position:relative;">
+      <div style="position:absolute;top:8px;left:8px;display:flex;gap:4px;">
+        <button class="btn-icon-edit" onclick="editInfoBox(${box.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn-icon-delete" onclick="deleteInfoBox(${box.id})">×</button>
       </div>
-      <div class="field">
-        <label>کلاس مربوطه</label>
-        <input type="text" placeholder="مثلاً: نقاشی" value="${escapeAttr(item.className)}"
-               oninput="classGalleryItems[${i}].className = this.value">
-      </div>
-      <div class="field">
-        <label>نام</label>
-        <input type="text" placeholder="مثلاً: نقاشی خانواده" value="${escapeAttr(item.name)}"
-               oninput="classGalleryItems[${i}].name = this.value">
-      </div>
-      <div class="field">
-        <label>توضیحات</label>
-        <input type="text" placeholder="توضیح کوتاه درباره تصویر" value="${escapeAttr(item.desc)}"
-               oninput="classGalleryItems[${i}].desc = this.value">
-      </div>
-      <button type="button" class="btn btn-ghost dynamic-row-remove" title="حذف" onclick="removeGalleryItem(${i})">
-        <i class="fa-solid fa-trash"></i>
-      </button>
+      <div class="category-img"><img src="${box.icon}" alt="" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'"></div>
+      <h3>${box.title}</h3>
+      <p class="desc">${box.desc}</p>
     </div>
-  `).join('') || '<p class="hint" style="margin-bottom:12px;">هنوز آیتمی به گالری اضافه نشده است.</p>';
+  `).join('');
+
+  if (infoBoxesData.length < 3) {
+    addContainer.innerHTML = `<button class="btn btn-ghost" onclick="addInfoBox()"><i class="fa-solid fa-plus"></i> افزودن باکس</button>`;
+  } else {
+    addContainer.innerHTML = `<span style="font-size:12px;color:var(--text-muted);">حداکثر ۳ باکس مجاز است</span>`;
+  }
 }
-function uploadGalleryImage(input, index) {
+
+function addInfoBox() {
+  const newBox = { id: nextInfoBoxId++, icon: 'https://via.placeholder.com/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: infoBoxColors[0].value };
+  infoBoxesData.push(newBox);
+  renderInfoBoxes();
+  editInfoBox(newBox.id);
+}
+
+function editInfoBox(id) {
+  const box = infoBoxesData.find(b => b.id === id);
+  if (!box) return;
+  const colorOptions = infoBoxColors.map(c => `<option value="${c.value}" ${c.value === box.color ? 'selected' : ''} style="background:${c.value};">${c.label}</option>`).join('');
+  const html = `
+    <h3>ویرایش باکس معرفی</h3>
+    <div class="form-grid" style="margin-top:16px;">
+      <div class="field full"><label>عنوان</label><input type="text" id="edit-info-title" value="${escapeHtml(box.title)}"></div>
+      <div class="field full"><label>توضیحات</label><textarea id="edit-info-desc">${escapeHtml(box.desc)}</textarea></div>
+      <div class="field"><label>رنگ</label>
+        <select id="edit-info-color" style="padding:4px;">${colorOptions}</select>
+      </div>
+      <div class="field"><label>آیکن</label>
+        <div class="upload-zone" style="padding:12px;">
+          <input type="file" accept="image/*" onchange="previewInfoBoxIcon(this)">
+          <i class="fa-solid fa-image"></i>
+          <p style="font-size:12px;">آپلود آیکن</p>
+        </div>
+        <img id="edit-info-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveInfoBoxEdit(${id})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeFormModal();renderInfoBoxes();">انصراف</button>
+    </div>
+  `;
+  openFormModal(html);
+}
+
+function previewInfoBoxIcon(input) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
-    reader.onload = e => {
-      classGalleryItems[index].image = e.target.result;
-      renderClassGallery();
-    };
+    reader.onload = e => document.getElementById('edit-info-icon-preview').src = e.target.result;
     reader.readAsDataURL(input.files[0]);
   }
 }
-function addGalleryItem() {
-  classGalleryItems.push({ image: '', className: '', name: '', desc: '' });
-  renderClassGallery();
+
+function saveInfoBoxEdit(id) {
+  const box = infoBoxesData.find(b => b.id === id);
+  if (!box) return;
+  box.title = document.getElementById('edit-info-title').value.trim();
+  box.desc = document.getElementById('edit-info-desc').value.trim();
+  box.color = document.getElementById('edit-info-color').value;
+  const iconPreview = document.getElementById('edit-info-icon-preview');
+  if (iconPreview && iconPreview.src) box.icon = iconPreview.src;
+  closeFormModal();
+  renderInfoBoxes();
+  showToast('باکس ویرایش شد');
 }
-function removeGalleryItem(index) {
-  classGalleryItems.splice(index, 1);
-  renderClassGallery();
+
+function deleteInfoBox(id) {
+  openDeleteModal(() => {
+    infoBoxesData = infoBoxesData.filter(b => b.id !== id);
+    renderInfoBoxes();
+    showToast('حذف شد');
+  });
 }
+
+function saveInfoBoxes() { showToast('ذخیره شد'); }
+function cancelInfoBoxes() { renderInfoBoxes(); }
+
+// ============================================================
+// 13. FEATURE BOXES
+// ============================================================
+
+function renderFeatureBoxes() {
+  const list = document.getElementById('feature-boxes-list');
+  const addContainer = document.getElementById('feature-boxes-add-container');
+
+  list.innerHTML = featureBoxesData.map(box => `
+    <div class="feature-box" style="background:${box.color};min-width:200px;max-width:280px;flex:1 1 200px;position:relative;">
+      <div style="position:absolute;top:8px;left:8px;display:flex;gap:4px;">
+        <button class="btn-icon-edit" onclick="editFeatureBox(${box.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn-icon-delete" onclick="deleteFeatureBox(${box.id})">×</button>
+      </div>
+      <div class="feature-text">
+        <h3>${box.title}</h3>
+        <p>${box.desc}</p>
+      </div>
+      <div class="feature-icon"><img src="${box.icon}" alt="" onerror="this.src='https://via.placeholder.com/40/F0F0F0/999?text=آیکن'"></div>
+    </div>
+  `).join('');
+
+  if (featureBoxesData.length < 6) {
+    addContainer.innerHTML = `<button class="btn btn-ghost" onclick="addFeatureBox()"><i class="fa-solid fa-plus"></i> افزودن باکس</button>`;
+  } else {
+    addContainer.innerHTML = `<span style="font-size:12px;color:var(--text-muted);">حداکثر ۶ باکس مجاز است</span>`;
+  }
+}
+
+function addFeatureBox() {
+  const newBox = { id: nextFeatureBoxId++, icon: 'https://via.placeholder.com/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: featureBoxColors[0].value, link: '' };
+  featureBoxesData.push(newBox);
+  renderFeatureBoxes();
+  editFeatureBox(newBox.id);
+}
+
+function editFeatureBox(id) {
+  const box = featureBoxesData.find(b => b.id === id);
+  if (!box) return;
+  const colorOptions = featureBoxColors.map(c => `<option value="${c.value}" ${c.value === box.color ? 'selected' : ''} style="background:${c.value};">${c.label}</option>`).join('');
+  const html = `
+    <h3>ویرایش باکس دسته‌بندی</h3>
+    <div class="form-grid" style="margin-top:16px;">
+      <div class="field full"><label>عنوان</label><input type="text" id="edit-feature-title" value="${escapeHtml(box.title)}"></div>
+      <div class="field full"><label>توضیحات</label><textarea id="edit-feature-desc">${escapeHtml(box.desc)}</textarea></div>
+      <div class="field"><label>رنگ</label>
+        <select id="edit-feature-color" style="padding:4px;">${colorOptions}</select>
+      </div>
+      <div class="field"><label>لینک</label><input type="text" id="edit-feature-link" value="${escapeHtml(box.link)}"></div>
+      <div class="field full"><label>آیکن</label>
+        <div class="upload-zone" style="padding:12px;">
+          <input type="file" accept="image/*" onchange="previewFeatureIcon(this)">
+          <i class="fa-solid fa-image"></i>
+          <p style="font-size:12px;">آپلود آیکن</p>
+        </div>
+        <img id="edit-feature-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveFeatureBoxEdit(${id})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeFormModal();renderFeatureBoxes();">انصراف</button>
+    </div>
+  `;
+  openFormModal(html);
+}
+
+function previewFeatureIcon(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('edit-feature-icon-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function saveFeatureBoxEdit(id) {
+  const box = featureBoxesData.find(b => b.id === id);
+  if (!box) return;
+  box.title = document.getElementById('edit-feature-title').value.trim();
+  box.desc = document.getElementById('edit-feature-desc').value.trim();
+  box.color = document.getElementById('edit-feature-color').value;
+  box.link = document.getElementById('edit-feature-link').value.trim();
+  const iconPreview = document.getElementById('edit-feature-icon-preview');
+  if (iconPreview && iconPreview.src) box.icon = iconPreview.src;
+  closeFormModal();
+  renderFeatureBoxes();
+  showToast('باکس ویرایش شد');
+}
+
+function deleteFeatureBox(id) {
+  openDeleteModal(() => {
+    featureBoxesData = featureBoxesData.filter(b => b.id !== id);
+    renderFeatureBoxes();
+    showToast('حذف شد');
+  });
+}
+
+function saveFeatureBoxes() { showToast('ذخیره شد'); }
+function cancelFeatureBoxes() { renderFeatureBoxes(); }
+
+// ============================================================
+// 14. FOOTER LINKS (max 5)
+// ============================================================
+
+function renderFooterLinks() {
+  const wrap = document.getElementById('footer-links-list');
+  const counter = document.getElementById('footer-link-counter');
+
+  wrap.innerHTML = footerLinksData.map((link, i) => `
+    <div class="dynamic-row">
+      <div class="field"><label>عنوان</label><input type="text" value="${escapeHtml(link.title)}" oninput="footerLinksData[${i}].title = this.value"></div>
+      <div class="field"><label>آدرس</label><input type="text" value="${escapeHtml(link.url)}" oninput="footerLinksData[${i}].url = this.value"></div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" onclick="removeFooterLink(${i})"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  `).join('') || '<p class="hint">هنوز لینکی اضافه نشده است.</p>';
+
+  counter.textContent = `${footerLinksData.length} / ۵`;
+  document.getElementById('add-footer-link-btn').disabled = footerLinksData.length >= 5;
+}
+
+function addFooterLink() {
+  if (footerLinksData.length >= 5) return;
+  footerLinksData.push({ id: nextFooterLinkId++, title: '', url: '' });
+  renderFooterLinks();
+}
+
+function removeFooterLink(index) {
+  openDeleteModal(() => {
+    footerLinksData.splice(index, 1);
+    renderFooterLinks();
+    showToast('حذف شد');
+  });
+}
+
+function saveFooterLinks() { showToast('ذخیره شد'); }
+function cancelFooterLinks() { renderFooterLinks(); }
+
+// ============================================================
+// 15. SOCIAL LINKS (max 9)
+// ============================================================
+
+function renderSocialLinks() {
+  const wrap = document.getElementById('social-links-list');
+  const counter = document.getElementById('social-link-counter');
+
+  wrap.innerHTML = socialLinksData.map((link, i) => {
+    const platform = getSocialPlatform(link.platform);
+    const options = socialPlatforms.map(p =>
+      `<option value="${p.key}" ${p.key === link.platform ? 'selected' : ''}>${p.label}</option>`
+    ).join('');
+    return `
+    <div class="dynamic-row">
+      <div class="field">
+        <label>شبکه</label>
+        <div class="social-platform-picker">
+          <span class="social-icon-preview" style="color:${platform.color};"><i class="${platform.icon}"></i></span>
+          <select style="flex:1;" onchange="socialLinksData[${i}].platform = this.value; renderSocialLinks();">${options}</select>
+        </div>
+      </div>
+      <div class="field"><label>لینک</label><input type="url" placeholder="${platform.placeholder}" value="${escapeHtml(link.url)}" oninput="socialLinksData[${i}].url = this.value"></div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" onclick="removeSocialLink(${i})"><i class="fa-solid fa-trash"></i></button>
+    </div>`;
+  }).join('') || '<p class="hint">هنوز شبکه‌ای اضافه نشده است.</p>';
+
+  counter.textContent = `${socialLinksData.length} / ۹`;
+  document.getElementById('add-social-link-btn').disabled = socialLinksData.length >= 9;
+}
+
+function addSocialLink() {
+  if (socialLinksData.length >= 9) return;
+  socialLinksData.push({ id: nextSocialLinkId++, platform: 'instagram', url: '' });
+  renderSocialLinks();
+}
+
+function removeSocialLink(index) {
+  openDeleteModal(() => {
+    socialLinksData.splice(index, 1);
+    renderSocialLinks();
+    showToast('حذف شد');
+  });
+}
+
+function saveSocialLinks() { showToast('ذخیره شد'); }
+function cancelSocialLinks() { renderSocialLinks(); }
+
+// ============================================================
+// 16. ACHIEVEMENTS (max 3)
+// ============================================================
+
+function renderAchievements() {
+  const wrap = document.getElementById('achievements-list');
+  const counter = document.getElementById('achievement-counter');
+
+  wrap.innerHTML = achievementsData.map((a, i) => `
+    <div class="dynamic-row">
+      <div class="field"><label>عنوان</label><input type="text" value="${escapeHtml(a.title)}" oninput="achievementsData[${i}].title = this.value"></div>
+      <div class="field"><label>مقدار</label><input type="text" value="${escapeHtml(a.value)}" oninput="achievementsData[${i}].value = this.value"></div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" onclick="removeAchievement(${i})"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  `).join('') || '<p class="hint">هنوز دستاوردی اضافه نشده است.</p>';
+
+  counter.textContent = `${achievementsData.length} / ۳`;
+  document.getElementById('add-achievement-btn').disabled = achievementsData.length >= 3;
+}
+
+function addAchievement() {
+  if (achievementsData.length >= 3) return;
+  achievementsData.push({ id: nextAchievementId++, title: '', value: '' });
+  renderAchievements();
+}
+
+function removeAchievement(index) {
+  openDeleteModal(() => {
+    achievementsData.splice(index, 1);
+    renderAchievements();
+    showToast('حذف شد');
+  });
+}
+
+function saveAchievements() { showToast('ذخیره شد'); }
+function cancelAchievements() { renderAchievements(); }
+
+// ============================================================
+// 17. SLIDER
+// ============================================================
+
+let homeSliderImages = ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'];
+
+function renderHomeSliderImages() {
+  const grid = document.getElementById('home-slider-images-grid');
+  grid.innerHTML = homeSliderImages.map((src, i) => `
+    <div class="img-thumb-card">
+      <img src="${src}" onerror="this.src='https://via.placeholder.com/200x200/F0F0F0/999?text=بدون+تصویر'">
+      <div class="img-thumb-actions">
+        <button type="button" onclick="document.getElementById('home-slider-replace-${i}').click()" class="btn-icon-edit"><i class="fa-solid fa-pen"></i></button>
+        <button type="button" onclick="removeHomeSliderImage(${i})" class="btn-icon-delete">×</button>
+      </div>
+      <input type="file" accept="image/*" id="home-slider-replace-${i}" style="display:none;" onchange="replaceHomeSliderImage(this, ${i})">
+    </div>
+  `).join('');
+  const uploadZone = document.getElementById('home-slider-images-upload-zone');
+  const fullMsg = document.getElementById('home-slider-images-full-msg');
+  const isFull = homeSliderImages.length >= 3;
+  uploadZone.style.display = isFull ? 'none' : 'block';
+  if (fullMsg) fullMsg.style.display = isFull ? 'block' : 'none';
+}
+
+function replaceHomeSliderImage(input, index) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      homeSliderImages[index] = e.target.result;
+      renderHomeSliderImages();
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+  input.value = '';
+}
+
+function handleHomeSliderUpload(input) {
+  if (!input.files) return;
+  const remainingSlots = 3 - homeSliderImages.length;
+  if (remainingSlots <= 0) { alert('حداکثر ۳ عکس مجاز است.'); input.value = ''; return; }
+  const files = Array.from(input.files).slice(0, remainingSlots);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      homeSliderImages.push(e.target.result);
+      renderHomeSliderImages();
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+function removeHomeSliderImage(index) {
+  homeSliderImages.splice(index, 1);
+  renderHomeSliderImages();
+}
+
+function saveHomeSlider() { showToast('ذخیره شد'); }
+function cancelHomeSlider() {
+  homeSliderImages = ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'];
+  renderHomeSliderImages();
+  document.getElementById('home-slider-title-input').value = 'تاریخچه';
+  document.getElementById('home-slider-desc-input').value = 'داستان شکل‌گیری مهدکودک کیدآپ';
+}
+
+// ============================================================
+// 18. BANNER
+// ============================================================
+
+function previewBannerImage(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('banner-image-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function saveBanner() { showToast('ذخیره شد'); }
+function cancelBanner() {
+  document.getElementById('banner-image-preview').src = 'https://via.placeholder.com/300x200/F0F0F0/999?text=بنر';
+  document.getElementById('banner-title-input').value = 'کودک شاد، کودک سالم!';
+  document.getElementById('banner-desc-input').value = 'محیطی شاد و امن برای رشد و شکوفایی استعدادهای کودکان';
+}
+
+// ============================================================
+// 19. GENERAL SETTINGS
+// ============================================================
+
+function previewLogo(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('logo-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function previewFavicon(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('favicon-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function saveGeneralSettings() { showToast('ذخیره شد'); }
+function cancelGeneralSettings() {
+  document.getElementById('site-name-input').value = 'کیدآپ — مهدکودک';
+  document.getElementById('logo-preview').src = '/img/Logo.png';
+  document.getElementById('favicon-preview').src = 'https://via.placeholder.com/48/F875AA/fff?text=K';
+}
+
+// ============================================================
+// 20. ADMIN PHOTO
+// ============================================================
+
+function previewAdminPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('admin-photo-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// ============================================================
+// 21. MESSAGES
+// ============================================================
 
 function selectMsg(el, name, text) {
   document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
@@ -1720,27 +2156,41 @@ function sendReply() {
   input.value = '';
   area.scrollTop = area.scrollHeight;
 }
-const sidebar=document.querySelector(".sidebar");
-const overlay=document.querySelector(".sidebar-overlay");
 
-function toggleSidebar(){
+// ============================================================
+// 22. GENERIC IMAGE PREVIEW
+// ============================================================
 
-    sidebar.classList.toggle("open");
-    overlay.classList.toggle("show");
-
+function previewGenericImage(input, targetId) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById(targetId).src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
 }
 
-function closeSidebar(){
+// ============================================================
+// 23. INITIALIZATION
+// ============================================================
 
-    sidebar.classList.remove("open");
-    overlay.classList.remove("show");
-
+function init() {
+  renderStudents();
+  renderTeachers();
+  renderBlog();
+  renderGallery();
+  renderClasses();
+  renderInfoBoxes();
+  renderFeatureBoxes();
+  renderFooterLinks();
+  renderSocialLinks();
+  renderAchievements();
+  renderHomeSliderImages();
+  fillClassSelects();
+  renderClassAxisChips();
+  renderClassSlides();
 }
 
-fillClassSelects();
-renderClassAxisChips();
-renderClassSlides();
-renderClassGallery();
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
