@@ -59,15 +59,6 @@
       <i class="fa-solid fa-newspaper"></i> وبلاگ
     </div>
 
-    <div class="nav-section">ارتباطات</div>
-    <div class="nav-item" onclick="showSection('messages')">
-      <i class="fa-solid fa-envelope"></i> پیام‌ها
-      <span class="nav-badge">۳</span>
-    </div>
-    <div class="nav-item" onclick="showSection('notifications')">
-      <i class="fa-solid fa-bell"></i> اعلان‌ها
-      <span class="nav-badge" id="notif-sidebar-badge">۳</span>
-    </div>
   </nav>
 
   <nav class="sidebar-quick-links">
@@ -100,41 +91,10 @@
     </nav>
 
     <div class="topbar-brand">
-      <div class="icon-btn notif-dot" title="اعلان‌ها" onclick="toggleNotifications()">
-        <i class="fa-regular fa-bell"></i>
-        <span class="notif-count" id="notif-header-count">۳</span>
-      </div>
       <a href="/main.html" class="topbar-logo">
         <img src="/img/Logo.png" alt="لوگو">
       </a>
     </div>
-  </div>
-
-  <!-- Notification Dropdown -->
-  <div id="notif-dropdown">
-    <div style="padding:0 16px 10px;border-bottom:1px solid var(--border);font-weight:600;font-size:14px;">اعلان‌ها</div>
-    <div class="notif-item" style="padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="markNotifRead(this, 1)">
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span style="background:var(--pink-bg);color:var(--pink);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-user"></i></span>
-        <div><div style="font-size:13px;font-weight:500;">ثبت‌نام جدید</div><div style="font-size:12px;color:var(--text-muted);">سارا احمدی ثبت‌نام کرد</div></div>
-      </div>
-      <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۲ دقیقه پیش</div>
-    </div>
-    <div class="notif-item" style="padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="markNotifRead(this, 2)">
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span style="background:var(--green-bg);color:var(--success);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-check"></i></span>
-        <div><div style="font-size:13px;font-weight:500;">تأیید کلاس</div><div style="font-size:12px;color:var(--text-muted);">کلاس نقاشی تأیید شد</div></div>
-      </div>
-      <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۱ ساعت پیش</div>
-    </div>
-    <div class="notif-item" style="padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="markNotifRead(this, 3)">
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span style="background:var(--warning-bg);color:var(--warning);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-clock"></i></span>
-        <div><div style="font-size:13px;font-weight:500;">یادآوری</div><div style="font-size:12px;color:var(--text-muted);">جلسه فردا ساعت ۱۰</div></div>
-      </div>
-      <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۳ ساعت پیش</div>
-    </div>
-    <div style="padding:8px 16px;text-align:center;font-size:12px;color:var(--pink);cursor:pointer;" onclick="viewAllNotifications()">مشاهده همه</div>
   </div>
 
   <!-- CONTENT -->
@@ -221,7 +181,7 @@
       </div>
 
       <!-- شبکه‌های اجتماعی -->
-      <div class="card">
+      <div class="card" style="margin-bottom:16px;">
         <div class="card-head">
           <div>
             <div class="card-title">شبکه‌های اجتماعی</div>
@@ -237,6 +197,27 @@
           <div class="btn-row">
             <button class="btn btn-primary" onclick="saveSocialLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
             <button class="btn btn-ghost" onclick="cancelSocialLinks()">انصراف</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- لینک‌های قوانین و مقررات (حداکثر ۳) -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">لینک‌های قوانین و مقررات</div>
+            <div class="card-sub">لینک‌های پایین فوتر مثل قوانین و مقررات، حریم خصوصی و نقشه سایت (حداکثر ۳ عدد)</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="legal-links-list"></div>
+          <button type="button" class="btn btn-ghost" id="add-legal-link-btn" onclick="addLegalLink()">
+            <i class="fa-solid fa-plus"></i> افزودن لینک
+          </button>
+          <span id="legal-link-counter" style="font-size:12px;color:var(--text-muted);margin-right:8px;"></span>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="saveLegalLinks()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-ghost" onclick="cancelLegalLinks()">انصراف</button>
           </div>
         </div>
       </div>
@@ -377,17 +358,32 @@
         <div class="card-head"><div class="card-title">متن معرفی</div></div>
         <div class="card-body">
           <div class="form-grid full">
+            <div class="field full">
+              <label>عکس معرفی</label>
+              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                <img src="https://via.placeholder.com/300x200/F0F0F0/999?text=معرفی" class="logo-preview" id="about-intro-image-preview" alt="عکس معرفی" style="width:140px;height:90px;object-fit:cover;">
+                <div style="flex:1;min-width:160px;">
+                  <div class="upload-zone">
+                    <input type="file" accept="image/jpeg, image/png, image/webp" onchange="previewAboutIntroImage(this)">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p>آپلود عکس معرفی</p>
+                    <small>JPG، PNG یا WEBP</small>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="field">
               <label>عنوان</label>
-              <input type="text" value="درباره ما">
+              <input type="text" id="about-intro-title-input" value="درباره ما">
             </div>
             <div class="field">
               <label>توضیحات</label>
-              <textarea style="min-height:120px;">مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطراف تشویق می‌کنیم.</textarea>
+              <textarea id="about-intro-desc-input" style="min-height:120px;">مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطراف تشویق می‌کنیم.</textarea>
             </div>
           </div>
           <div class="btn-row">
             <button class="btn btn-primary" onclick="showToast('ذخیره شد')"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-ghost" onclick="cancelAboutIntro()">انصراف</button>
           </div>
         </div>
       </div>
@@ -396,12 +392,13 @@
         <div class="card-head"><div class="card-title">اطلاعات تماس</div></div>
         <div class="card-body">
           <div class="form-grid">
-            <div class="field"><label>آدرس</label><input type="text" value="تهران، خیابان کودکستان"></div>
-            <div class="field"><label>تلفن</label><input type="tel" value="۰۲۱-۱۲۳۴۵۶۷۸"></div>
-            <div class="field full"><label>ایمیل</label><input type="email" value="info@kidup.com"></div>
+            <div class="field"><label>آدرس</label><input type="text" id="about-contact-address-input" value="تهران، خیابان کودکستان"></div>
+            <div class="field"><label>تلفن</label><input type="tel" id="about-contact-phone-input" value="۰۲۱-۱۲۳۴۵۶۷۸"></div>
+            <div class="field full"><label>ایمیل</label><input type="email" id="about-contact-email-input" value="info@kidup.com"></div>
           </div>
           <div class="btn-row">
             <button class="btn btn-primary" onclick="showToast('ذخیره شد')"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+            <button class="btn btn-ghost" onclick="cancelAboutContact()">انصراف</button>
           </div>
         </div>
       </div>
@@ -590,101 +587,11 @@
         <button class="btn btn-primary" onclick="openBlogModal()"><i class="fa-solid fa-plus"></i> مقاله جدید</button>
       </div>
       <div class="card">
-        <div style="overflow-x:auto;">
-          <table class="data-table">
+        <div class="blog-table-wrap" style="overflow-x:auto;">
+          <table class="data-table blog-table">
             <thead><tr><th>تصویر</th><th>عنوان</th><th>دسته</th><th>تاریخ</th><th>برچسب‌ها</th><th>وضعیت</th><th>عملیات</th></tr></thead>
             <tbody id="blog-table-body"></tbody>
           </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ SECTION: پیام‌ها ══ -->
-    <div id="sec-messages" class="section">
-      <div class="sec-header">
-        <div>
-          <div class="sec-title">پیام‌ها</div>
-          <div class="sec-sub">۳ پیام خوانده‌نشده</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="msg-pane">
-          <div class="msg-list-pane">
-            <div class="msg-item unread active" onclick="selectMsg(this,'زهرا رضایی','درباره حضور و غیاب فرزندم می‌خواستم سوال کنم.')">
-              <div class="msg-av">ز</div>
-              <div class="msg-meta"><div class="msg-sender">زهرا رضایی</div><div class="msg-preview">درباره حضور و غیاب...</div></div>
-              <div class="msg-time">۱۰:۳۲</div>
-            </div>
-            <div class="msg-item unread" onclick="selectMsg(this,'محمد محمدی','آیا کلاس فردا برگزار می‌شود؟')">
-              <div class="msg-av">م</div>
-              <div class="msg-meta"><div class="msg-sender">محمد محمدی</div><div class="msg-preview">آیا کلاس فردا...</div></div>
-              <div class="msg-time">دیروز</div>
-            </div>
-            <div class="msg-item" onclick="selectMsg(this,'فاطمه احمدی','ممنون از همکاری خوب تیم')">
-              <div class="msg-av">ف</div>
-              <div class="msg-meta"><div class="msg-sender">فاطمه احمدی</div><div class="msg-preview">ممنون از همکاری...</div></div>
-              <div class="msg-time">شنبه</div>
-            </div>
-          </div>
-          <div class="msg-chat" id="msg-chat-area">
-            <div class="msg-chat-head">
-              <div class="msg-av">ز</div>
-              <div><div class="u-name" id="chat-name">زهرا رضایی</div><div class="u-sub">والدین نیلوفر</div></div>
-            </div>
-            <div id="chat-bubble-area" style="flex:1;display:flex;flex-direction:column;gap:8px;overflow-y:auto;">
-              <div><div class="chat-bubble" id="chat-msg-text">درباره حضور و غیاب فرزندم می‌خواستم سوال کنم.</div><div class="chat-time">۱۰:۳۲</div></div>
-            </div>
-            <div class="chat-input-row">
-              <input type="text" placeholder="پاسخ..." id="reply-input" style="flex:1;" onkeydown="if(event.key==='Enter')sendReply()">
-              <button class="btn btn-primary" onclick="sendReply()"><i class="fa-solid fa-paper-plane"></i> ارسال</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ SECTION: اعلان‌ها ══ -->
-    <div id="sec-notifications" class="section">
-      <div class="sec-header">
-        <div>
-          <div class="sec-title">اعلان‌ها</div>
-          <div class="sec-sub">مدیریت اعلان‌های سیستم</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <div id="notifications-list">
-            <div class="notif-item" style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <div style="display:flex;gap:10px;align-items:center;">
-                  <span style="background:var(--pink-bg);color:var(--pink);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-user"></i></span>
-                  <div><div style="font-size:13px;font-weight:500;">ثبت‌نام جدید</div><div style="font-size:12px;color:var(--text-muted);">سارا احمدی ثبت‌نام کرد</div></div>
-                </div>
-                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۲ دقیقه پیش</div>
-              </div>
-              <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px;" onclick="removeNotification(this)">حذف</button>
-            </div>
-            <div class="notif-item" style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <div style="display:flex;gap:10px;align-items:center;">
-                  <span style="background:var(--green-bg);color:var(--success);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-check"></i></span>
-                  <div><div style="font-size:13px;font-weight:500;">تأیید کلاس</div><div style="font-size:12px;color:var(--text-muted);">کلاس نقاشی تأیید شد</div></div>
-                </div>
-                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۱ ساعت پیش</div>
-              </div>
-              <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px;" onclick="removeNotification(this)">حذف</button>
-            </div>
-            <div class="notif-item" style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <div style="display:flex;gap:10px;align-items:center;">
-                  <span style="background:var(--warning-bg);color:var(--warning);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-clock"></i></span>
-                  <div><div style="font-size:13px;font-weight:500;">یادآوری</div><div style="font-size:12px;color:var(--text-muted);">جلسه فردا ساعت ۱۰</div></div>
-                </div>
-                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">۳ ساعت پیش</div>
-              </div>
-              <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px;" onclick="removeNotification(this)">حذف</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -719,7 +626,7 @@
 // 1. CORE DATA
 // ============================================================
 
-const sections = ['site','homepage','about','students','teachers','classes','blog','messages','notifications'];
+const sections = ['site','homepage','about','students','teachers','classes','blog'];
 
 // ---------- Students ----------
 let studentsData = [
@@ -818,6 +725,14 @@ let footerLinksData = [
 ];
 let nextFooterLinkId = 4;
 
+// ---------- Legal Links (max 3) ----------
+let legalLinksData = [
+  { id: 1, title: 'قوانین و مقررات', url: '#' },
+  { id: 2, title: 'حریم خصوصی', url: '#' },
+  { id: 3, title: 'نقشه سایت', url: '#' },
+];
+let nextLegalLinkId = 4;
+
 // ---------- Social Links (max 9) ----------
 let socialLinksData = [
   { id: 1, platform: 'instagram', url: 'https://instagram.com/kidup' },
@@ -889,65 +804,6 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
-
-// ============================================================
-// 3. NOTIFICATIONS
-// ============================================================
-
-let notifOpen = false;
-let notifCount = 3;
-
-function toggleNotifications() {
-  const dropdown = document.getElementById('notif-dropdown');
-  notifOpen = !notifOpen;
-  dropdown.style.display = notifOpen ? 'block' : 'none';
-}
-
-function markNotifRead(el, id) {
-  el.style.background = 'var(--surface-1)';
-  notifCount--;
-  updateNotifBadge();
-  showToast('اعلان خوانده شد');
-}
-
-function updateNotifBadge() {
-  const headerCount = document.getElementById('notif-header-count');
-  const sidebarBadge = document.getElementById('notif-sidebar-badge');
-  const count = notifCount > 0 ? notifCount : '۰';
-  if (headerCount) headerCount.textContent = count;
-  if (sidebarBadge) sidebarBadge.textContent = count;
-  if (notifCount <= 0) {
-    document.querySelector('.notif-dot').classList.remove('notif-dot');
-  }
-}
-
-function viewAllNotifications() {
-  document.getElementById('notif-dropdown').style.display = 'none';
-  notifOpen = false;
-  showSection('notifications');
-}
-
-function removeNotification(el) {
-  const item = el.closest('.notif-item');
-  if (item) {
-    openDeleteModal(() => {
-      item.remove();
-      notifCount--;
-      updateNotifBadge();
-      showToast('اعلان حذف شد');
-    });
-  }
-}
-
-// Close notification on outside click
-document.addEventListener('click', function(e) {
-  const dropdown = document.getElementById('notif-dropdown');
-  const btn = document.querySelector('.icon-btn.notif-dot');
-  if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
-    dropdown.style.display = 'none';
-    notifOpen = false;
-  }
-});
 
 // ============================================================
 // 4. SIDEBAR
@@ -1206,13 +1062,13 @@ function renderBlog() {
   const tbody = document.getElementById('blog-table-body');
   tbody.innerHTML = blogData.map(b => `
     <tr>
-      <td><img src="${b.image || 'https://via.placeholder.com/50/FFF0F7/F875AA?text=img'}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"></td>
-      <td><strong>${b.title}</strong></td>
-      <td>${b.category}</td>
-      <td>${b.date}</td>
-      <td><span style="font-size:12px;color:var(--text-muted);">${b.tags || ''}</span></td>
-      <td><span class="chip ${b.status === 'منتشر' ? 'green' : 'amber'}">${b.status}</span></td>
-      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+      <td class="blog-img-cell"><img src="${b.image || 'https://via.placeholder.com/50/FFF0F7/F875AA?text=img'}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"></td>
+      <td class="blog-title-cell" data-label="عنوان"><strong>${b.title}</strong></td>
+      <td data-label="دسته">${b.category}</td>
+      <td data-label="تاریخ">${b.date}</td>
+      <td data-label="برچسب‌ها"><span style="font-size:12px;color:var(--text-muted);">${b.tags || ''}</span></td>
+      <td data-label="وضعیت"><span class="chip ${b.status === 'منتشر' ? 'green' : 'amber'}">${b.status}</span></td>
+      <td class="blog-actions-cell" data-label="عملیات"><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
     </tr>
   `).join('');
 }
@@ -1926,6 +1782,43 @@ function saveFooterLinks() { showToast('ذخیره شد'); }
 function cancelFooterLinks() { renderFooterLinks(); }
 
 // ============================================================
+// 14.1 LEGAL LINKS (max 3)
+// ============================================================
+
+function renderLegalLinks() {
+  const wrap = document.getElementById('legal-links-list');
+  const counter = document.getElementById('legal-link-counter');
+
+  wrap.innerHTML = legalLinksData.map((link, i) => `
+    <div class="dynamic-row">
+      <div class="field"><label>عنوان</label><input type="text" value="${escapeHtml(link.title)}" oninput="legalLinksData[${i}].title = this.value"></div>
+      <div class="field"><label>آدرس</label><input type="text" value="${escapeHtml(link.url)}" oninput="legalLinksData[${i}].url = this.value"></div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" onclick="removeLegalLink(${i})"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  `).join('') || '<p class="hint">هنوز لینکی اضافه نشده است.</p>';
+
+  counter.textContent = `${legalLinksData.length} / ۳`;
+  document.getElementById('add-legal-link-btn').disabled = legalLinksData.length >= 3;
+}
+
+function addLegalLink() {
+  if (legalLinksData.length >= 3) return;
+  legalLinksData.push({ id: nextLegalLinkId++, title: '', url: '' });
+  renderLegalLinks();
+}
+
+function removeLegalLink(index) {
+  openDeleteModal(() => {
+    legalLinksData.splice(index, 1);
+    renderLegalLinks();
+    showToast('حذف شد');
+  });
+}
+
+function saveLegalLinks() { showToast('ذخیره شد'); }
+function cancelLegalLinks() { renderLegalLinks(); }
+
+// ============================================================
 // 15. SOCIAL LINKS (max 9)
 // ============================================================
 
@@ -2096,6 +1989,30 @@ function cancelBanner() {
 }
 
 // ============================================================
+// 18b. ABOUT — متن معرفی و اطلاعات تماس
+// ============================================================
+
+function previewAboutIntroImage(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('about-intro-image-preview').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function cancelAboutIntro() {
+  document.getElementById('about-intro-image-preview').src = 'https://via.placeholder.com/300x200/F0F0F0/999?text=معرفی';
+  document.getElementById('about-intro-title-input').value = 'درباره ما';
+  document.getElementById('about-intro-desc-input').value = 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطراف تشویق می‌کنیم.';
+}
+
+function cancelAboutContact() {
+  document.getElementById('about-contact-address-input').value = 'تهران، خیابان کودکستان';
+  document.getElementById('about-contact-phone-input').value = '۰۲۱-۱۲۳۴۵۶۷۸';
+  document.getElementById('about-contact-email-input').value = 'info@kidup.com';
+}
+
+// ============================================================
 // 19. GENERAL SETTINGS
 // ============================================================
 
@@ -2135,29 +2052,6 @@ function previewAdminPhoto(input) {
 }
 
 // ============================================================
-// 21. MESSAGES
-// ============================================================
-
-function selectMsg(el, name, text) {
-  document.querySelectorAll('.msg-item').forEach(i => i.classList.remove('active'));
-  el.classList.add('active');
-  el.classList.remove('unread');
-  document.getElementById('chat-name').textContent = name;
-  document.getElementById('chat-msg-text').textContent = text;
-  document.getElementById('chat-bubble-area').innerHTML = `<div><div class="chat-bubble">${text}</div><div class="chat-time">الان</div></div>`;
-}
-
-function sendReply() {
-  const input = document.getElementById('reply-input');
-  const val = input.value.trim();
-  if (!val) return;
-  const area = document.getElementById('chat-bubble-area');
-  area.innerHTML += `<div style="align-self:flex-start;"><div class="chat-bubble mine">${val}</div><div class="chat-time">همین الان</div></div>`;
-  input.value = '';
-  area.scrollTop = area.scrollHeight;
-}
-
-// ============================================================
 // 22. GENERIC IMAGE PREVIEW
 // ============================================================
 
@@ -2182,6 +2076,7 @@ function init() {
   renderInfoBoxes();
   renderFeatureBoxes();
   renderFooterLinks();
+  renderLegalLinks();
   renderSocialLinks();
   renderAchievements();
   renderHomeSliderImages();
