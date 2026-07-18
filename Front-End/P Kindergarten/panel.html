@@ -674,6 +674,25 @@ let classesData = [
 ];
 let nextClassId = 4;
 
+// ---------- Color Swatch Picker (used by Info Boxes & Feature Boxes) ----------
+// رنگ‌ها به‌صورت باکس‌های کوچک قابل‌کلیک نمایش داده می‌شوند به‌جای select
+function renderColorSwatches(colors, selectedColor, hiddenInputId) {
+  return colors.map(c => `
+    <div class="color-swatch${c.value === selectedColor ? ' selected' : ''}"
+         style="background:${c.value};"
+         title="${c.label}"
+         data-color="${c.value}"
+         onclick="selectColorSwatch(this, '${hiddenInputId}')"></div>
+  `).join('');
+}
+
+function selectColorSwatch(el, hiddenInputId) {
+  const row = el.parentElement;
+  row.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById(hiddenInputId).value = el.dataset.color;
+}
+
 // ---------- Info Boxes (Hero Cards) ----------
 const infoBoxColors = [
   { value: '#ffb6c1', label: 'صورتی' },
@@ -1183,7 +1202,7 @@ function renderGallery() {
           </div>
         </div>
         <div id="gallery-content-${className}" style="padding:16px;display:${isOpen ? 'block' : 'none'};">
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;">
             ${items.length === 0 ? `<div class="empty-state" style="grid-column:1/-1;padding:20px;"><p>هیچ عکسی در این گالری وجود ندارد</p></div>` : ''}
             ${items.map(item => `
               <div class="card" style="overflow:hidden;">
@@ -1587,14 +1606,16 @@ function addInfoBox() {
 function editInfoBox(id) {
   const box = infoBoxesData.find(b => b.id === id);
   if (!box) return;
-  const colorOptions = infoBoxColors.map(c => `<option value="${c.value}" ${c.value === box.color ? 'selected' : ''} style="background:${c.value};">${c.label}</option>`).join('');
+  const colorSwatches = renderColorSwatches(infoBoxColors, box.color, 'edit-info-color');
   const html = `
     <h3>ویرایش باکس معرفی</h3>
     <div class="form-grid" style="margin-top:16px;">
       <div class="field full"><label>عنوان</label><input type="text" id="edit-info-title" value="${escapeHtml(box.title)}"></div>
       <div class="field full"><label>توضیحات</label><textarea id="edit-info-desc">${escapeHtml(box.desc)}</textarea></div>
-      <div class="field"><label>رنگ</label>
-        <select id="edit-info-color" style="padding:4px;">${colorOptions}</select>
+      <div class="field">
+        <label>رنگ</label>
+        <input type="hidden" id="edit-info-color" value="${box.color}">
+        <div class="color-swatch-row">${colorSwatches}</div>
       </div>
       <div class="field"><label>آیکن</label>
         <div class="upload-zone" style="padding:12px;">
@@ -1684,14 +1705,16 @@ function addFeatureBox() {
 function editFeatureBox(id) {
   const box = featureBoxesData.find(b => b.id === id);
   if (!box) return;
-  const colorOptions = featureBoxColors.map(c => `<option value="${c.value}" ${c.value === box.color ? 'selected' : ''} style="background:${c.value};">${c.label}</option>`).join('');
+  const colorSwatches = renderColorSwatches(featureBoxColors, box.color, 'edit-feature-color');
   const html = `
     <h3>ویرایش باکس دسته‌بندی</h3>
     <div class="form-grid" style="margin-top:16px;">
       <div class="field full"><label>عنوان</label><input type="text" id="edit-feature-title" value="${escapeHtml(box.title)}"></div>
       <div class="field full"><label>توضیحات</label><textarea id="edit-feature-desc">${escapeHtml(box.desc)}</textarea></div>
-      <div class="field"><label>رنگ</label>
-        <select id="edit-feature-color" style="padding:4px;">${colorOptions}</select>
+      <div class="field">
+        <label>رنگ</label>
+        <input type="hidden" id="edit-feature-color" value="${box.color}">
+        <div class="color-swatch-row">${colorSwatches}</div>
       </div>
       <div class="field"><label>لینک</label><input type="text" id="edit-feature-link" value="${escapeHtml(box.link)}"></div>
       <div class="field full"><label>آیکن</label>
