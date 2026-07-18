@@ -890,6 +890,7 @@
     #classes-grid { grid-template-columns: 1fr; }
 }
 
+
 #sec-blog .blog-table-wrap {
   overflow-x: auto;
 }
@@ -963,5 +964,61 @@
 @media (max-width: 480px) {
   #class-axis-chips {
     flex-wrap: wrap;
+  }
+}
+
+/* === وسط‌چین شدن فرم ویرایش باکس معرفی === */
+@media (max-width: 600px) {
+  .info-box-edit-form h3 {
+    text-align: center;
+  }
+  .info-box-edit-form .field {
+    align-items: center;
+  }
+  .info-box-edit-form label {
+    text-align: center;
+    width: 100%;
+  }
+  .info-box-edit-form .color-swatch-row {
+    justify-content: center;
+  }
+  .info-box-edit-form .upload-zone {
+    width: 100%;
+  }
+  .info-box-edit-form #edit-info-icon-preview {
+    margin: 6px auto 0;
+  }
+  .info-box-edit-form .btn-row {
+    justify-content: center;
+  }
+}
+
+/* =====  باکس‌های دسته‌بندی  ===== */
+@media (max-width: 992px) {
+  #feature-boxes-list {
+    justify-content: center !important;
+    text-align: center;
+  }
+  #feature-boxes-wrapper #feature-boxes-add-container {
+    text-align: center;
+  }
+}
+
+/* ===== ستون‌های لیست کلاس‌ها ===== */
+@media (max-width: 992px) {
+  #classes-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #classes-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #classes-grid {
+    grid-template-columns: 1fr !important;
   }
 }
