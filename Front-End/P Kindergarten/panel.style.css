@@ -890,9 +890,78 @@
     #classes-grid { grid-template-columns: 1fr; }
 }
 
-/* ===========================
-   بخش وبلاگ — ریسپانسیو (اسکرول افقی ساده، مطابق پنل قبلی)
-=========================== */
 #sec-blog .blog-table-wrap {
   overflow-x: auto;
+}
+
+#form-modal {
+  align-items: center;
+  justify-content: center;
+}
+
+#form-modal > div {
+  margin: auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  #form-modal {
+    padding: 12px;
+  }
+  #form-modal > div {
+    width: calc(100% - 0px);
+    max-width: 100%;
+    padding: 18px;
+  }
+}
+
+/* -----باکس رنگی- --------*/
+.color-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.color-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.selected {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--pink);
+}
+
+
+#class-form-card {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+#class-form-card .form-grid,
+#class-form-card .field,
+#class-form-card .dynamic-row,
+#class-form-card select,
+#class-form-card input,
+#class-form-card textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#class-slides-grid {
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+}
+
+@media (max-width: 480px) {
+  #class-axis-chips {
+    flex-wrap: wrap;
+  }
 }
