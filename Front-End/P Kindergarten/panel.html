@@ -1608,6 +1608,7 @@ function editInfoBox(id) {
   if (!box) return;
   const colorSwatches = renderColorSwatches(infoBoxColors, box.color, 'edit-info-color');
   const html = `
+    <div class="info-box-edit-form">
     <h3>ویرایش باکس معرفی</h3>
     <div class="form-grid" style="margin-top:16px;">
       <div class="field full"><label>عنوان</label><input type="text" id="edit-info-title" value="${escapeHtml(box.title)}"></div>
@@ -1629,6 +1630,7 @@ function editInfoBox(id) {
     <div class="btn-row">
       <button class="btn btn-primary" onclick="saveInfoBoxEdit(${id})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
       <button class="btn btn-ghost" onclick="closeFormModal();renderInfoBoxes();">انصراف</button>
+    </div>
     </div>
   `;
   openFormModal(html);
