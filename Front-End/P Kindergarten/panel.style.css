@@ -553,6 +553,7 @@
   .chip.amber { background: var(--warning-bg); color: var(--warning); }
   .chip.pink { background: var(--pink-bg); color: var(--pink); }
   .chip.gray { background: var(--surface-1); color: var(--text-muted); }
+  .chip.blue { background: #E6F1FB; color: #185FA5; }
 
   /* ─── TABLE ─── */
   .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -589,6 +590,12 @@
   .u-av.blue { background: #E6F1FB; color: #185FA5; }
   .u-av.green { background: var(--green-bg); color: var(--success); }
   .u-av.amber { background: var(--warning-bg); color: var(--warning); }
+
+  .u-av-img {
+    width: 30px; height: 30px; border-radius: 50%;
+    object-fit: cover; flex-shrink: 0; display: block;
+    border: 1px solid var(--border);
+  }
 
   .u-name { font-size: 13px; font-weight: 500; }
   .u-sub { font-size: 11px; color: var(--text-muted); }
@@ -1004,21 +1011,21 @@
   }
 }
 
-/* ===== ستون‌های لیست کلاس‌ها ===== */
+/* ===== ستون‌های لیست کلاس‌ها و مربی‌ها ===== */
 @media (max-width: 992px) {
-  #classes-grid {
+  #classes-grid, #coaches-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
 @media (max-width: 768px) {
-  #classes-grid {
+  #classes-grid, #coaches-grid {
     grid-template-columns: 1fr !important;
   }
 }
 
 @media (max-width: 600px) {
-  #classes-grid {
+  #classes-grid, #coaches-grid {
     grid-template-columns: 1fr !important;
   }
 }
