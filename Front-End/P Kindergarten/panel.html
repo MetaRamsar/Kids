@@ -38,19 +38,8 @@
     </div>
 
     <div class="nav-section">مدیریت محتوا</div>
-    <div class="nav-item nav-item-parent" onclick="toggleSubmenu(this)">
+    <div class="nav-item" onclick="showSection('users')">
       <i class="fa-solid fa-users"></i> کاربران
-      <i class="fa-solid fa-chevron-down nav-arrow"></i>
-    </div>
-    <div class="nav-submenu">
-      <div class="nav-submenu-inner">
-        <div class="nav-item nav-subitem" onclick="showSection('students', event)">
-          <i class="fa-solid fa-child"></i> دانش‌آموزان
-        </div>
-        <div class="nav-item nav-subitem" onclick="showSection('teachers', event)">
-          <i class="fa-solid fa-chalkboard-user"></i> معلمان
-        </div>
-      </div>
     </div>
     <div class="nav-item" onclick="showSection('classes')">
       <i class="fa-solid fa-door-open"></i> کلاس‌ها
@@ -425,52 +414,25 @@
       </div>
     </div>
 
-    <!-- ══ SECTION: دانش‌آموزان ══ -->
-    <div id="sec-students" class="section">
+    <!-- ══ SECTION: کاربران ══ -->
+    <div id="sec-users" class="section">
       <div class="sec-header">
         <div>
-          <div class="sec-title">دانش‌آموزان</div>
-          <div class="sec-sub" id="students-count">۳ دانش‌آموز</div>
+          <div class="sec-title">کاربران</div>
+          <div class="sec-sub" id="users-count">۰ کاربر</div>
         </div>
-        <button class="btn btn-primary" onclick="openStudentModal()"><i class="fa-solid fa-plus"></i> ثبت دانش‌آموز</button>
+        <button class="btn btn-primary" onclick="openUserModal()"><i class="fa-solid fa-plus"></i> افزودن ادمین</button>
       </div>
       <div class="card">
         <div class="card-head">
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <input type="text" id="students-search-input" placeholder="جستجو..." style="width:180px;" oninput="filterStudents()">
-            <select id="students-class-filter" style="width:130px;" onchange="filterStudents()">
-              <option value="">همه کلاس‌ها</option>
-              <option>نقاشی</option><option>موسیقی</option><option>ورزش</option>
-            </select>
-            <select id="students-status-filter" style="width:120px;" onchange="filterStudents()">
-              <option value="">همه وضعیت‌ها</option>
-              <option>فعال</option><option>در انتظار</option>
-            </select>
+            <input type="text" id="users-search-input" placeholder="جستجو..." style="width:200px;" oninput="filterUsers()">
           </div>
         </div>
         <div style="overflow-x:auto;">
           <table class="data-table">
-            <thead><tr><th>نام</th><th>سن</th><th>کلاس</th><th>ولی امر</th><th>تلفن</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-            <tbody id="students-table-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ SECTION: معلمان ══ -->
-    <div id="sec-teachers" class="section">
-      <div class="sec-header">
-        <div>
-          <div class="sec-title">معلمان</div>
-          <div class="sec-sub" id="teachers-count">۲ معلم</div>
-        </div>
-        <button class="btn btn-primary" onclick="openTeacherModal()"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
-      </div>
-      <div class="card">
-        <div style="overflow-x:auto;">
-          <table class="data-table">
-            <thead><tr><th>نام</th><th>تخصص</th><th>کلاس‌ها</th><th>تلفن</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-            <tbody id="teachers-table-body"></tbody>
+            <thead><tr><th>عکس</th><th>نام و نام خانوادگی</th><th>نقش</th><th>تلفن</th><th>عملیات</th></tr></thead>
+            <tbody id="users-table-body"></tbody>
           </table>
         </div>
       </div>
@@ -519,7 +481,7 @@
             <div class="field"><label>سطح</label><select id="class-level-select"><option value="">انتخاب...</option></select></div>
             <div class="field"><label>وضعیت</label><select id="class-status-select"><option value="">انتخاب...</option></select></div>
             <div class="field"><label>تاریخ شروع</label><input type="date" id="class-start-date-input"></div>
-            <div class="field"><label>معلم‌ها</label><select id="class-teacher-select" multiple size="4"></select></div>
+            <div class="field"><label>معلم</label><input type="text" id="class-teacher-input" placeholder="نام معلم"></div>
             <div class="field"><label>ایجاد</label><input type="text" id="class-created-at" disabled></div>
             <div class="field"><label>آخرین بروزرسانی</label><input type="text" id="class-updated-at" disabled></div>
           </div>
@@ -626,22 +588,16 @@
 // 1. CORE DATA
 // ============================================================
 
-const sections = ['site','homepage','about','students','teachers','classes','blog'];
+const sections = ['site','homepage','about','users','classes','blog'];
 
-// ---------- Students ----------
-let studentsData = [
-  { id: 1, name: 'نیلوفر رضایی', age: 4, class: 'نقاشی', parent: 'زهرا رضایی', phone: '۰۹۱۲۱۲۳۴۵۶۷', status: 'فعال' },
-  { id: 2, name: 'علی محمدی', age: 5, class: 'موسیقی', parent: 'محمد محمدی', phone: '۰۹۳۵۹۸۷۶۵۴۳', status: 'فعال' },
-  { id: 3, name: 'سارا احمدی', age: 3, class: 'ورزش', parent: 'فاطمه احمدی', phone: '۰۹۱۰۴۴۴۵۵۵۶', status: 'در انتظار' },
+// ---------- Users (panel access: admins, teachers, ...) ----------
+let usersData = [
+  { id: 1, name: 'مدیر سیستم', role: 'مدیر ارشد', phone: '۰۹۱۲۰۰۰۰۰۰۰', photo: '/img/profile-pic.jpg.jpeg' },
+  { id: 2, name: 'فریده موسوی', role: 'معلم', phone: '۰۹۱۲۳۳۳۴۴۴۵', photo: '' },
+  { id: 3, name: 'حسین کرمی', role: 'معلم', phone: '۰۹۳۵۱۱۱۲۲۲۳', photo: '' },
 ];
-let nextStudentId = 4;
-
-// ---------- Teachers ----------
-let teachersData = [
-  { id: 1, name: 'فریده موسوی', specialty: 'هنر و نقاشی', classes: 'نقاشی، خلاقیت', phone: '۰۹۱۲۳۳۳۴۴۴۵', status: 'فعال' },
-  { id: 2, name: 'حسین کرمی', specialty: 'ورزش و حرکت', classes: 'ورزش، حرکت', phone: '۰۹۳۵۱۱۱۲۲۲۳', status: 'فعال' },
-];
-let nextTeacherId = 3;
+let nextUserId = 4;
+const userRoles = ['مدیر ارشد', 'ادمین', 'معلم', 'پشتیبانی'];
 
 // ---------- Blog ----------
 let blogData = [
@@ -907,168 +863,89 @@ function closeFormModal() {
 }
 
 // ============================================================
-// 7. STUDENTS
+// 7. USERS (panel access: admins, teachers, ...)
 // ============================================================
 
-function renderStudents() {
-  const tbody = document.getElementById('students-table-body');
-  const search = document.getElementById('students-search-input').value.toLowerCase();
-  const classFilter = document.getElementById('students-class-filter').value;
-  const statusFilter = document.getElementById('students-status-filter').value;
+function renderUsers() {
+  const tbody = document.getElementById('users-table-body');
+  const search = document.getElementById('users-search-input').value.toLowerCase();
 
-  let filtered = studentsData.filter(s => {
-    const matchName = s.name.includes(search);
-    const matchClass = classFilter === '' || s.class === classFilter;
-    const matchStatus = statusFilter === '' || s.status === statusFilter;
-    return matchName && matchClass && matchStatus;
-  });
+  const filtered = usersData.filter(u => u.name.toLowerCase().includes(search));
 
-  document.getElementById('students-count').textContent = filtered.length + ' دانش‌آموز';
+  document.getElementById('users-count').textContent = filtered.length + ' کاربر';
 
-  tbody.innerHTML = filtered.map(s => `
+  tbody.innerHTML = filtered.map(u => `
     <tr>
-      <td><div class="u-row"><div class="u-av pink">${s.name.charAt(0)}</div><div><div class="u-name">${s.name}</div></div></div></td>
-      <td>${s.age}</td><td>${s.class}</td><td>${s.parent}</td><td>${s.phone}</td>
-      <td><span class="chip ${s.status === 'فعال' ? 'green' : 'amber'}">${s.status}</span></td>
-      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editStudent(${s.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+      <td>${u.photo
+        ? `<img src="${u.photo}" class="u-av-img" width="30" height="30" style="width:30px;height:30px;border-radius:50%;object-fit:cover;display:block;" onerror="this.outerHTML='<div class=\\'u-av pink\\'>${u.name.charAt(0)}</div>'">`
+        : `<div class="u-av pink">${u.name.charAt(0)}</div>`}</td>
+      <td class="u-name">${u.name}</td>
+      <td><span class="chip blue">${u.role}</span></td>
+      <td>${u.phone}</td>
+      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editUser(${u.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i></button></div></td>
     </tr>
   `).join('');
 }
 
-function filterStudents() { renderStudents(); }
+function filterUsers() { renderUsers(); }
 
-function openStudentModal(data) {
+function openUserModal(data) {
   const isEdit = !!data;
-  const s = data || { name: '', age: '', class: '', parent: '', phone: '', status: 'فعال' };
+  const u = data || { name: '', role: 'ادمین', phone: '', photo: '' };
+  const roleOptions = userRoles.map(r => `<option value="${r}" ${u.role === r ? 'selected' : ''}>${r}</option>`).join('');
   const html = `
-    <h3>${isEdit ? 'ویرایش' : 'ثبت'} دانش‌آموز</h3>
-    <div class="form-grid" style="margin-top:16px;">
-      <div class="field"><label>نام</label><input type="text" id="student-name" value="${escapeHtml(s.name)}"></div>
-      <div class="field"><label>سن</label><input type="number" id="student-age" value="${s.age}"></div>
-      <div class="field"><label>کلاس</label><input type="text" id="student-class" value="${escapeHtml(s.class)}"></div>
-      <div class="field"><label>ولی امر</label><input type="text" id="student-parent" value="${escapeHtml(s.parent)}"></div>
-      <div class="field"><label>تلفن</label><input type="text" id="student-phone" value="${escapeHtml(s.phone)}"></div>
-      <div class="field"><label>وضعیت</label>
-        <select id="student-status">
-          <option value="فعال" ${s.status === 'فعال' ? 'selected' : ''}>فعال</option>
-          <option value="در انتظار" ${s.status === 'در انتظار' ? 'selected' : ''}>در انتظار</option>
-        </select>
+    <h3>${isEdit ? 'ویرایش' : 'افزودن'} کاربر</h3>
+    <div style="display:flex;justify-content:center;margin:16px 0;">
+      <div class="admin-photo-wrap" style="width:74px;height:74px;">
+        <img id="user-photo-preview" src="${u.photo || 'https://via.placeholder.com/74/F0F0F0/999?text=+'}" class="admin-photo" style="width:74px;height:74px;">
+        <label class="admin-photo-edit" title="آپلود عکس">
+          <i class="fa-solid fa-camera"></i>
+          <input type="file" accept="image/*" onchange="previewGenericImage(this, 'user-photo-preview')">
+        </label>
       </div>
     </div>
+    <div class="form-grid">
+      <div class="field full"><label>نام و نام خانوادگی</label><input type="text" id="user-name" value="${escapeHtml(u.name)}"></div>
+      <div class="field"><label>نقش</label><select id="user-role">${roleOptions}</select></div>
+      <div class="field"><label>تلفن</label><input type="text" id="user-phone" value="${escapeHtml(u.phone)}"></div>
+    </div>
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveStudent(${isEdit ? s.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-primary" onclick="saveUser(${isEdit ? u.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
       <button class="btn btn-ghost" onclick="closeFormModal()">انصراف</button>
     </div>
   `;
   openFormModal(html);
 }
 
-function saveStudent(id) {
-  const name = document.getElementById('student-name').value.trim();
-  const age = parseInt(document.getElementById('student-age').value);
-  const cls = document.getElementById('student-class').value.trim();
-  const parent = document.getElementById('student-parent').value.trim();
-  const phone = document.getElementById('student-phone').value.trim();
-  const status = document.getElementById('student-status').value;
-
-  if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
-  if (!age || age < 1) { alert('سن معتبر وارد کنید.'); return; }
-
-  if (id) {
-    const idx = studentsData.findIndex(s => s.id === id);
-    if (idx !== -1) studentsData[idx] = { ...studentsData[idx], name, age, class: cls, parent, phone, status };
-  } else {
-    studentsData.push({ id: nextStudentId++, name, age, class: cls, parent, phone, status });
-  }
-  closeFormModal();
-  renderStudents();
-  showToast('دانش‌آموز ذخیره شد');
-}
-
-function editStudent(id) {
-  const s = studentsData.find(s => s.id === id);
-  if (s) openStudentModal(s);
-}
-
-function deleteStudent(id) {
-  openDeleteModal(() => {
-    studentsData = studentsData.filter(s => s.id !== id);
-    renderStudents();
-    showToast('حذف شد');
-  });
-}
-
-// ============================================================
-// 8. TEACHERS
-// ============================================================
-
-function renderTeachers() {
-  const tbody = document.getElementById('teachers-table-body');
-  document.getElementById('teachers-count').textContent = teachersData.length + ' معلم';
-  tbody.innerHTML = teachersData.map(t => `
-    <tr>
-      <td><div class="u-row"><div class="u-av blue">${t.name.charAt(0)}</div><div><div class="u-name">${t.name}</div><div class="u-sub">${t.specialty}</div></div></div></td>
-      <td>${t.specialty}</td><td>${t.classes}</td><td>${t.phone}</td>
-      <td><span class="chip green">${t.status}</span></td>
-      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editTeacher(${t.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteTeacher(${t.id})"><i class="fa-solid fa-trash"></i></button></div></td>
-    </tr>
-  `).join('');
-}
-
-function openTeacherModal(data) {
-  const isEdit = !!data;
-  const t = data || { name: '', specialty: '', classes: '', phone: '', status: 'فعال' };
-  const html = `
-    <h3>${isEdit ? 'ویرایش' : 'افزودن'} معلم</h3>
-    <div class="form-grid" style="margin-top:16px;">
-      <div class="field"><label>نام</label><input type="text" id="teacher-name" value="${escapeHtml(t.name)}"></div>
-      <div class="field"><label>تخصص</label><input type="text" id="teacher-specialty" value="${escapeHtml(t.specialty)}"></div>
-      <div class="field"><label>کلاس‌ها</label><input type="text" id="teacher-classes" value="${escapeHtml(t.classes)}"></div>
-      <div class="field"><label>تلفن</label><input type="text" id="teacher-phone" value="${escapeHtml(t.phone)}"></div>
-      <div class="field"><label>وضعیت</label>
-        <select id="teacher-status">
-          <option value="فعال" ${t.status === 'فعال' ? 'selected' : ''}>فعال</option>
-          <option value="غیرفعال" ${t.status === 'غیرفعال' ? 'selected' : ''}>غیرفعال</option>
-        </select>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveTeacher(${isEdit ? t.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
-      <button class="btn btn-ghost" onclick="closeFormModal()">انصراف</button>
-    </div>
-  `;
-  openFormModal(html);
-}
-
-function saveTeacher(id) {
-  const name = document.getElementById('teacher-name').value.trim();
-  const specialty = document.getElementById('teacher-specialty').value.trim();
-  const classes = document.getElementById('teacher-classes').value.trim();
-  const phone = document.getElementById('teacher-phone').value.trim();
-  const status = document.getElementById('teacher-status').value;
+function saveUser(id) {
+  const name = document.getElementById('user-name').value.trim();
+  const role = document.getElementById('user-role').value;
+  const phone = document.getElementById('user-phone').value.trim();
+  const photoPreview = document.getElementById('user-photo-preview').src;
+  const photo = photoPreview.includes('via.placeholder.com') ? '' : photoPreview;
 
   if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
 
   if (id) {
-    const idx = teachersData.findIndex(t => t.id === id);
-    if (idx !== -1) teachersData[idx] = { ...teachersData[idx], name, specialty, classes, phone, status };
+    const idx = usersData.findIndex(u => u.id === id);
+    if (idx !== -1) usersData[idx] = { ...usersData[idx], name, role, phone, photo };
   } else {
-    teachersData.push({ id: nextTeacherId++, name, specialty, classes, phone, status });
+    usersData.push({ id: nextUserId++, name, role, phone, photo });
   }
   closeFormModal();
-  renderTeachers();
-  showToast('معلم ذخیره شد');
+  renderUsers();
+  showToast('کاربر ذخیره شد');
 }
 
-function editTeacher(id) {
-  const t = teachersData.find(t => t.id === id);
-  if (t) openTeacherModal(t);
+function editUser(id) {
+  const u = usersData.find(u => u.id === id);
+  if (u) openUserModal(u);
 }
 
-function deleteTeacher(id) {
+function deleteUser(id) {
   openDeleteModal(() => {
-    teachersData = teachersData.filter(t => t.id !== id);
-    renderTeachers();
+    usersData = usersData.filter(u => u.id !== id);
+    renderUsers();
     showToast('حذف شد');
   });
 }
@@ -1354,6 +1231,7 @@ function editClass(id) {
     document.getElementById('class-level-select').value = c.level || '';
     document.getElementById('class-status-select').value = c.status || '';
     document.getElementById('class-start-date-input').value = c.startDate || '';
+    document.getElementById('class-teacher-input').value = c.teacher || '';
     classAxesSelected = c.axes || [];
     renderClassAxisChips();
     classSchedule = c.schedule || [{ day: '', start: '', end: '' }];
@@ -1390,14 +1268,6 @@ function fillClassSelects() {
     opt.value = s.key;
     opt.textContent = s.label;
     statusSelect.appendChild(opt);
-  });
-
-  const teacherSelect = document.getElementById('class-teacher-select');
-  teachersData.forEach(t => {
-    const opt = document.createElement('option');
-    opt.value = t.id;
-    opt.textContent = t.name;
-    teacherSelect.appendChild(opt);
   });
 
   const axisSelect = document.getElementById('class-axis-select');
@@ -1438,6 +1308,7 @@ function toggleClassForm() {
     document.getElementById('class-level-select').value = '';
     document.getElementById('class-status-select').value = '';
     document.getElementById('class-start-date-input').value = '';
+    document.getElementById('class-teacher-input').value = '';
     classAxesSelected = [];
     renderClassAxisChips();
     classSchedule = [{ day: '', start: '', end: '' }];
@@ -1549,7 +1420,7 @@ function saveClass() {
     level: document.getElementById('class-level-select').value,
     status: document.getElementById('class-status-select').value || 'pending',
     startDate: document.getElementById('class-start-date-input').value,
-    teacher: teachersData.length > 0 ? teachersData[0].name : '',
+    teacher: document.getElementById('class-teacher-input').value.trim(),
     axes: classAxesSelected,
     schedule: classSchedule.filter(r => r.day && r.start && r.end),
     slides: classSlideImages,
@@ -2093,8 +1964,7 @@ function previewGenericImage(input, targetId) {
 // ============================================================
 
 function init() {
-  renderStudents();
-  renderTeachers();
+  renderUsers();
   renderBlog();
   renderGallery();
   renderClasses();
