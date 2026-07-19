@@ -205,8 +205,8 @@
       <div class="card">
         <div class="card-head">
           <div>
-            <div class="card-title">لینک‌های قوانین و مقررات</div>
-            <div class="card-sub">لینک‌های پایین فوتر مثل قوانین و مقررات، حریم خصوصی و نقشه سایت (حداکثر ۳ عدد)</div>
+            <div class="card-title">لینک‌های انتهای فوتر</div>
+            <div class="card-sub">لینک‌های انتهای فوتر مثل قوانین و مقررات، حریم خصوصی و نقشه سایت (حداکثر ۳ عدد)</div>
           </div>
         </div>
         <div class="card-body">
@@ -1939,7 +1939,7 @@ function renderHomeSliderImages() {
   grid.innerHTML = homeSliderImages.map((src, i) => `
     <div class="img-thumb-card">
       <img src="${src}" onerror="this.src='https://via.placeholder.com/200x200/F0F0F0/999?text=بدون+تصویر'">
-      <div class="img-thumb-actions">
+      <div style="position:absolute;top:8px;left:8px;display:flex;gap:4px;">
         <button type="button" onclick="document.getElementById('home-slider-replace-${i}').click()" class="btn-icon-edit"><i class="fa-solid fa-pen"></i></button>
         <button type="button" onclick="removeHomeSliderImage(${i})" class="btn-icon-delete">×</button>
       </div>
