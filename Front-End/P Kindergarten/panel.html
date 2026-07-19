@@ -481,7 +481,7 @@
             <div class="field"><label>سطح</label><select id="class-level-select"><option value="">انتخاب...</option></select></div>
             <div class="field"><label>وضعیت</label><select id="class-status-select"><option value="">انتخاب...</option></select></div>
             <div class="field"><label>تاریخ شروع</label><input type="date" id="class-start-date-input"></div>
-            <div class="field"><label>معلم</label><input type="text" id="class-teacher-input" placeholder="نام معلم"></div>
+            <div class="field"><label>معلم</label><select id="class-teacher-select"><option value="">— انتخاب معلم —</option></select></div>
             <div class="field"><label>ایجاد</label><input type="text" id="class-created-at" disabled></div>
             <div class="field"><label>آخرین بروزرسانی</label><input type="text" id="class-updated-at" disabled></div>
           </div>
@@ -526,6 +526,16 @@
       <!-- لیست کلاس‌ها -->
       <div id="classes-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;"></div>
 
+      <!-- معلم‌ها -->
+      <div class="sec-header" style="margin-top:24px;">
+        <div>
+          <div class="sec-title">معلم‌ها</div>
+          <div class="sec-sub" id="coaches-count">۰ معلم</div>
+        </div>
+        <button class="btn btn-primary" onclick="openCoachModal()"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
+      </div>
+      <div id="coaches-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;"></div>
+
       <!-- گالری کلاس‌ها - هر کلاس جدا -->
       <div class="sec-header" style="margin-top:24px;">
         <div>
@@ -565,7 +575,7 @@
 <div id="toast">✓ ذخیره شد</div>
 
 <!-- DELETE MODAL -->
-<div id="delete-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+<div id="delete-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1001;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:12px;padding:24px;max-width:400px;width:90%;">
     <h3>تأیید حذف</h3>
     <p style="margin:12px 0 20px;">آیا از حذف این آیتم اطمینان دارید؟</p>
@@ -624,11 +634,20 @@ let nextGalleryId = 5;
 
 // ---------- Classes ----------
 let classesData = [
-  { id: 1, title: 'نقاشی', location: 'سالن هنر', desc: 'آموزش نقاشی با تکنیک‌های مختلف', capacity: 15, fee: 1500000, minAge: 3, maxAge: 7, level: 'beginner', status: 'active', startDate: '2025-01-10', teacher: 'فریده موسوی', axes: ['art', 'social'], schedule: [{day:'شنبه',start:'10:00',end:'12:00'}], slides: [] },
-  { id: 2, title: 'موسیقی', location: 'کلاس موسیقی', desc: 'آموزش سازهای مختلف و آواز', capacity: 12, fee: 1200000, minAge: 4, maxAge: 8, level: 'intermediate', status: 'active', startDate: '2025-01-12', teacher: 'احمد صادقی', axes: ['music'], schedule: [{day:'دوشنبه',start:'14:00',end:'16:00'}], slides: [] },
-  { id: 3, title: 'ورزش', location: 'سالن ورزش', desc: 'آموزش مهارت‌های حرکتی', capacity: 10, fee: 800000, minAge: 3, maxAge: 6, level: 'beginner', status: 'pending', startDate: '2025-01-15', teacher: 'حسین کرمی', axes: ['sport'], schedule: [{day:'سه‌شنبه',start:'11:00',end:'13:00'}], slides: [] },
+  { id: 1, title: 'نقاشی', location: 'سالن هنر', desc: 'آموزش نقاشی با تکنیک‌های مختلف', capacity: 15, fee: 1500000, minAge: 3, maxAge: 7, level: 'beginner', status: 'active', startDate: '2025-01-10', teacherId: 1, axes: ['art', 'social'], schedule: [{day:'شنبه',start:'10:00',end:'12:00'}], slides: [] },
+  { id: 2, title: 'موسیقی', location: 'کلاس موسیقی', desc: 'آموزش سازهای مختلف و آواز', capacity: 12, fee: 1200000, minAge: 4, maxAge: 8, level: 'intermediate', status: 'active', startDate: '2025-01-12', teacherId: 3, axes: ['music'], schedule: [{day:'دوشنبه',start:'14:00',end:'16:00'}], slides: [] },
+  { id: 3, title: 'ورزش', location: 'سالن ورزش', desc: 'آموزش مهارت‌های حرکتی', capacity: 10, fee: 800000, minAge: 3, maxAge: 6, level: 'beginner', status: 'pending', startDate: '2025-01-15', teacherId: 2, axes: ['sport'], schedule: [{day:'سه‌شنبه',start:'11:00',end:'13:00'}], slides: [] },
 ];
 let nextClassId = 4;
+
+// ---------- Coaches (معلم‌ها) ----------
+let coachesData = [
+  { id: 1, name: 'فریده موسوی', phone: '۰۹۱۲۳۳۳۴۴۴۵', degree: 'کارشناسی هنرهای تجسمی', experience: '۸ سال', desc: 'معلم نقاشی و خلاقیت با تمرکز بر پرورش ذهن هنری کودکان زیر ۷ سال.', photo: '', socials: [{ platform: 'instagram', url: 'https://instagram.com/farideh.art' }] },
+  { id: 2, name: 'حسین کرمی', phone: '۰۹۳۵۱۱۱۲۲۲۳', degree: 'کارشناسی تربیت‌بدنی', experience: '۵ سال', desc: 'معلم ورزش و حرکات موزون، دارای گواهی مربیگری کودکان.', photo: '', socials: [] },
+  { id: 3, name: 'احمد صادقی', phone: '', degree: '', experience: '', desc: '', photo: '', socials: [] },
+];
+let nextCoachId = 4;
+let coachFormSocials = [];
 
 // ---------- Color Swatch Picker (used by Info Boxes & Feature Boxes) ----------
 // رنگ‌ها به‌صورت باکس‌های کوچک قابل‌کلیک نمایش داده می‌شوند به‌جای select
@@ -1202,7 +1221,7 @@ function renderClasses() {
       </div>
       <div class="card-body" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;">
         <div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;">
-          <div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> ${c.teacher}</div>
+          <div><i class="fa-solid fa-chalkboard-user" style="color:var(--pink);"></i> ${getCoachName(c.teacherId)}</div>
           <div><i class="fa-regular fa-calendar" style="color:var(--pink);"></i> ${c.schedule.length > 0 ? c.schedule[0].day + ' — ' + c.schedule[0].start : 'زمان نامشخص'}</div>
           <div><i class="fa-solid fa-child" style="color:var(--pink);"></i> ${c.capacity} دانش‌آموز</div>
           <div><i class="fa-solid fa-location-dot" style="color:var(--pink);"></i> ${c.location || 'نامشخص'}</div>
@@ -1231,7 +1250,7 @@ function editClass(id) {
     document.getElementById('class-level-select').value = c.level || '';
     document.getElementById('class-status-select').value = c.status || '';
     document.getElementById('class-start-date-input').value = c.startDate || '';
-    document.getElementById('class-teacher-input').value = c.teacher || '';
+    document.getElementById('class-teacher-select').value = c.teacherId != null ? String(c.teacherId) : '';
     classAxesSelected = c.axes || [];
     renderClassAxisChips();
     classSchedule = c.schedule || [{ day: '', start: '', end: '' }];
@@ -1247,6 +1266,178 @@ function editClass(id) {
 function deleteClass(id) {
   openDeleteModal(() => {
     classesData = classesData.filter(c => c.id !== id);
+    renderClasses();
+    showToast('حذف شد');
+  });
+}
+
+// ============================================================
+// COACHES (معلم‌ها)
+// ============================================================
+
+function getCoachName(id) {
+  const c = coachesData.find(c => c.id === id);
+  return c ? c.name : 'بدون معلم';
+}
+
+function populateCoachSelect() {
+  const select = document.getElementById('class-teacher-select');
+  if (!select) return;
+  const current = select.value;
+  select.innerHTML = '<option value="">— انتخاب معلم —</option>' +
+    coachesData.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+  select.value = current;
+}
+
+function renderCoaches() {
+  const grid = document.getElementById('coaches-grid');
+  document.getElementById('coaches-count').textContent = coachesData.length + ' معلم';
+
+  grid.innerHTML = coachesData.map(c => `
+    <div class="card" style="height:100%;display:flex;flex-direction:column;">
+      <div class="card-body" style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          ${c.photo
+            ? `<img src="${c.photo}" width="56" height="56" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--pink-light);flex-shrink:0;display:block;" onerror="this.outerHTML='<div class=\\'u-av pink\\' style=\\'width:56px;height:56px;font-size:18px;\\'>${c.name.charAt(0)}</div>'">`
+            : `<div class="u-av pink" style="width:56px;height:56px;font-size:18px;">${c.name.charAt(0)}</div>`}
+          <div style="font-weight:600;font-size:14px;">${c.name}</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px;">
+          <div><i class="fa-solid fa-briefcase" style="color:var(--pink);width:14px;"></i> ${c.experience || '—'}</div>
+          <div><i class="fa-solid fa-graduation-cap" style="color:var(--pink);width:14px;"></i> ${c.degree || '—'}</div>
+          <div><i class="fa-solid fa-phone" style="color:var(--pink);width:14px;"></i> ${c.phone || '—'}</div>
+        </div>
+        ${c.desc ? `<p style="font-size:12px;color:var(--text-secondary);line-height:1.7;margin:0;">${escapeHtml(c.desc)}</p>` : ''}
+        ${c.socials && c.socials.length > 0 ? `<div style="display:flex;gap:8px;">${c.socials.map(s => {
+          const p = getSocialPlatform(s.platform);
+          return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" style="color:${p.color};font-size:15px;" title="${p.label}"><i class="${p.icon}"></i></a>`;
+        }).join('')}</div>` : ''}
+        <div style="display:flex;gap:6px;margin-top:auto;">
+          <button class="btn btn-ghost" style="font-size:12px;" onclick="editCoach(${c.id})"><i class="fa-solid fa-pen"></i> ویرایش</button>
+          <button class="btn btn-ghost" style="font-size:12px;color:#E24B4A;" onclick="deleteCoach(${c.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+        </div>
+      </div>
+    </div>
+  `).join('') || '<div class="empty-state" style="grid-column:1/-1;"><i class="fa-solid fa-chalkboard-user"></i><p>هیچ معلمی ثبت نشده است</p></div>';
+}
+
+function openCoachModal(data) {
+  const isEdit = !!data;
+  const c = data || { name: '', phone: '', degree: '', experience: '', desc: '', photo: '' };
+  coachFormSocials = data ? JSON.parse(JSON.stringify(data.socials || [])) : [];
+  const html = `
+    <h3>${isEdit ? 'ویرایش' : 'افزودن'} معلم</h3>
+    <div style="display:flex;justify-content:center;margin:16px 0;">
+      <div class="admin-photo-wrap" style="width:74px;height:74px;">
+        <img id="coach-photo-preview" src="${c.photo || 'https://via.placeholder.com/74/F0F0F0/999?text=+'}" class="admin-photo" style="width:74px;height:74px;">
+        <label class="admin-photo-edit" title="آپلود عکس">
+          <i class="fa-solid fa-camera"></i>
+          <input type="file" accept="image/*" onchange="previewGenericImage(this, 'coach-photo-preview')">
+        </label>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="field full"><label>نام و نام خانوادگی</label><input type="text" id="coach-name" value="${escapeHtml(c.name)}"></div>
+      <div class="field"><label>سابقه کاری</label><input type="text" id="coach-experience" placeholder="مثلاً: ۵ سال" value="${escapeHtml(c.experience)}"></div>
+      <div class="field"><label>مدرک تحصیلی</label><input type="text" id="coach-degree" value="${escapeHtml(c.degree)}"></div>
+      <div class="field"><label>تلفن</label><input type="text" id="coach-phone" value="${escapeHtml(c.phone)}"></div>
+      <div class="field full"><label>توضیحات</label><textarea id="coach-desc">${escapeHtml(c.desc)}</textarea></div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <label>شبکه‌های اجتماعی (حداکثر ۳)</label>
+      <div id="coach-social-list" style="margin-top:8px;"></div>
+      <button type="button" class="btn btn-ghost" id="add-coach-social-btn" onclick="addCoachSocial()"><i class="fa-solid fa-plus"></i> افزودن شبکه</button>
+      <span id="coach-social-counter" style="font-size:12px;color:var(--text-muted);margin-right:8px;"></span>
+    </div>
+
+    <div class="btn-row" style="margin-top:16px;">
+      <button class="btn btn-primary" onclick="saveCoach(${isEdit ? c.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
+      <button class="btn btn-ghost" onclick="closeFormModal()">انصراف</button>
+    </div>
+  `;
+  openFormModal(html);
+  renderCoachSocials();
+}
+
+function renderCoachSocials() {
+  const wrap = document.getElementById('coach-social-list');
+  const counter = document.getElementById('coach-social-counter');
+  if (!wrap) return;
+
+  wrap.innerHTML = coachFormSocials.map((link, i) => {
+    const platform = getSocialPlatform(link.platform);
+    const options = socialPlatforms.map(p =>
+      `<option value="${p.key}" ${p.key === link.platform ? 'selected' : ''}>${p.label}</option>`
+    ).join('');
+    return `
+    <div class="dynamic-row">
+      <div class="field">
+        <label>شبکه</label>
+        <div class="social-platform-picker">
+          <span class="social-icon-preview" style="color:${platform.color};"><i class="${platform.icon}"></i></span>
+          <select style="flex:1;" onchange="coachFormSocials[${i}].platform = this.value; renderCoachSocials();">${options}</select>
+        </div>
+      </div>
+      <div class="field"><label>لینک</label><input type="url" placeholder="${platform.placeholder}" value="${escapeHtml(link.url)}" oninput="coachFormSocials[${i}].url = this.value"></div>
+      <button type="button" class="btn btn-ghost dynamic-row-remove" onclick="removeCoachSocial(${i})"><i class="fa-solid fa-trash"></i></button>
+    </div>`;
+  }).join('') || '<p class="hint">هنوز شبکه‌ای اضافه نشده است.</p>';
+
+  counter.textContent = `${coachFormSocials.length} / ۳`;
+  const btn = document.getElementById('add-coach-social-btn');
+  if (btn) btn.disabled = coachFormSocials.length >= 3;
+}
+
+function addCoachSocial() {
+  if (coachFormSocials.length >= 3) return;
+  coachFormSocials.push({ platform: 'instagram', url: '' });
+  renderCoachSocials();
+}
+
+function removeCoachSocial(index) {
+  openDeleteModal(() => {
+    coachFormSocials.splice(index, 1);
+    renderCoachSocials();
+  });
+}
+
+function saveCoach(id) {
+  const name = document.getElementById('coach-name').value.trim();
+  const phone = document.getElementById('coach-phone').value.trim();
+  const degree = document.getElementById('coach-degree').value.trim();
+  const experience = document.getElementById('coach-experience').value.trim();
+  const desc = document.getElementById('coach-desc').value.trim();
+  const photoPreview = document.getElementById('coach-photo-preview').src;
+  const photo = photoPreview.includes('via.placeholder.com') ? '' : photoPreview;
+  const socials = coachFormSocials.filter(s => s.url.trim() !== '');
+
+  if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
+
+  if (id) {
+    const idx = coachesData.findIndex(c => c.id === id);
+    if (idx !== -1) coachesData[idx] = { ...coachesData[idx], name, phone, degree, experience, desc, photo, socials };
+  } else {
+    coachesData.push({ id: nextCoachId++, name, phone, degree, experience, desc, photo, socials });
+  }
+  coachFormSocials = [];
+  closeFormModal();
+  renderCoaches();
+  populateCoachSelect();
+  renderClasses();
+  showToast('معلم ذخیره شد');
+}
+
+function editCoach(id) {
+  const c = coachesData.find(c => c.id === id);
+  if (c) openCoachModal(c);
+}
+
+function deleteCoach(id) {
+  openDeleteModal(() => {
+    coachesData = coachesData.filter(c => c.id !== id);
+    renderCoaches();
+    populateCoachSelect();
     renderClasses();
     showToast('حذف شد');
   });
@@ -1277,6 +1468,8 @@ function fillClassSelects() {
     opt.textContent = a.label;
     axisSelect.appendChild(opt);
   });
+
+  populateCoachSelect();
 }
 
 let classSchedule = [];
@@ -1308,7 +1501,7 @@ function toggleClassForm() {
     document.getElementById('class-level-select').value = '';
     document.getElementById('class-status-select').value = '';
     document.getElementById('class-start-date-input').value = '';
-    document.getElementById('class-teacher-input').value = '';
+    document.getElementById('class-teacher-select').value = '';
     classAxesSelected = [];
     renderClassAxisChips();
     classSchedule = [{ day: '', start: '', end: '' }];
@@ -1420,7 +1613,7 @@ function saveClass() {
     level: document.getElementById('class-level-select').value,
     status: document.getElementById('class-status-select').value || 'pending',
     startDate: document.getElementById('class-start-date-input').value,
-    teacher: document.getElementById('class-teacher-input').value.trim(),
+    teacherId: document.getElementById('class-teacher-select').value ? parseInt(document.getElementById('class-teacher-select').value) : null,
     axes: classAxesSelected,
     schedule: classSchedule.filter(r => r.day && r.start && r.end),
     slides: classSlideImages,
@@ -1968,6 +2161,7 @@ function init() {
   renderBlog();
   renderGallery();
   renderClasses();
+  renderCoaches();
   renderInfoBoxes();
   renderFeatureBoxes();
   renderFooterLinks();
