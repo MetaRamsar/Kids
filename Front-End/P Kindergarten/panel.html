@@ -5,7 +5,1478 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>پنل ادمین — کیدآپ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="panel.style.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0;}
+  *{ font-family: 'Vazirmatn', Tahoma, sans-serif;}
+
+  :root {
+    --pink: #F875AA;
+    --pink-light: #FDEDED;
+    --pink-bg: #FFF0F7;
+    --green-bg: #EDFFF0;
+    --blue-light: #AEDEFC;
+    --border: rgba(0,0,0,0.09);
+    --surface-0: #f5f5f3;
+    --surface-1: #f0f0ee;
+    --surface-2: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555;
+    --text-muted: #999;
+    --radius: 8px;
+    --sidebar-w: 250px;
+    --success: #3B6D11;
+    --success-bg: #EAF3DE;
+    --warning: #854F0B;
+    --warning-bg: #FAEEDA;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    direction: rtl;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: #fff;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    z-index: 100;
+  }
+
+  .sidebar-admin {
+    padding: 18px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .admin-photo {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--pink-light);
+    display: block;
+  }
+
+  .admin-photo-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+
+  .admin-photo-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--pink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border: 2px solid #fff;
+    cursor: pointer;
+  }
+  .admin-photo-edit:hover { background: var(--pink-dark, var(--pink)); }
+  .admin-photo-edit input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .admin-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .admin-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .admin-role { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+
+  .sidebar-nav { flex: 1; padding: 10px 0; overflow-y: auto; }
+
+  .nav-section {
+    padding: 12px 16px 4px;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-right: 3px solid transparent;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+  }
+
+  .nav-item i { font-size: 15px; width: 18px; text-align: center; }
+  .nav-item:hover { background: var(--surface-1); color: var(--text-primary); }
+
+  .nav-item.active {
+    color: var(--pink);
+    background: var(--pink-bg);
+    border-right-color: var(--pink);
+    font-weight: 500;
+  }
+
+  .nav-badge {
+    margin-right: auto;
+    background: var(--pink);
+    color: #fff;
+    font-size: 10px;
+    border-radius: 20px;
+    padding: 2px 7px;
+    font-weight: 500;
+  }
+
+  /* ─── نان آیتم دارای زیرمنو (کاربران) ─── */
+  .nav-item-parent {
+    position: relative;
+  }
+
+  .nav-arrow {
+    margin-right: auto;
+    font-size: 11px !important;
+    width: auto !important;
+    transition: transform 0.2s ease;
+  }
+
+  .nav-item-parent.open .nav-arrow {
+    transform: rotate(180deg);
+  }
+
+  .nav-submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-submenu.open {
+    grid-template-rows: 1fr;
+  }
+
+  .nav-submenu-inner {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.25s ease, transform 0.3s ease;
+  }
+
+  .nav-submenu.open .nav-submenu-inner {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
+  }
+
+  .nav-subitem {
+    padding-right: 44px;
+    font-size: 13px;
+  }
+
+  /* ─── SIDEBAR QUICK LINKS ─── */
+  .sidebar-quick-links {
+    border-top: 1px solid var(--border);
+    padding: 6px 0;
+    display: none;
+  }
+  @media (max-width: 700px) {
+    .sidebar-quick-links { display: block; }
+   }
+  .sidebar-footer {
+    padding: 10px 16px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .logout-item {
+    color: #E8636D;
+    border-radius: var(--radius);
+    padding: 10px 8px;
+  }
+
+  .logout-item:hover { background: #FDECEC; color: #E8636D; }
+
+  /* ─── MAIN ─── */
+  .main-wrap {
+    margin-right: var(--sidebar-w);
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    background: linear-gradient(135deg, #d5e2e8, var(--green-bg));
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky; top: 0; z-index: 50;
+  }
+
+  /* ─── TOPBAR QUICK LINKS ─── */
+  .quick-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .quick-links a {
+    color: var(--pink);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .quick-links a:hover { color: #185FA5; }
+
+  /* ─── TOPBAR ACTIONS ─── */
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  position: relative;
+}
+  .icon-btn {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--pink); font-size: 16px;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .icon-btn i{
+    font-size: 20px;
+  }
+  .icon-btn:hover { background: rgba(255, 255, 255, 0.8); }
+
+  /* ─── TOPBAR LOGO ─── */
+  .topbar-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .topbar-logo img {
+    height: 80px;
+    width: 80px;
+  }
+
+  @media (max-width: 700px) {
+    .quick-links { display: none; }
+  }
+
+  /* ─── CONTENT ─── */
+  .content { padding: 24px; flex: 1; }
+
+  /* sections */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .card-head {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .card-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+  .card-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .card-body { padding: 18px; }
+
+  /* ─── STAT GRID ─── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+
+  .stat-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .stat-icon.pink { background: var(--pink-bg); color: var(--pink); }
+  .stat-icon.blue { background: #E6F1FB; color: #185FA5; }
+  .stat-icon.green { background: var(--green-bg); color: var(--success); }
+  .stat-icon.amber { background: var(--warning-bg); color: var(--warning); }
+
+  .stat-num { font-size: 26px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ─── FORM CONTROLS ─── */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-grid.full { grid-template-columns: 1fr; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  input[type="file"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    color: var(--text-primary);
+    background: #fff;
+    direction: rtl;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+
+  input:disabled {
+    background: var(--surface-1);
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+
+  select[multiple] { padding: 6px; }
+  
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(248,117,170,0.12);
+  }
+
+  textarea { resize: vertical; min-height: 90px; }
+
+  .hint { font-size: 11px; color: var(--text-muted); }
+
+  /* ─── UPLOAD ZONE ─── */
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .upload-zone:hover { border-color: var(--pink); background: var(--pink-bg); }
+  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-zone i { font-size: 28px; color: var(--pink); margin-bottom: 8px; display: block; }
+  .upload-zone p { font-size: 13px; color: var(--text-secondary); }
+  .upload-zone small { font-size: 11px; color: var(--text-muted); }
+
+  .preview-img {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--pink-light);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .logo-preview {
+    width: 100px; height: 60px;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .favicon-preview {
+    width: 56px; height: 56px;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* ─── ردیف‌های پویا ─── */
+  .dynamic-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .dynamic-row .field { flex: 1; min-width: 0; }
+
+  .dynamic-row-remove {
+    flex-shrink: 0;
+    padding: 9px 12px;
+    color: #E24B4A;
+    border-color: var(--border);
+  }
+
+  .dynamic-row-remove:hover { background: #FDECEC; border-color: #E24B4A; }
+
+  .social-platform-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .social-icon-preview {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--surface-1);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 15px;
+  }
+
+  @media (max-width: 600px) {
+    .dynamic-row { flex-wrap: wrap; }
+    .dynamic-row .field { flex-basis: 100%; }
+    .dynamic-row-remove { margin-right: auto; }
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 18px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.1s;
+    font-weight: 500;
+  }
+
+  .btn:active { transform: scale(0.98); }
+
+  .btn-primary { background: var(--pink); color: #fff; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .btn-ghost:hover { background: var(--surface-1); }
+  .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-danger { background: #E24B4A; color: #fff; }
+  .btn-danger:hover { opacity: 0.9; }
+
+  .btn-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── CHIP ─── */
+  .chip {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .chip.green { background: var(--success-bg); color: var(--success); }
+  .chip.amber { background: var(--warning-bg); color: var(--warning); }
+  .chip.pink { background: var(--pink-bg); color: var(--pink); }
+  .chip.gray { background: var(--surface-1); color: var(--text-muted); }
+  .chip.blue { background: #E6F1FB; color: #185FA5; }
+
+  /* ─── TABLE ─── */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  .data-table th {
+    text-align: right;
+    padding: 10px 14px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-0);
+  }
+
+  .data-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--text-primary);
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--pink-bg); }
+
+  .u-row { display: flex; align-items: center; gap: 9px; }
+
+  .u-av {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+
+  .u-av.pink { background: var(--pink-bg); color: var(--pink); }
+  .u-av.blue { background: #E6F1FB; color: #185FA5; }
+  .u-av.green { background: var(--green-bg); color: var(--success); }
+  .u-av.amber { background: var(--warning-bg); color: var(--warning); }
+
+  .u-av-img {
+    width: 30px; height: 30px; border-radius: 50%;
+    object-fit: cover; flex-shrink: 0; display: block;
+    border: 1px solid var(--border);
+  }
+
+  .u-name { font-size: 13px; font-weight: 500; }
+  .u-sub { font-size: 11px; color: var(--text-muted); }
+
+  /* ─── SECTION HEADERS ─── */
+  .sec-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .sec-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+  .sec-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+
+  /* ─── TOAST ─── */
+  #toast {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: #1a1a1a;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  #toast.show { opacity: 1; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 700px) {
+    .sidebar { display: none; }
+    .main-wrap { margin-right: 0; }
+  }
+
+/* ===========================
+   Mobile Sidebar
+=========================== */
+
+.menu-toggle{
+    display:none;
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:10px;
+    background:#fff;
+    border:1px solid var(--border);
+    cursor:pointer;
+    font-size:18px;
+    color:var(--text-primary);
+}
+
+.sidebar-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.35);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+    z-index:90;
+}
+
+.sidebar.open{
+    transform:translateX(0);
+}
+
+.sidebar-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+@media (max-width:700px){
+
+    .menu-toggle{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .sidebar{
+        display:flex;
+        position:fixed;
+        right:0;
+        top:0;
+        width:260px;
+        height:100%;
+        transform:translateX(100%);
+        transition:.3s;
+        z-index:100;
+    }
+
+    .main-wrap{
+        margin-right:0;
+    }
+}
+
+/* ===== Thumbnail image card ===== */
+.img-thumb-card{
+    position:relative;
+    aspect-ratio:1;
+    border-radius:8px;
+    border:1px solid var(--border);
+    overflow:hidden;
+}
+
+.img-thumb-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.img-thumb-actions{
+    position:absolute;
+    top:4px;
+    right:4px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.img-thumb-actions.actions-left{
+    right:auto;
+    left:4px;
+}
+
+.btn-icon-edit,
+.btn-icon-delete{
+    border:none;
+    border-radius:8px;
+    width:24px;
+    height:24px;
+    font-size:12px;
+    cursor:pointer;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    box-shadow:0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.85);
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.btn-icon-edit{
+    background:linear-gradient(135deg, var(--pink), #D9457F);
+}
+
+.btn-icon-edit:hover{
+    background:linear-gradient(135deg, #E8619A, #C93A70);
+    transform:translateY(-2px) scale(1.08);
+    box-shadow:0 4px 10px rgba(217,69,127,0.5), 0 0 0 2px #fff;
+}
+
+.btn-icon-delete{
+    background:linear-gradient(135deg, #D9455B, #B8324A);
+}
+
+.btn-icon-delete:hover{
+    background:linear-gradient(135deg, #E8586D, #B8324A);
+    transform:translateY(-2px) scale(1.08);
+    box-shadow:0 4px 10px rgba(184,50,74,0.5), 0 0 0 2px #fff;
+}
+
+.btn-icon-edit:active,
+.btn-icon-delete:active{
+    transform:translateY(0) scale(0.96);
+}
+
+/* ===== Info Box & Feature Box card styles ===== */
+.info-box {
+    background: #fff;
+    color: #333;
+    text-align: center;
+    padding: 30px 22px;
+    border-radius: 20px;
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 280px;
+    transition: all 0.25s ease;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.info-box:hover {
+    box-shadow: 0 8px 22px rgba(251, 190, 75, 0.25);
+    border-color: #333;
+}
+
+.info-box .category-img {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px auto;
+}
+
+.info-box .category-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-box h3 {
+    margin: 8px 0 6px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.info-box .desc {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+.feature-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;
+    max-width: 280px;
+    flex: 1 1 200px;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.feature-box:hover {
+    box-shadow: 0 6px 20px rgba(251, 190, 75, 0.25);
+    border-color: #333;
+}
+
+.feature-box .feature-text {
+    flex: 3;
+}
+
+.feature-box .feature-text h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: #333;
+}
+
+.feature-box .feature-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.feature-box .feature-icon {
+    flex: 1;
+    text-align: center;
+}
+
+.feature-box .feature-icon img {
+    width: 100%;
+    height: 100%;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+/* ===== Modal ===== */
+#delete-modal, #form-modal {
+    display: none;
+}
+
+#delete-modal[style*="display:flex"],
+#form-modal[style*="display:flex"] {
+    display: flex !important;
+}
+
+/* ===== Empty state ===== */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--surface-1);
+    border-radius: 8px;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+    color: var(--pink);
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* ===== Responsive fixes ===== */
+@media (max-width: 992px) {
+    .info-box { width: calc(50% - 10px); }
+    .feature-box { min-width: 160px; max-width: 220px; }
+    #classes-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    #classes-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+    .info-box { width: 100% !important; }
+    .feature-box { width: 100% !important; max-width: 100%; }
+    #classes-grid { grid-template-columns: 1fr; }
+}
+
+
+#sec-blog .blog-table-wrap {
+  overflow-x: auto;
+}
+
+#form-modal {
+  align-items: center;
+  justify-content: center;
+}
+
+#form-modal > div {
+  margin: auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  #form-modal {
+    padding: 12px;
+  }
+  #form-modal > div {
+    width: calc(100% - 0px);
+    max-width: 100%;
+    padding: 18px;
+  }
+}
+
+/* -----باکس رنگی- --------*/
+.color-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.color-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.selected {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--pink);
+}
+
+
+#class-form-card {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+#class-form-card .form-grid,
+#class-form-card .field,
+#class-form-card .dynamic-row,
+#class-form-card select,
+#class-form-card input,
+#class-form-card textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#class-slides-grid {
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+}
+
+@media (max-width: 480px) {
+  #class-axis-chips {
+    flex-wrap: wrap;
+  }
+}
+
+/* === وسط‌چین شدن فرم ویرایش باکس معرفی === */
+@media (max-width: 600px) {
+  .info-box-edit-form h3 {
+    text-align: center;
+  }
+  .info-box-edit-form .field {
+    align-items: center;
+  }
+  .info-box-edit-form label {
+    text-align: center;
+    width: 100%;
+  }
+  .info-box-edit-form .color-swatch-row {
+    justify-content: center;
+  }
+  .info-box-edit-form .upload-zone {
+    width: 100%;
+  }
+  .info-box-edit-form #edit-info-icon-preview {
+    margin: 6px auto 0;
+  }
+  .info-box-edit-form .btn-row {
+    justify-content: center;
+  }
+}
+
+/* =====  باکس‌های دسته‌بندی  ===== */
+@media (max-width: 992px) {
+  #feature-boxes-list {
+    justify-content: center !important;
+    text-align: center;
+  }
+  #feature-boxes-wrapper #feature-boxes-add-container {
+    text-align: center;
+  }
+}
+
+/* ===== ستون‌های لیست کلاس‌ها و مربی‌ها ===== */
+@media (max-width: 992px) {
+  #classes-grid, #coaches-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #classes-grid, #coaches-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #classes-grid, #coaches-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
+   🟢 RESPONSIVE: USERS & BLOG (نسخه نهایی نهایی)
+   ============================================================ */
+
+/* ===== ریسپانسیو بخش کاربران ===== */
+@media (max-width: 768px) {
+  #sec-users .data-table thead {
+    display: none;
+  }
+
+  #sec-users .data-table tbody tr {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding: 16px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  #sec-users .card-body {
+    padding: 12px;
+  }
+
+  #sec-users .data-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  #sec-users .data-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  #sec-users .data-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+
+  #sec-users .data-table tbody td:first-child {
+    justify-content: center;
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+
+  #sec-users .data-table tbody td:first-child::before {
+    display: none;
+  }
+
+  /* 🔥 دکمه‌ها به راست */
+  #sec-users .data-table tbody td:last-child {
+    justify-content: flex-end !important;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  #sec-users .data-table tbody td:last-child::before {
+    display: none !important;
+  }
+
+  /* 🔥 حذف کامل هاور صورتی در موبایل */
+  #sec-users .data-table tbody tr:hover td {
+    background: transparent !important;
+  }
+
+  #sec-users .data-table tbody tr:active td {
+    background: transparent !important;
+  }
+
+  #users-search-input {
+    width: 100% !important;
+  }
+
+  #sec-users .sec-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  #sec-users .sec-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #sec-users .data-table tbody td {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #sec-users .data-table tbody td::before {
+    min-width: unset;
+    font-size: 11px;
+  }
+
+  #sec-users .data-table tbody td:last-child {
+    flex-direction: row;
+    justify-content: flex-end !important;
+  }
+}
+
+/* ===== ریسپانسیو بخش وبلاگ ===== */
+@media (max-width: 768px) {
+  .blog-table-wrap {
+    overflow-x: visible !important;
+  }
+
+  #sec-blog .data-table thead {
+    display: none;
+  }
+
+  #sec-blog .data-table tbody tr {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding: 16px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  #sec-blog .card-body {
+    padding: 12px;
+  }
+
+  #sec-blog .data-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  #sec-blog .data-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  #sec-blog .data-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+
+  #sec-blog .data-table tbody td:first-child {
+    justify-content: center;
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+
+  #sec-blog .data-table tbody td:first-child::before {
+    display: none;
+  }
+
+  #sec-blog .data-table tbody td:first-child img {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 8px !important;
+  }
+
+  #sec-blog .data-table tbody td:nth-child(2) {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  /* 🔥 دکمه‌ها به راست */
+  #sec-blog .data-table tbody td:last-child {
+    justify-content: flex-end !important;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  #sec-blog .data-table tbody td:last-child::before {
+    display: none !important;
+  }
+
+  /* 🔥 حذف کامل هاور صورتی در موبایل */
+  #sec-blog .data-table tbody tr:hover td {
+    background: transparent !important;
+  }
+
+  #sec-blog .data-table tbody tr:active td {
+    background: transparent !important;
+  }
+
+  #sec-blog .sec-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  #sec-blog .sec-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #sec-blog .data-table tbody td {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #sec-blog .data-table tbody td::before {
+    min-width: unset;
+    font-size: 11px;
+  }
+
+  #sec-blog .data-table tbody td:last-child {
+    flex-direction: row;
+    justify-content: flex-end !important;
+  }
+}
+
+/* ===== دکمه‌های عملیات در موبایل ===== */
+@media (max-width: 768px) {
+  .btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .btn-ghost {
+    padding: 6px 12px;
+  }
+
+  #sec-users .btn-ghost,
+  #sec-blog .btn-ghost {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #sec-users .btn-ghost i,
+  #sec-blog .btn-ghost i {
+    font-size: 16px;
+  }
+}
+
+/* ===== هدر بخش‌ها در موبایل ===== */
+@media (max-width: 768px) {
+  .sec-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .sec-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sec-title {
+    font-size: 20px;
+  }
+
+  .sec-sub {
+    font-size: 13px;
+  }
+}
+
+/* ============================================================
+   🟢 اصلاح هاورها در موبایل (کل سایت)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  
+  .data-table tr:hover td {
+    background: transparent !important;
+  }
+  
+  .data-table tr:active td {
+    background: transparent !important;
+  }
+
+  .card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: var(--border) !important;
+  }
+  
+  .card:active {
+    transform: scale(0.99) !important;
+    transition: transform 0.08s ease;
+  }
+
+  .btn:hover {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .btn:active {
+    transform: scale(0.95) !important;
+    opacity: 0.8 !important;
+    transition: all 0.08s ease;
+  }
+  
+  .btn-ghost:hover {
+    background: transparent !important;
+    border-color: var(--border) !important;
+  }
+  
+  .btn-ghost:active {
+    background: var(--surface-1) !important;
+  }
+  
+  .btn-primary:hover {
+    background: var(--pink) !important;
+  }
+  
+  .btn-primary:active {
+    background: #E8619A !important;
+  }
+
+  .nav-item:hover {
+    background: transparent !important;
+    color: var(--text-secondary) !important;
+  }
+  
+  .nav-item:active {
+    background: var(--pink-bg) !important;
+    color: var(--pink) !important;
+  }
+  
+  .nav-item.active:hover {
+    background: var(--pink-bg) !important;
+    color: var(--pink) !important;
+  }
+
+  .info-box:hover {
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25) !important;
+    border-color: transparent !important;
+    transform: none !important;
+  }
+  
+  .info-box:active {
+    transform: scale(0.97) !important;
+    transition: transform 0.08s ease;
+  }
+
+  .feature-box:hover {
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25) !important;
+    border-color: transparent !important;
+    transform: none !important;
+  }
+  
+  .feature-box:active {
+    transform: scale(0.97) !important;
+    transition: transform 0.08s ease;
+  }
+
+  .btn-icon-edit:hover,
+  .btn-icon-delete:hover {
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.85) !important;
+  }
+  
+  .btn-icon-edit:active,
+  .btn-icon-delete:active {
+    transform: scale(0.92) !important;
+    transition: transform 0.08s ease;
+  }
+
+  a:hover {
+    color: inherit !important;
+  }
+  
+  a:active {
+    opacity: 0.7 !important;
+    transition: opacity 0.08s ease;
+  }
+
+  .upload-zone:hover {
+    border-color: var(--border) !important;
+    background: transparent !important;
+  }
+  
+  .upload-zone:active {
+    border-color: var(--pink) !important;
+    background: var(--pink-bg) !important;
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--border) !important;
+  }
+  
+  input:active,
+  select:active,
+  textarea:active {
+    border-color: var(--pink) !important;
+  }
+}
+
+/* ===== کارت‌های کلاس در موبایل ===== */
+@media (max-width: 768px) {
+  #classes-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .card-body {
+    padding: 14px;
+  }
+}
+  </style>
 </head>
 <body>
 
@@ -13,7 +1484,7 @@
 <aside class="sidebar">
   <div class="sidebar-admin">
     <div class="admin-photo-wrap">
-      <img src="/img/profile-pic.jpg.jpeg" class="admin-photo" id="admin-photo-preview" alt="ادمین">
+      <img src="https://placehold.co/100x100/FFF0F7/F875AA?text=مدیر" class="admin-photo" id="admin-photo-preview" alt="ادمین">
       <label class="admin-photo-edit" title="تغییر عکس پروفایل">
         <i class="fa-solid fa-camera"></i>
         <input type="file" accept="image/*" onchange="previewAdminPhoto(this)">
@@ -81,7 +1552,7 @@
 
     <div class="topbar-brand">
       <a href="/main.html" class="topbar-logo">
-        <img src="/img/Logo.png" alt="لوگو">
+        <img src="https://placehold.co/160x50/F875AA/fff?text=کیدآپ" alt="لوگو">
       </a>
     </div>
   </div>
@@ -115,7 +1586,7 @@
             <div class="field">
               <label>لوگو</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="/img/Logo.png" class="logo-preview" id="logo-preview" alt="لوگو">
+                <img src="https://placehold.co/160x50/F875AA/fff?text=کیدآپ" class="logo-preview" id="logo-preview" alt="لوگو">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/*" onchange="previewLogo(this)">
@@ -129,7 +1600,7 @@
             <div class="field">
               <label>فیوآیکون</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://via.placeholder.com/48/F875AA/fff?text=K" class="favicon-preview" id="favicon-preview" alt="فیوآیکون">
+                <img src="https://placehold.co/48/F875AA/fff?text=K" class="favicon-preview" id="favicon-preview" alt="فیوآیکون">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/*" onchange="previewFavicon(this)">
@@ -234,7 +1705,7 @@
             <div class="field full">
               <label>عکس بنر</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://via.placeholder.com/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1" class="logo-preview" id="banner-image-preview" alt="عکس بنر" style="width:140px;height:90px;object-fit:cover;">
+                <img src="https://placehold.co/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1" class="logo-preview" id="banner-image-preview" alt="عکس بنر" style="width:140px;height:90px;object-fit:cover;">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/jpeg, image/png, image/webp" onchange="previewBannerImage(this)">
@@ -461,7 +1932,7 @@
             <div class="field full">
               <label>عکس اصلی</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://via.placeholder.com/100x70/FFF0F7/F875AA?text=کلاس" class="logo-preview" id="class-main-image-preview">
+                <img src="https://placehold.co/100x70/FFF0F7/F875AA?text=کلاس" class="logo-preview" id="class-main-image-preview">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/*" onchange="previewGenericImage(this,'class-main-image-preview')">
@@ -602,7 +2073,7 @@ const sections = ['site','homepage','about','users','classes','blog'];
 
 // ---------- Users (panel access: admins, teachers, ...) ----------
 let usersData = [
-  { id: 1, name: 'مدیر سیستم', role: 'مدیر ارشد', phone: '۰۹۱۲۰۰۰۰۰۰۰', photo: '/img/profile-pic.jpg.jpeg' },
+  { id: 1, name: 'مدیر سیستم', role: 'مدیر ارشد', phone: '۰۹۱۲۰۰۰۰۰۰۰', photo: 'https://placehold.co/100/FFF0F7/F875AA?text=مدیر' },
   { id: 2, name: 'فریده موسوی', role: 'معلم', phone: '۰۹۱۲۳۳۳۴۴۴۵', photo: '' },
   { id: 3, name: 'حسین کرمی', role: 'معلم', phone: '۰۹۳۵۱۱۱۲۲۲۳', photo: '' },
 ];
@@ -611,23 +2082,23 @@ const userRoles = ['مدیر ارشد', 'ادمین', 'معلم', 'پشتیبا�
 
 // ---------- Blog ----------
 let blogData = [
-  { id: 1, title: 'روز نقاشی', category: 'هنر', date: '۲۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/photo_2025-11-19_03-51-58.jpg', tags: 'نقاشی, خلاقیت', content: 'امروز روز نقاشی در مهدکودک بود...' },
-  { id: 2, title: 'جشن یلدا', category: 'مناسبت‌ها', date: '۳۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/download (9).jpg', tags: 'یلدا, جشن', content: 'جشن یلدا با حضور کودکان برگزار شد...' },
-  { id: 3, title: 'کارگاه خمیربازی', category: 'خلاقیت', date: '۵ دی ۱۴۰۳', status: 'پیش‌نویس', image: '/img/Cute.jpg', tags: 'خمیربازی, خلاقیت', content: 'کارگاه خمیربازی برای کودکان برگزار شد...' },
+  { id: 1, title: 'روز نقاشی', category: 'هنر', date: '۲۰ آذر ۱۴۰۳', status: 'منتشر', image: 'https://placehold.co/300x200/FFD6E8/8a4b64?text=نقاشی', tags: 'نقاشی, خلاقیت', content: 'امروز روز نقاشی در مهدکودک بود...' },
+  { id: 2, title: 'جشن یلدا', category: 'مناسبت‌ها', date: '۳۰ آذر ۱۴۰۳', status: 'منتشر', image: 'https://placehold.co/300x200/FFE9C8/8a5a2b?text=یلدا', tags: 'یلدا, جشن', content: 'جشن یلدا با حضور کودکان برگزار شد...' },
+  { id: 3, title: 'کارگاه خمیربازی', category: 'خلاقیت', date: '۵ دی ۱۴۰۳', status: 'پیش‌نویس', image: 'https://placehold.co/300x200/E3D1FF/5a3b8a?text=خمیربازی', tags: 'خمیربازی, خلاقیت', content: 'کارگاه خمیربازی برای کودکان برگزار شد...' },
 ];
 let nextBlogId = 4;
 
 // ---------- Gallery (per class) ----------
 let galleryData = {
   'نقاشی': [
-    { id: 1, image: '/img/photo_2025-11-19_03-51-58.jpg', name: 'نقاشی خانواده', desc: 'اثر نقاشی یکی از هنرآموزان' },
-    { id: 2, image: '/img/download (9).jpg', name: 'تابلوی دوستی', desc: 'تابلوی گروهی کلاس نقاشی' },
+    { id: 1, image: 'https://placehold.co/300x200/FFD6E8/8a4b64?text=نقاشی+۱', name: 'نقاشی خانواده', desc: 'اثر نقاشی یکی از هنرآموزان' },
+    { id: 2, image: 'https://placehold.co/300x200/FFE9C8/8a5a2b?text=دوستی', name: 'تابلوی دوستی', desc: 'تابلوی گروهی کلاس نقاشی' },
   ],
   'موسیقی': [
-    { id: 3, image: '/img/Cute.jpg', name: 'تمرین سنتور', desc: 'جلسه تمرین گروهی' },
+    { id: 3, image: 'https://placehold.co/300x200/C8F4C8/2b6b2b?text=سنتور', name: 'تمرین سنتور', desc: 'جلسه تمرین گروهی' },
   ],
   'ورزش': [
-    { id: 4, image: '/img/sport_12693567.png', name: 'تمرین ورزشی', desc: 'تمرین مهارت‌های حرکتی' },
+    { id: 4, image: 'https://placehold.co/300x200/AEDEFC/2b4b6b?text=ورزش', name: 'تمرین ورزشی', desc: 'تمرین مهارت‌های حرکتی' },
   ],
 };
 let nextGalleryId = 5;
@@ -650,7 +2121,6 @@ let nextCoachId = 4;
 let coachFormSocials = [];
 
 // ---------- Color Swatch Picker (used by Info Boxes & Feature Boxes) ----------
-// رنگ‌ها به‌صورت باکس‌های کوچک قابل‌کلیک نمایش داده می‌شوند به‌جای select
 function renderColorSwatches(colors, selectedColor, hiddenInputId) {
   return colors.map(c => `
     <div class="color-swatch${c.value === selectedColor ? ' selected' : ''}"
@@ -682,9 +2152,9 @@ const infoBoxColors = [
 ];
 
 let infoBoxesData = [
-  { id: 1, icon: '/img/kids_3636298.png', title: 'آموزش و پرورش', desc: 'پرورش همه‌جانبه کودکان در فضایی امن', color: '#ffb6c1' },
-  { id: 2, icon: '/img/kid_10133636.png', title: 'خلاقیت', desc: 'شکوفایی استعدادهای خلاقانه', color: '#ffff4e' },
-  { id: 3, icon: '/img/dough_9102578.png', title: 'مهارت‌های زندگی', desc: 'آموزش مهارت‌های روزمره و اجتماعی', color: '#90ee90' },
+  { id: 1, icon: 'https://placehold.co/55/ffb6c1/fff?text=آموزش', title: 'آموزش و پرورش', desc: 'پرورش همه‌جانبه کودکان در فضایی امن', color: '#ffb6c1' },
+  { id: 2, icon: 'https://placehold.co/55/ffff4e/333?text=خلاقیت', title: 'خلاقیت', desc: 'شکوفایی استعدادهای خلاقانه', color: '#ffff4e' },
+  { id: 3, icon: 'https://placehold.co/55/90ee90/333?text=مهارت', title: 'مهارت‌های زندگی', desc: 'آموزش مهارت‌های روزمره و اجتماعی', color: '#90ee90' },
 ];
 let nextInfoBoxId = 4;
 
@@ -702,12 +2172,12 @@ const featureBoxColors = [
 ];
 
 let featureBoxesData = [
-  { id: 1, icon: '/img/alphabet_3898075.png', title: 'زبان انگلیسی', desc: 'آموزش پایه زبان انگلیسی', color: '#AEDEFC', link: '/archive.html' },
-  { id: 2, icon: '/img/colour_2708174 (1).png', title: 'نقاشی', desc: 'آموزش نقاشی و خلاقیت', color: '#FFD6E8', link: '' },
-  { id: 3, icon: '/img/dough_9102578.png', title: 'آشپزی', desc: 'آموزش آشپزی ساده و سالم', color: '#FFF3B0', link: '' },
-  { id: 4, icon: '/img/sport_12693567.png', title: 'ورزش', desc: 'فعالیت‌های ورزشی و حرکتی', color: '#C8F4C8', link: '' },
-  { id: 5, icon: '/img/xylophone_6977852.png', title: 'نواختن ساز', desc: 'آموزش موسیقی و ساز', color: '#E3D1FF', link: '' },
-  { id: 6, icon: '/img/bonjour_9541518.png', title: 'زبان فرانسه', desc: 'آموزش مکالمه فرانسه', color: '#FFD1B8', link: '' },
+  { id: 1, icon: 'https://placehold.co/55/AEDEFC/2b4b6b?text=EN', title: 'زبان انگلیسی', desc: 'آموزش پایه زبان انگلیسی', color: '#AEDEFC', link: '/archive.html' },
+  { id: 2, icon: 'https://placehold.co/55/FFD6E8/8a4b64?text=نقاشی', title: 'نقاشی', desc: 'آموزش نقاشی و خلاقیت', color: '#FFD6E8', link: '' },
+  { id: 3, icon: 'https://placehold.co/55/FFF3B0/6b5a2b?text=آشپزی', title: 'آشپزی', desc: 'آموزش آشپزی ساده و سالم', color: '#FFF3B0', link: '' },
+  { id: 4, icon: 'https://placehold.co/55/C8F4C8/2b6b2b?text=ورزش', title: 'ورزش', desc: 'فعالیت‌های ورزشی و حرکتی', color: '#C8F4C8', link: '' },
+  { id: 5, icon: 'https://placehold.co/55/E3D1FF/5a3b8a?text=ساز', title: 'نواختن ساز', desc: 'آموزش موسیقی و ساز', color: '#E3D1FF', link: '' },
+  { id: 6, icon: 'https://placehold.co/55/FFD1B8/6b3b2b?text=FR', title: 'زبان فرانسه', desc: 'آموزش مکالمه فرانسه', color: '#FFD1B8', link: '' },
 ];
 let nextFeatureBoxId = 7;
 
@@ -895,13 +2365,13 @@ function renderUsers() {
 
   tbody.innerHTML = filtered.map(u => `
     <tr>
-      <td>${u.photo
+      <td data-label="عکس">${u.photo
         ? `<img src="${u.photo}" class="u-av-img" width="30" height="30" style="width:30px;height:30px;border-radius:50%;object-fit:cover;display:block;" onerror="this.outerHTML='<div class=\\'u-av pink\\'>${u.name.charAt(0)}</div>'">`
         : `<div class="u-av pink">${u.name.charAt(0)}</div>`}</td>
-      <td class="u-name">${u.name}</td>
-      <td><span class="chip blue">${u.role}</span></td>
-      <td>${u.phone}</td>
-      <td><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editUser(${u.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+      <td data-label="نام و نام خانوادگی" class="u-name">${u.name}</td>
+      <td data-label="نقش"><span class="chip blue">${u.role}</span></td>
+      <td data-label="تلفن">${u.phone}</td>
+      <td data-label="عملیات"><div style="display:flex;gap:4px;justify-content:flex-end;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editUser(${u.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i></button></div></td>
     </tr>
   `).join('');
 }
@@ -916,7 +2386,7 @@ function openUserModal(data) {
     <h3>${isEdit ? 'ویرایش' : 'افزودن'} کاربر</h3>
     <div style="display:flex;justify-content:center;margin:16px 0;">
       <div class="admin-photo-wrap" style="width:74px;height:74px;">
-        <img id="user-photo-preview" src="${u.photo || 'https://via.placeholder.com/74/F0F0F0/999?text=+'}" class="admin-photo" style="width:74px;height:74px;">
+        <img id="user-photo-preview" src="${u.photo || 'https://placehold.co/74/F0F0F0/999?text=+'}" class="admin-photo" style="width:74px;height:74px;">
         <label class="admin-photo-edit" title="آپلود عکس">
           <i class="fa-solid fa-camera"></i>
           <input type="file" accept="image/*" onchange="previewGenericImage(this, 'user-photo-preview')">
@@ -977,13 +2447,13 @@ function renderBlog() {
   const tbody = document.getElementById('blog-table-body');
   tbody.innerHTML = blogData.map(b => `
     <tr>
-      <td class="blog-img-cell"><img src="${b.image || 'https://via.placeholder.com/50/FFF0F7/F875AA?text=img'}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"></td>
-      <td class="blog-title-cell" data-label="عنوان"><strong>${b.title}</strong></td>
+      <td data-label="تصویر" class="blog-img-cell"><img src="${b.image || 'https://placehold.co/50/FFF0F7/F875AA?text=img'}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"></td>
+      <td data-label="عنوان" class="blog-title-cell"><strong>${b.title}</strong></td>
       <td data-label="دسته">${b.category}</td>
       <td data-label="تاریخ">${b.date}</td>
       <td data-label="برچسب‌ها"><span style="font-size:12px;color:var(--text-muted);">${b.tags || ''}</span></td>
       <td data-label="وضعیت"><span class="chip ${b.status === 'منتشر' ? 'green' : 'amber'}">${b.status}</span></td>
-      <td class="blog-actions-cell" data-label="عملیات"><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+      <td data-label="عملیات" class="blog-actions-cell"><div style="display:flex;gap:4px;justify-content:flex-end;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
     </tr>
   `).join('');
 }
@@ -1103,7 +2573,7 @@ function renderGallery() {
             ${items.map(item => `
               <div class="card" style="overflow:hidden;">
                 <div style="position:relative;aspect-ratio:4/3;background:var(--surface-1);">
-                  ${item.image ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://via.placeholder.com/200x150/F0F0F0/999?text=بدون+تصویر'">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);"><i class="fa-solid fa-image" style="font-size:32px;"></i></div>`}
+                  ${item.image ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://placehold.co/200x150/F0F0F0/999?text=بدون+تصویر'">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);"><i class="fa-solid fa-image" style="font-size:32px;"></i></div>`}
                   <div style="position:absolute;top:4px;left:4px;display:flex;gap:4px;">
                     <button class="btn-icon-edit" onclick="editGalleryItem('${className}', ${item.id})"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn-icon-delete" onclick="deleteGalleryItem('${className}', ${item.id})">×</button>
@@ -1409,7 +2879,7 @@ function saveCoach(id) {
   const experience = document.getElementById('coach-experience').value.trim();
   const desc = document.getElementById('coach-desc').value.trim();
   const photoPreview = document.getElementById('coach-photo-preview').src;
-  const photo = photoPreview.includes('via.placeholder.com') ? '' : photoPreview;
+  const photo = photoPreview.includes('placehold.co') ? '' : photoPreview;
   const socials = coachFormSocials.filter(s => s.url.trim() !== '');
 
   if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
@@ -1565,7 +3035,7 @@ function renderClassSlides() {
   const grid = document.getElementById('class-slides-grid');
   grid.innerHTML = classSlideImages.map((src, i) => `
     <div class="img-thumb-card">
-      <img src="${src}" onerror="this.src='https://via.placeholder.com/100/F0F0F0/999?text=بدون+تصویر'">
+      <img src="${src}" onerror="this.src='https://placehold.co/100/F0F0F0/999?text=بدون+تصویر'">
       <button type="button" onclick="removeClassSlide(${i})" class="btn-icon-delete img-thumb-actions actions-left">×</button>
     </div>
   `).join('');
@@ -1647,7 +3117,7 @@ function renderInfoBoxes() {
         <button class="btn-icon-edit" onclick="editInfoBox(${box.id})"><i class="fa-solid fa-pen"></i></button>
         <button class="btn-icon-delete" onclick="deleteInfoBox(${box.id})">×</button>
       </div>
-      <div class="category-img"><img src="${box.icon}" alt="" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'"></div>
+      <div class="category-img"><img src="${box.icon}" alt="" onerror="this.src='https://placehold.co/55/F0F0F0/999?text=آیکن'"></div>
       <h3>${box.title}</h3>
       <p class="desc">${box.desc}</p>
     </div>
@@ -1661,7 +3131,7 @@ function renderInfoBoxes() {
 }
 
 function addInfoBox() {
-  const newBox = { id: nextInfoBoxId++, icon: 'https://via.placeholder.com/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: infoBoxColors[0].value };
+  const newBox = { id: nextInfoBoxId++, icon: 'https://placehold.co/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: infoBoxColors[0].value };
   infoBoxesData.push(newBox);
   renderInfoBoxes();
   editInfoBox(newBox.id);
@@ -1688,7 +3158,7 @@ function editInfoBox(id) {
           <i class="fa-solid fa-image"></i>
           <p style="font-size:12px;">آپلود آیکن</p>
         </div>
-        <img id="edit-info-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'">
+        <img id="edit-info-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://placehold.co/55/F0F0F0/999?text=آیکن'">
       </div>
     </div>
     <div class="btn-row">
@@ -1750,7 +3220,7 @@ function renderFeatureBoxes() {
         <h3>${box.title}</h3>
         <p>${box.desc}</p>
       </div>
-      <div class="feature-icon"><img src="${box.icon}" alt="" onerror="this.src='https://via.placeholder.com/40/F0F0F0/999?text=آیکن'"></div>
+      <div class="feature-icon"><img src="${box.icon}" alt="" onerror="this.src='https://placehold.co/40/F0F0F0/999?text=آیکن'"></div>
     </div>
   `).join('');
 
@@ -1762,7 +3232,7 @@ function renderFeatureBoxes() {
 }
 
 function addFeatureBox() {
-  const newBox = { id: nextFeatureBoxId++, icon: 'https://via.placeholder.com/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: featureBoxColors[0].value, link: '' };
+  const newBox = { id: nextFeatureBoxId++, icon: 'https://placehold.co/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: featureBoxColors[0].value, link: '' };
   featureBoxesData.push(newBox);
   renderFeatureBoxes();
   editFeatureBox(newBox.id);
@@ -1789,7 +3259,7 @@ function editFeatureBox(id) {
           <i class="fa-solid fa-image"></i>
           <p style="font-size:12px;">آپلود آیکن</p>
         </div>
-        <img id="edit-feature-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'">
+        <img id="edit-feature-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://placehold.co/55/F0F0F0/999?text=آیکن'">
       </div>
     </div>
     <div class="btn-row">
@@ -1996,7 +3466,7 @@ function cancelAchievements() { renderAchievements(); }
 // 17. SLIDER
 // ============================================================
 
-let homeSliderImages = ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'];
+let homeSliderImages = ['https://placehold.co/400x300/AEDEFC/2b4b6b?text=اسلاید+۱', 'https://placehold.co/400x300/FFD6E8/8a4b64?text=اسلاید+۲', 'https://placehold.co/400x300/C8F4C8/2b6b2b?text=اسلاید+۳'];
 
 function renderHomeSliderImages() {
   const grid = document.getElementById('home-slider-images-grid');
@@ -2055,7 +3525,7 @@ function removeHomeSliderImage(index) {
 
 function saveHomeSlider() { showToast('ذخیره شد'); }
 function cancelHomeSlider() {
-  homeSliderImages = ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'];
+  homeSliderImages = ['https://placehold.co/400x300/AEDEFC/2b4b6b?text=اسلاید+۱', 'https://placehold.co/400x300/FFD6E8/8a4b64?text=اسلاید+۲', 'https://placehold.co/400x300/C8F4C8/2b6b2b?text=اسلاید+۳'];
   renderHomeSliderImages();
   document.getElementById('home-slider-title-input').value = 'تاریخچه';
   document.getElementById('home-slider-desc-input').value = 'داستان شکل‌گیری مهدکودک کیدآپ';
@@ -2075,7 +3545,7 @@ function previewBannerImage(input) {
 
 function saveBanner() { showToast('ذخیره شد'); }
 function cancelBanner() {
-  document.getElementById('banner-image-preview').src = 'https://via.placeholder.com/300x200/F0F0F0/999?text=بنر';
+  document.getElementById('banner-image-preview').src = 'https://placehold.co/300x200/F0F0F0/999?text=بنر';
   document.getElementById('banner-title-input').value = 'کودک شاد، کودک سالم!';
   document.getElementById('banner-desc-input').value = 'محیطی شاد و امن برای رشد و شکوفایی استعدادهای کودکان';
 }
@@ -2093,7 +3563,7 @@ function previewAboutIntroImage(input) {
 }
 
 function cancelAboutIntro() {
-  document.getElementById('about-intro-image-preview').src = 'https://via.placeholder.com/300x200/F0F0F0/999?text=معرفی';
+  document.getElementById('about-intro-image-preview').src = 'https://placehold.co/300x200/F0F0F0/999?text=معرفی';
   document.getElementById('about-intro-title-input').value = 'درباره ما';
   document.getElementById('about-intro-desc-input').value = 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطراف تشویق می‌کنیم.';
 }
@@ -2127,8 +3597,8 @@ function previewFavicon(input) {
 function saveGeneralSettings() { showToast('ذخیره شد'); }
 function cancelGeneralSettings() {
   document.getElementById('site-name-input').value = 'کیدآپ — مهدکودک';
-  document.getElementById('logo-preview').src = '/img/Logo.png';
-  document.getElementById('favicon-preview').src = 'https://via.placeholder.com/48/F875AA/fff?text=K';
+  document.getElementById('logo-preview').src = 'https://placehold.co/160x50/F875AA/fff?text=کیدآپ';
+  document.getElementById('favicon-preview').src = 'https://placehold.co/48/F875AA/fff?text=K';
 }
 
 // ============================================================
