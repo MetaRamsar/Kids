@@ -4,7 +4,7 @@
   src: url(/Vazir-Medium.ttf);
 }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0;}
-  *{ font-family: vazir;}
+  *{ font-family: 'Vazirmatn', Tahoma, sans-serif;}
 
   :root {
     --pink: #F875AA;
@@ -731,24 +731,43 @@
 .btn-icon-edit,
 .btn-icon-delete{
     border:none;
-    border-radius:6px;
-    width:22px;
-    height:22px;
-    font-size:11px;
+    border-radius:8px;
+    width:24px;
+    height:24px;
+    font-size:12px;
     cursor:pointer;
     color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
     padding:0;
+    box-shadow:0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.85);
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
 
 .btn-icon-edit{
-    background:#4A90D9;
+    background:linear-gradient(135deg, var(--pink), #D9457F);
+}
+
+.btn-icon-edit:hover{
+    background:linear-gradient(135deg, #E8619A, #C93A70);
+    transform:translateY(-2px) scale(1.08);
+    box-shadow:0 4px 10px rgba(217,69,127,0.5), 0 0 0 2px #fff;
 }
 
 .btn-icon-delete{
-    background:#E24B4A;
+    background:linear-gradient(135deg, #D9455B, #B8324A);
+}
+
+.btn-icon-delete:hover{
+    background:linear-gradient(135deg, #E8586D, #B8324A);
+    transform:translateY(-2px) scale(1.08);
+    box-shadow:0 4px 10px rgba(184,50,74,0.5), 0 0 0 2px #fff;
+}
+
+.btn-icon-edit:active,
+.btn-icon-delete:active{
+    transform:translateY(0) scale(0.96);
 }
 
 /* ===== Info Box & Feature Box card styles ===== */
@@ -1029,3 +1048,479 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ============================================================
+   🟢 RESPONSIVE: USERS & BLOG (نسخه نهایی نهایی)
+   ============================================================ */
+
+/* ===== ریسپانسیو بخش کاربران ===== */
+@media (max-width: 768px) {
+  #sec-users .data-table thead {
+    display: none;
+  }
+
+  #sec-users .data-table tbody tr {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding: 16px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  #sec-users .card-body {
+    padding: 12px;
+  }
+
+  #sec-users .data-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  #sec-users .data-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  #sec-users .data-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+
+  #sec-users .data-table tbody td:first-child {
+    justify-content: center;
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+
+  #sec-users .data-table tbody td:first-child::before {
+    display: none;
+  }
+
+  /* 🔥 دکمه‌ها به راست */
+  #sec-users .data-table tbody td:last-child {
+    justify-content: flex-end !important;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  #sec-users .data-table tbody td:last-child::before {
+    display: none !important;
+  }
+
+  /* 🔥 حذف کامل هاور صورتی در موبایل */
+  #sec-users .data-table tbody tr:hover td {
+    background: transparent !important;
+  }
+
+  #sec-users .data-table tbody tr:active td {
+    background: transparent !important;
+  }
+
+  #users-search-input {
+    width: 100% !important;
+  }
+
+  #sec-users .sec-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  #sec-users .sec-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #sec-users .data-table tbody td {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #sec-users .data-table tbody td::before {
+    min-width: unset;
+    font-size: 11px;
+  }
+
+  #sec-users .data-table tbody td:last-child {
+    flex-direction: row;
+    justify-content: flex-end !important;
+  }
+}
+
+/* ===== ریسپانسیو بخش وبلاگ ===== */
+@media (max-width: 768px) {
+  .blog-table-wrap {
+    overflow-x: visible !important;
+  }
+
+  #sec-blog .data-table thead {
+    display: none;
+  }
+
+  #sec-blog .data-table tbody tr {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding: 16px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  #sec-blog .card-body {
+    padding: 12px;
+  }
+
+  #sec-blog .data-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  #sec-blog .data-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  #sec-blog .data-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+
+  #sec-blog .data-table tbody td:first-child {
+    justify-content: center;
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+
+  #sec-blog .data-table tbody td:first-child::before {
+    display: none;
+  }
+
+  #sec-blog .data-table tbody td:first-child img {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 8px !important;
+  }
+
+  #sec-blog .data-table tbody td:nth-child(2) {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  /* 🔥 دکمه‌ها به راست */
+  #sec-blog .data-table tbody td:last-child {
+    justify-content: flex-end !important;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  #sec-blog .data-table tbody td:last-child::before {
+    display: none !important;
+  }
+
+  /* 🔥 حذف کامل هاور صورتی در موبایل */
+  #sec-blog .data-table tbody tr:hover td {
+    background: transparent !important;
+  }
+
+  #sec-blog .data-table tbody tr:active td {
+    background: transparent !important;
+  }
+
+  #sec-blog .sec-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  #sec-blog .sec-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #sec-blog .data-table tbody td {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #sec-blog .data-table tbody td::before {
+    min-width: unset;
+    font-size: 11px;
+  }
+
+  #sec-blog .data-table tbody td:last-child {
+    flex-direction: row;
+    justify-content: flex-end !important;
+  }
+}
+
+/* ===== دکمه‌های عملیات در موبایل ===== */
+@media (max-width: 768px) {
+  .btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .btn-ghost {
+    padding: 6px 12px;
+  }
+
+  #sec-users .btn-ghost,
+  #sec-blog .btn-ghost {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #sec-users .btn-ghost i,
+  #sec-blog .btn-ghost i {
+    font-size: 16px;
+  }
+}
+
+/* ===== هدر بخش‌ها در موبایل ===== */
+@media (max-width: 768px) {
+  .sec-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .sec-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sec-title {
+    font-size: 20px;
+  }
+
+  .sec-sub {
+    font-size: 13px;
+  }
+}
+
+/* ============================================================
+   🟢 اصلاح هاورها در موبایل (کل سایت)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  
+  .data-table tr:hover td {
+    background: transparent !important;
+  }
+  
+  .data-table tr:active td {
+    background: transparent !important;
+  }
+
+  .card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: var(--border) !important;
+  }
+  
+  .card:active {
+    transform: scale(0.99) !important;
+    transition: transform 0.08s ease;
+  }
+
+  .btn:hover {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .btn:active {
+    transform: scale(0.95) !important;
+    opacity: 0.8 !important;
+    transition: all 0.08s ease;
+  }
+  
+  .btn-ghost:hover {
+    background: transparent !important;
+    border-color: var(--border) !important;
+  }
+  
+  .btn-ghost:active {
+    background: var(--surface-1) !important;
+  }
+  
+  .btn-primary:hover {
+    background: var(--pink) !important;
+  }
+  
+  .btn-primary:active {
+    background: #E8619A !important;
+  }
+
+  .nav-item:hover {
+    background: transparent !important;
+    color: var(--text-secondary) !important;
+  }
+  
+  .nav-item:active {
+    background: var(--pink-bg) !important;
+    color: var(--pink) !important;
+  }
+  
+  .nav-item.active:hover {
+    background: var(--pink-bg) !important;
+    color: var(--pink) !important;
+  }
+
+  .info-box:hover {
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25) !important;
+    border-color: transparent !important;
+    transform: none !important;
+  }
+  
+  .info-box:active {
+    transform: scale(0.97) !important;
+    transition: transform 0.08s ease;
+  }
+
+  .feature-box:hover {
+    box-shadow: 0 4px 14px rgba(219, 147, 176, 0.25) !important;
+    border-color: transparent !important;
+    transform: none !important;
+  }
+  
+  .feature-box:active {
+    transform: scale(0.97) !important;
+    transition: transform 0.08s ease;
+  }
+
+  .btn-icon-edit:hover,
+  .btn-icon-delete:hover {
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25), 0 0 0 2px rgba(255,255,255,0.85) !important;
+  }
+  
+  .btn-icon-edit:active,
+  .btn-icon-delete:active {
+    transform: scale(0.92) !important;
+    transition: transform 0.08s ease;
+  }
+
+  a:hover {
+    color: inherit !important;
+  }
+  
+  a:active {
+    opacity: 0.7 !important;
+    transition: opacity 0.08s ease;
+  }
+
+  .upload-zone:hover {
+    border-color: var(--border) !important;
+    background: transparent !important;
+  }
+  
+  .upload-zone:active {
+    border-color: var(--pink) !important;
+    background: var(--pink-bg) !important;
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--border) !important;
+  }
+  
+  input:active,
+  select:active,
+  textarea:active {
+    border-color: var(--pink) !important;
+  }
+}
+
+/* ===== کارت‌های کلاس در موبایل ===== */
+@media (max-width: 768px) {
+  #classes-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .card-body {
+    padding: 14px;
+  }
+}
+
+/* ===== معلم‌های صفحه اصلی (نام و عکس) ===== */
+.home-teacher-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  text-align:center;
+}
+
+.home-teacher-photo-wrap{
+  position:relative;
+  width:90px;
+  height:90px;
+}
+
+.home-teacher-photo{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--pink-light);
+  display:block;
+}
+
+.home-teacher-photo-actions{
+  position:absolute;
+  bottom:-4px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:4px;
+}
+
+.home-teacher-name-input{
+  width:100%;
+  text-align:center;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:6px 8px;
+  font-size:13px;
+}
+
+
+.home-teacher-card{
+  width:120px;   
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
