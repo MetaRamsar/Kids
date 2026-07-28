@@ -4,7 +4,7 @@
   src: url(/Vazir-Medium.ttf);
 }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0;}
-  *{ font-family: 'Vazirmatn', Tahoma, sans-serif;}
+  *{ font-family: vazir;}
 
   :root {
     --pink: #F875AA;
@@ -648,10 +648,10 @@
     border:none;
     border-radius:10px;
     background:#fff;
-    border:1px solid var(--border);
+    border:1px solid var(--pink-light);
     cursor:pointer;
     font-size:18px;
-    color:var(--text-primary);
+    color:var(--pink);
 }
 
 .sidebar-overlay{
@@ -900,6 +900,10 @@
 }
 
 /* ===== Responsive fixes ===== */
+#info-boxes-list {
+    justify-content: center;
+}
+
 @media (max-width: 992px) {
     .info-box { width: calc(50% - 10px); }
     .feature-box { min-width: 160px; max-width: 220px; }
@@ -1048,6 +1052,49 @@
     grid-template-columns: 1fr !important;
   }
 }
+/* ===== معلم‌های صفحه اصلی (نام و عکس) ===== */
+.home-teacher-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  text-align:center;
+  width:120px;
+  margin:0 auto;
+}
+
+.home-teacher-photo-wrap{
+  position:relative;
+  width:90px;
+  height:90px;
+}
+
+.home-teacher-photo{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--pink-light);
+  display:block;
+}
+
+.home-teacher-photo-actions{
+  position:absolute;
+  bottom:-4px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:4px;
+}
+
+.home-teacher-name-input{
+  width:100%;
+  text-align:center;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:6px 8px;
+  font-size:13px;
+}
 
 /* ============================================================
    🟢 RESPONSIVE: USERS & BLOG (نسخه نهایی نهایی)
@@ -1117,6 +1164,18 @@
 
   #sec-users .data-table tbody td:last-child::before {
     display: none !important;
+  }
+
+  #sec-users .data-table tbody td:last-child .btn-ghost {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #sec-users .data-table tbody td:last-child .btn-ghost i {
+    font-size: 16px;
   }
 
   /* 🔥 حذف کامل هاور صورتی در موبایل */
@@ -1241,6 +1300,18 @@
     display: none !important;
   }
 
+  #sec-blog .data-table tbody td:last-child .btn-ghost {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #sec-blog .data-table tbody td:last-child .btn-ghost i {
+    font-size: 16px;
+  }
+
   /* 🔥 حذف کامل هاور صورتی در موبایل */
   #sec-blog .data-table tbody tr:hover td {
     background: transparent !important;
@@ -1279,33 +1350,7 @@
   }
 }
 
-/* ===== دکمه‌های عملیات در موبایل ===== */
-@media (max-width: 768px) {
-  .btn {
-    padding: 8px 14px;
-    font-size: 12px;
-  }
-
-  .btn-ghost {
-    padding: 6px 12px;
-  }
-
-  #sec-users .btn-ghost,
-  #sec-blog .btn-ghost {
-    min-width: 44px;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #sec-users .btn-ghost i,
-  #sec-blog .btn-ghost i {
-    font-size: 16px;
-  }
-}
-
-/* ===== هدر بخش‌ها در موبایل ===== */
+/* ===== هدر بخش‌ها در موبایل (شامل دکمه افزودن کلاس و افزودن معلم) ===== */
 @media (max-width: 768px) {
   .sec-header {
     flex-direction: column;
@@ -1460,67 +1505,3 @@
     border-color: var(--pink) !important;
   }
 }
-
-/* ===== کارت‌های کلاس در موبایل ===== */
-@media (max-width: 768px) {
-  #classes-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px;
-  }
-
-  .card-body {
-    padding: 14px;
-  }
-}
-
-/* ===== معلم‌های صفحه اصلی (نام و عکس) ===== */
-.home-teacher-card{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:2px;
-  text-align:center;
-}
-
-.home-teacher-photo-wrap{
-  position:relative;
-  width:90px;
-  height:90px;
-}
-
-.home-teacher-photo{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid var(--pink-light);
-  display:block;
-}
-
-.home-teacher-photo-actions{
-  position:absolute;
-  bottom:-4px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:4px;
-}
-
-.home-teacher-name-input{
-  width:100%;
-  text-align:center;
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:6px 8px;
-  font-size:13px;
-}
-
-
-.home-teacher-card{
-  width:120px;   
-  margin:0 auto;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
