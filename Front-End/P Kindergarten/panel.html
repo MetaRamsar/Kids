@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>پنل ادمین — کیدآپ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="/panel.style.css">
+  <link rel="stylesheet" href="panel.style.css">
 </head>
-
 <body>
 
 <!-- ═══════════ SIDEBAR ═══════════ -->
 <aside class="sidebar">
   <div class="sidebar-admin">
     <div class="admin-photo-wrap">
-      <img src="https://placehold.co/100x100/FFF0F7/F875AA?text=مدیر" class="admin-photo" id="admin-photo-preview" alt="ادمین">
+      <img src="/img/profile-pic.jpg.jpeg" class="admin-photo" id="admin-photo-preview" alt="ادمین">
       <label class="admin-photo-edit" title="تغییر عکس پروفایل">
         <i class="fa-solid fa-camera"></i>
         <input type="file" accept="image/*" onchange="previewAdminPhoto(this)">
@@ -82,7 +81,7 @@
 
     <div class="topbar-brand">
       <a href="/main.html" class="topbar-logo">
-        <img src="https://placehold.co/160x50/F875AA/fff?text=کیدآپ" alt="لوگو">
+        <img src="/img/Logo.png" alt="لوگو">
       </a>
     </div>
   </div>
@@ -116,7 +115,7 @@
             <div class="field">
               <label>لوگو</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://placehold.co/160x50/F875AA/fff?text=کیدآپ" class="logo-preview" id="logo-preview" alt="لوگو">
+                <img src="/img/Logo.png" class="logo-preview" id="logo-preview" alt="لوگو">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/*" onchange="previewLogo(this)">
@@ -130,7 +129,7 @@
             <div class="field">
               <label>فیوآیکون</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://placehold.co/48/F875AA/fff?text=K" class="favicon-preview" id="favicon-preview" alt="فیوآیکون">
+                <img src="https://via.placeholder.com/48/F875AA/fff?text=K" class="favicon-preview" id="favicon-preview" alt="فیوآیکون">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/*" onchange="previewFavicon(this)">
@@ -235,7 +234,7 @@
             <div class="field full">
               <label>عکس بنر</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://placehold.co/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1" class="logo-preview" id="banner-image-preview" alt="عکس بنر" style="width:140px;height:90px;object-fit:cover;">
+                <img src="https://via.placeholder.com/300x200/AEDEFC/333333?text=%D8%A8%D9%86%D8%B1" class="logo-preview" id="banner-image-preview" alt="عکس بنر" style="width:140px;height:90px;object-fit:cover;">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/jpeg, image/png, image/webp" onchange="previewBannerImage(this)">
@@ -271,7 +270,7 @@
           </div>
         </div>
         <div class="card-body" id="info-boxes-wrapper">
-          <div id="info-boxes-list" style="display:flex;flex-wrap:wrap;gap:16px;"></div>
+          <div id="info-boxes-list" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;"></div>
           <div id="info-boxes-add-container" style="margin-top:16px;"></div>
           <div class="btn-row">
             <button class="btn btn-primary" onclick="saveInfoBoxes()"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
@@ -483,7 +482,7 @@
             <div class="field full">
               <label>عکس اصلی</label>
               <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                <img src="https://placehold.co/100x70/FFF0F7/F875AA?text=کلاس" class="logo-preview" id="class-main-image-preview">
+                <img src="https://via.placeholder.com/100x70/FFF0F7/F875AA?text=کلاس" class="logo-preview" id="class-main-image-preview">
                 <div style="flex:1;min-width:160px;">
                   <div class="upload-zone">
                     <input type="file" accept="image/*" onchange="previewGenericImage(this,'class-main-image-preview')">
@@ -624,7 +623,7 @@ const sections = ['site','homepage','about','users','classes','blog'];
 
 // ---------- Users (panel access: admins, teachers, ...) ----------
 let usersData = [
-  { id: 1, name: 'مدیر سیستم', role: 'مدیر ارشد', phone: '۰۹۱۲۰۰۰۰۰۰۰', photo: 'https://placehold.co/100/FFF0F7/F875AA?text=مدیر' },
+  { id: 1, name: 'مدیر سیستم', role: 'مدیر ارشد', phone: '۰۹۱۲۰۰۰۰۰۰۰', photo: '/img/profile-pic.jpg.jpeg' },
   { id: 2, name: 'فریده موسوی', role: 'معلم', phone: '۰۹۱۲۳۳۳۴۴۴۵', photo: '' },
   { id: 3, name: 'حسین کرمی', role: 'معلم', phone: '۰۹۳۵۱۱۱۲۲۲۳', photo: '' },
 ];
@@ -633,23 +632,23 @@ const userRoles = ['مدیر ارشد', 'ادمین', 'معلم', 'پشتیبا�
 
 // ---------- Blog ----------
 let blogData = [
-  { id: 1, title: 'روز نقاشی', category: 'هنر', date: '۲۰ آذر ۱۴۰۳', status: 'منتشر', image: 'https://placehold.co/300x200/FFD6E8/8a4b64?text=نقاشی', tags: 'نقاشی, خلاقیت', content: 'امروز روز نقاشی در مهدکودک بود...' },
-  { id: 2, title: 'جشن یلدا', category: 'مناسبت‌ها', date: '۳۰ آذر ۱۴۰۳', status: 'منتشر', image: 'https://placehold.co/300x200/FFE9C8/8a5a2b?text=یلدا', tags: 'یلدا, جشن', content: 'جشن یلدا با حضور کودکان برگزار شد...' },
-  { id: 3, title: 'کارگاه خمیربازی', category: 'خلاقیت', date: '۵ دی ۱۴۰۳', status: 'پیش‌نویس', image: 'https://placehold.co/300x200/E3D1FF/5a3b8a?text=خمیربازی', tags: 'خمیربازی, خلاقیت', content: 'کارگاه خمیربازی برای کودکان برگزار شد...' },
+  { id: 1, title: 'روز نقاشی', category: 'هنر', date: '۲۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/photo_2025-11-19_03-51-58.jpg', tags: 'نقاشی, خلاقیت', content: 'امروز روز نقاشی در مهدکودک بود...' },
+  { id: 2, title: 'جشن یلدا', category: 'مناسبت‌ها', date: '۳۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/download (9).jpg', tags: 'یلدا, جشن', content: 'جشن یلدا با حضور کودکان برگزار شد...' },
+  { id: 3, title: 'کارگاه خمیربازی', category: 'خلاقیت', date: '۵ دی ۱۴۰۳', status: 'پیش‌نویس', image: '/img/Cute.jpg', tags: 'خمیربازی, خلاقیت', content: 'کارگاه خمیربازی برای کودکان برگزار شد...' },
 ];
 let nextBlogId = 4;
 
 // ---------- Gallery (per class) ----------
 let galleryData = {
   'نقاشی': [
-    { id: 1, image: 'https://placehold.co/300x200/FFD6E8/8a4b64?text=نقاشی+۱', name: 'نقاشی خانواده', desc: 'اثر نقاشی یکی از هنرآموزان' },
-    { id: 2, image: 'https://placehold.co/300x200/FFE9C8/8a5a2b?text=دوستی', name: 'تابلوی دوستی', desc: 'تابلوی گروهی کلاس نقاشی' },
+    { id: 1, image: '/img/photo_2025-11-19_03-51-58.jpg', name: 'نقاشی خانواده', desc: 'اثر نقاشی یکی از هنرآموزان' },
+    { id: 2, image: '/img/download (9).jpg', name: 'تابلوی دوستی', desc: 'تابلوی گروهی کلاس نقاشی' },
   ],
   'موسیقی': [
-    { id: 3, image: 'https://placehold.co/300x200/C8F4C8/2b6b2b?text=سنتور', name: 'تمرین سنتور', desc: 'جلسه تمرین گروهی' },
+    { id: 3, image: '/img/Cute.jpg', name: 'تمرین سنتور', desc: 'جلسه تمرین گروهی' },
   ],
   'ورزش': [
-    { id: 4, image: 'https://placehold.co/300x200/AEDEFC/2b4b6b?text=ورزش', name: 'تمرین ورزشی', desc: 'تمرین مهارت‌های حرکتی' },
+    { id: 4, image: '/img/sport_12693567.png', name: 'تمرین ورزشی', desc: 'تمرین مهارت‌های حرکتی' },
   ],
 };
 let nextGalleryId = 5;
@@ -672,6 +671,7 @@ let nextCoachId = 4;
 let coachFormSocials = [];
 
 // ---------- Color Swatch Picker (used by Info Boxes & Feature Boxes) ----------
+// رنگ‌ها به‌صورت باکس‌های کوچک قابل‌کلیک نمایش داده می‌شوند به‌جای select
 function renderColorSwatches(colors, selectedColor, hiddenInputId) {
   return colors.map(c => `
     <div class="color-swatch${c.value === selectedColor ? ' selected' : ''}"
@@ -703,11 +703,12 @@ const infoBoxColors = [
 ];
 
 let infoBoxesData = [
-  { id: 1, icon: 'https://placehold.co/55/ffb6c1/fff?text=آموزش', title: 'آموزش و پرورش', desc: 'پرورش همه‌جانبه کودکان در فضایی امن', color: '#ffb6c1' },
-  { id: 2, icon: 'https://placehold.co/55/ffff4e/333?text=خلاقیت', title: 'خلاقیت', desc: 'شکوفایی استعدادهای خلاقانه', color: '#ffff4e' },
-  { id: 3, icon: 'https://placehold.co/55/90ee90/333?text=مهارت', title: 'مهارت‌های زندگی', desc: 'آموزش مهارت‌های روزمره و اجتماعی', color: '#90ee90' },
+  { id: 1, icon: '/img/kids_3636298.png', title: 'آموزش و پرورش', desc: 'پرورش همه‌جانبه کودکان در فضایی امن', color: '#ffb6c1' },
+  { id: 2, icon: '/img/kid_10133636.png', title: 'خلاقیت', desc: 'شکوفایی استعدادهای خلاقانه', color: '#ffff4e' },
+  { id: 3, icon: '/img/dough_9102578.png', title: 'مهارت‌های زندگی', desc: 'آموزش مهارت‌های روزمره و اجتماعی', color: '#90ee90' },
 ];
 let nextInfoBoxId = 4;
+let infoBoxesBackup = JSON.parse(JSON.stringify(infoBoxesData));
 
 // ---------- Feature Boxes ----------
 const featureBoxColors = [
@@ -723,14 +724,15 @@ const featureBoxColors = [
 ];
 
 let featureBoxesData = [
-  { id: 1, icon: 'https://placehold.co/55/AEDEFC/2b4b6b?text=EN', title: 'زبان انگلیسی', desc: 'آموزش پایه زبان انگلیسی', color: '#AEDEFC', link: '/archive.html' },
-  { id: 2, icon: 'https://placehold.co/55/FFD6E8/8a4b64?text=نقاشی', title: 'نقاشی', desc: 'آموزش نقاشی و خلاقیت', color: '#FFD6E8', link: '' },
-  { id: 3, icon: 'https://placehold.co/55/FFF3B0/6b5a2b?text=آشپزی', title: 'آشپزی', desc: 'آموزش آشپزی ساده و سالم', color: '#FFF3B0', link: '' },
-  { id: 4, icon: 'https://placehold.co/55/C8F4C8/2b6b2b?text=ورزش', title: 'ورزش', desc: 'فعالیت‌های ورزشی و حرکتی', color: '#C8F4C8', link: '' },
-  { id: 5, icon: 'https://placehold.co/55/E3D1FF/5a3b8a?text=ساز', title: 'نواختن ساز', desc: 'آموزش موسیقی و ساز', color: '#E3D1FF', link: '' },
-  { id: 6, icon: 'https://placehold.co/55/FFD1B8/6b3b2b?text=FR', title: 'زبان فرانسه', desc: 'آموزش مکالمه فرانسه', color: '#FFD1B8', link: '' },
+  { id: 1, icon: '/img/alphabet_3898075.png', title: 'زبان انگلیسی', desc: 'آموزش پایه زبان انگلیسی', color: '#AEDEFC', link: '/archive.html' },
+  { id: 2, icon: '/img/colour_2708174 (1).png', title: 'نقاشی', desc: 'آموزش نقاشی و خلاقیت', color: '#FFD6E8', link: '' },
+  { id: 3, icon: '/img/dough_9102578.png', title: 'آشپزی', desc: 'آموزش آشپزی ساده و سالم', color: '#FFF3B0', link: '' },
+  { id: 4, icon: '/img/sport_12693567.png', title: 'ورزش', desc: 'فعالیت‌های ورزشی و حرکتی', color: '#C8F4C8', link: '' },
+  { id: 5, icon: '/img/xylophone_6977852.png', title: 'نواختن ساز', desc: 'آموزش موسیقی و ساز', color: '#E3D1FF', link: '' },
+  { id: 6, icon: '/img/bonjour_9541518.png', title: 'زبان فرانسه', desc: 'آموزش مکالمه فرانسه', color: '#FFD1B8', link: '' },
 ];
 let nextFeatureBoxId = 7;
+let featureBoxesBackup = JSON.parse(JSON.stringify(featureBoxesData));
 
 // ---------- Footer Links (max 5) ----------
 let footerLinksData = [
@@ -739,6 +741,7 @@ let footerLinksData = [
   { id: 3, title: 'کلاس‌ها', url: '/archive.html' },
 ];
 let nextFooterLinkId = 4;
+let footerLinksBackup = JSON.parse(JSON.stringify(footerLinksData));
 
 // ---------- Legal Links (max 3) ----------
 let legalLinksData = [
@@ -747,6 +750,7 @@ let legalLinksData = [
   { id: 3, title: 'نقشه سایت', url: '#' },
 ];
 let nextLegalLinkId = 4;
+let legalLinksBackup = JSON.parse(JSON.stringify(legalLinksData));
 
 // ---------- Social Links (max 9) ----------
 let socialLinksData = [
@@ -756,6 +760,7 @@ let socialLinksData = [
   { id: 4, platform: 'youtube', url: 'https://youtube.com/kidup' },
 ];
 let nextSocialLinkId = 5;
+let socialLinksBackup = JSON.parse(JSON.stringify(socialLinksData));
 
 // ---------- Achievements (max 3) ----------
 let achievementsData = [
@@ -764,6 +769,7 @@ let achievementsData = [
   { id: 3, title: 'معلم متخصص', value: '۱۲' },
 ];
 let nextAchievementId = 4;
+let achievementsBackup = JSON.parse(JSON.stringify(achievementsData));
 
 // ---------- Social Platforms ----------
 const socialPlatforms = [
@@ -937,7 +943,7 @@ function openUserModal(data) {
     <h3>${isEdit ? 'ویرایش' : 'افزودن'} کاربر</h3>
     <div style="display:flex;justify-content:center;margin:16px 0;">
       <div class="admin-photo-wrap" style="width:74px;height:74px;">
-        <img id="user-photo-preview" src="${u.photo || 'https://placehold.co/74/F0F0F0/999?text=+'}" class="admin-photo" style="width:74px;height:74px;">
+        <img id="user-photo-preview" src="${u.photo || 'https://via.placeholder.com/74/F0F0F0/999?text=+'}" class="admin-photo" style="width:74px;height:74px;">
         <label class="admin-photo-edit" title="آپلود عکس">
           <i class="fa-solid fa-camera"></i>
           <input type="file" accept="image/*" onchange="previewGenericImage(this, 'user-photo-preview')">
@@ -998,13 +1004,13 @@ function renderBlog() {
   const tbody = document.getElementById('blog-table-body');
   tbody.innerHTML = blogData.map(b => `
     <tr>
-      <td data-label="تصویر" class="blog-img-cell"><img src="${b.image || 'https://placehold.co/50/FFF0F7/F875AA?text=img'}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"></td>
-      <td data-label="عنوان" class="blog-title-cell"><strong>${b.title}</strong></td>
+      <td class="blog-img-cell"><img src="${b.image || 'https://via.placeholder.com/50/FFF0F7/F875AA?text=img'}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;"></td>
+      <td class="blog-title-cell" data-label="عنوان"><strong>${b.title}</strong></td>
       <td data-label="دسته">${b.category}</td>
       <td data-label="تاریخ">${b.date}</td>
       <td data-label="برچسب‌ها"><span style="font-size:12px;color:var(--text-muted);">${b.tags || ''}</span></td>
       <td data-label="وضعیت"><span class="chip ${b.status === 'منتشر' ? 'green' : 'amber'}">${b.status}</span></td>
-      <td data-label="عملیات" class="blog-actions-cell"><div style="display:flex;gap:4px;justify-content:flex-end;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+      <td class="blog-actions-cell" data-label="عملیات"><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
     </tr>
   `).join('');
 }
@@ -1124,7 +1130,7 @@ function renderGallery() {
             ${items.map(item => `
               <div class="card" style="overflow:hidden;">
                 <div style="position:relative;aspect-ratio:4/3;background:var(--surface-1);">
-                  ${item.image ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://placehold.co/200x150/F0F0F0/999?text=بدون+تصویر'">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);"><i class="fa-solid fa-image" style="font-size:32px;"></i></div>`}
+                  ${item.image ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://via.placeholder.com/200x150/F0F0F0/999?text=بدون+تصویر'">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);"><i class="fa-solid fa-image" style="font-size:32px;"></i></div>`}
                   <div style="position:absolute;top:4px;left:4px;display:flex;gap:4px;">
                     <button class="btn-icon-edit" onclick="editGalleryItem('${className}', ${item.id})"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn-icon-delete" onclick="deleteGalleryItem('${className}', ${item.id})">×</button>
@@ -1430,7 +1436,7 @@ function saveCoach(id) {
   const experience = document.getElementById('coach-experience').value.trim();
   const desc = document.getElementById('coach-desc').value.trim();
   const photoPreview = document.getElementById('coach-photo-preview').src;
-  const photo = photoPreview.includes('placehold.co') ? '' : photoPreview;
+  const photo = photoPreview.includes('via.placeholder.com') ? '' : photoPreview;
   const socials = coachFormSocials.filter(s => s.url.trim() !== '');
 
   if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
@@ -1586,7 +1592,7 @@ function renderClassSlides() {
   const grid = document.getElementById('class-slides-grid');
   grid.innerHTML = classSlideImages.map((src, i) => `
     <div class="img-thumb-card">
-      <img src="${src}" onerror="this.src='https://placehold.co/100/F0F0F0/999?text=بدون+تصویر'">
+      <img src="${src}" onerror="this.src='https://via.placeholder.com/100/F0F0F0/999?text=بدون+تصویر'">
       <button type="button" onclick="removeClassSlide(${i})" class="btn-icon-delete img-thumb-actions actions-left">×</button>
     </div>
   `).join('');
@@ -1668,7 +1674,7 @@ function renderInfoBoxes() {
         <button class="btn-icon-edit" onclick="editInfoBox(${box.id})"><i class="fa-solid fa-pen"></i></button>
         <button class="btn-icon-delete" onclick="deleteInfoBox(${box.id})">×</button>
       </div>
-      <div class="category-img"><img src="${box.icon}" alt="" onerror="this.src='https://placehold.co/55/F0F0F0/999?text=آیکن'"></div>
+      <div class="category-img"><img src="${box.icon}" alt="" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'"></div>
       <h3>${box.title}</h3>
       <p class="desc">${box.desc}</p>
     </div>
@@ -1682,7 +1688,7 @@ function renderInfoBoxes() {
 }
 
 function addInfoBox() {
-  const newBox = { id: nextInfoBoxId++, icon: 'https://placehold.co/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: infoBoxColors[0].value };
+  const newBox = { id: nextInfoBoxId++, icon: 'https://via.placeholder.com/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: infoBoxColors[0].value };
   infoBoxesData.push(newBox);
   renderInfoBoxes();
   editInfoBox(newBox.id);
@@ -1709,7 +1715,7 @@ function editInfoBox(id) {
           <i class="fa-solid fa-image"></i>
           <p style="font-size:12px;">آپلود آیکن</p>
         </div>
-        <img id="edit-info-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://placehold.co/55/F0F0F0/999?text=آیکن'">
+        <img id="edit-info-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'">
       </div>
     </div>
     <div class="btn-row">
@@ -1750,8 +1756,14 @@ function deleteInfoBox(id) {
   });
 }
 
-function saveInfoBoxes() { showToast('ذخیره شد'); }
-function cancelInfoBoxes() { renderInfoBoxes(); }
+function saveInfoBoxes() {
+  infoBoxesBackup = JSON.parse(JSON.stringify(infoBoxesData));
+  showToast('ذخیره شد');
+}
+function cancelInfoBoxes() {
+  infoBoxesData = JSON.parse(JSON.stringify(infoBoxesBackup));
+  renderInfoBoxes();
+}
 
 // ============================================================
 // 13. FEATURE BOXES
@@ -1771,7 +1783,7 @@ function renderFeatureBoxes() {
         <h3>${box.title}</h3>
         <p>${box.desc}</p>
       </div>
-      <div class="feature-icon"><img src="${box.icon}" alt="" onerror="this.src='https://placehold.co/40/F0F0F0/999?text=آیکن'"></div>
+      <div class="feature-icon"><img src="${box.icon}" alt="" onerror="this.src='https://via.placeholder.com/40/F0F0F0/999?text=آیکن'"></div>
     </div>
   `).join('');
 
@@ -1783,7 +1795,7 @@ function renderFeatureBoxes() {
 }
 
 function addFeatureBox() {
-  const newBox = { id: nextFeatureBoxId++, icon: 'https://placehold.co/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: featureBoxColors[0].value, link: '' };
+  const newBox = { id: nextFeatureBoxId++, icon: 'https://via.placeholder.com/55/F0F0F0/999?text=+', title: 'باکس جدید', desc: 'توضیحات...', color: featureBoxColors[0].value, link: '' };
   featureBoxesData.push(newBox);
   renderFeatureBoxes();
   editFeatureBox(newBox.id);
@@ -1810,7 +1822,7 @@ function editFeatureBox(id) {
           <i class="fa-solid fa-image"></i>
           <p style="font-size:12px;">آپلود آیکن</p>
         </div>
-        <img id="edit-feature-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://placehold.co/55/F0F0F0/999?text=آیکن'">
+        <img id="edit-feature-icon-preview" src="${box.icon}" style="max-width:55px;max-height:55px;margin-top:6px;" onerror="this.src='https://via.placeholder.com/55/F0F0F0/999?text=آیکن'">
       </div>
     </div>
     <div class="btn-row">
@@ -1851,8 +1863,14 @@ function deleteFeatureBox(id) {
   });
 }
 
-function saveFeatureBoxes() { showToast('ذخیره شد'); }
-function cancelFeatureBoxes() { renderFeatureBoxes(); }
+function saveFeatureBoxes() {
+  featureBoxesBackup = JSON.parse(JSON.stringify(featureBoxesData));
+  showToast('ذخیره شد');
+}
+function cancelFeatureBoxes() {
+  featureBoxesData = JSON.parse(JSON.stringify(featureBoxesBackup));
+  renderFeatureBoxes();
+}
 
 // ============================================================
 // 14. FOOTER LINKS (max 5)
@@ -1888,8 +1906,14 @@ function removeFooterLink(index) {
   });
 }
 
-function saveFooterLinks() { showToast('ذخیره شد'); }
-function cancelFooterLinks() { renderFooterLinks(); }
+function saveFooterLinks() {
+  footerLinksBackup = JSON.parse(JSON.stringify(footerLinksData));
+  showToast('ذخیره شد');
+}
+function cancelFooterLinks() {
+  footerLinksData = JSON.parse(JSON.stringify(footerLinksBackup));
+  renderFooterLinks();
+}
 
 // ============================================================
 // 14.1 LEGAL LINKS (max 3)
@@ -1925,8 +1949,14 @@ function removeLegalLink(index) {
   });
 }
 
-function saveLegalLinks() { showToast('ذخیره شد'); }
-function cancelLegalLinks() { renderLegalLinks(); }
+function saveLegalLinks() {
+  legalLinksBackup = JSON.parse(JSON.stringify(legalLinksData));
+  showToast('ذخیره شد');
+}
+function cancelLegalLinks() {
+  legalLinksData = JSON.parse(JSON.stringify(legalLinksBackup));
+  renderLegalLinks();
+}
 
 // ============================================================
 // 15. SOCIAL LINKS (max 9)
@@ -1973,8 +2003,14 @@ function removeSocialLink(index) {
   });
 }
 
-function saveSocialLinks() { showToast('ذخیره شد'); }
-function cancelSocialLinks() { renderSocialLinks(); }
+function saveSocialLinks() {
+  socialLinksBackup = JSON.parse(JSON.stringify(socialLinksData));
+  showToast('ذخیره شد');
+}
+function cancelSocialLinks() {
+  socialLinksData = JSON.parse(JSON.stringify(socialLinksBackup));
+  renderSocialLinks();
+}
 
 // ============================================================
 // 16. ACHIEVEMENTS (max 3)
@@ -2010,14 +2046,20 @@ function removeAchievement(index) {
   });
 }
 
-function saveAchievements() { showToast('ذخیره شد'); }
-function cancelAchievements() { renderAchievements(); }
+function saveAchievements() {
+  achievementsBackup = JSON.parse(JSON.stringify(achievementsData));
+  showToast('ذخیره شد');
+}
+function cancelAchievements() {
+  achievementsData = JSON.parse(JSON.stringify(achievementsBackup));
+  renderAchievements();
+}
 
 // ============================================================
 // 17. SLIDER
 // ============================================================
 
-let homeSliderImages = ['https://placehold.co/400x300/AEDEFC/2b4b6b?text=اسلاید+۱', 'https://placehold.co/400x300/FFD6E8/8a4b64?text=اسلاید+۲', 'https://placehold.co/400x300/C8F4C8/2b6b2b?text=اسلاید+۳'];
+let homeSliderImages = ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'];
 
 function renderHomeSliderImages() {
   const grid = document.getElementById('home-slider-images-grid');
@@ -2076,7 +2118,7 @@ function removeHomeSliderImage(index) {
 
 function saveHomeSlider() { showToast('ذخیره شد'); }
 function cancelHomeSlider() {
-  homeSliderImages = ['https://placehold.co/400x300/AEDEFC/2b4b6b?text=اسلاید+۱', 'https://placehold.co/400x300/FFD6E8/8a4b64?text=اسلاید+۲', 'https://placehold.co/400x300/C8F4C8/2b6b2b?text=اسلاید+۳'];
+  homeSliderImages = ['/img/slide1 (1).jpg', '/img/slide1 (2).jpg', '/img/slide1 (3).jpg'];
   renderHomeSliderImages();
   document.getElementById('home-slider-title-input').value = 'تاریخچه';
   document.getElementById('home-slider-desc-input').value = 'داستان شکل‌گیری مهدکودک کیدآپ';
@@ -2096,7 +2138,7 @@ function previewBannerImage(input) {
 
 function saveBanner() { showToast('ذخیره شد'); }
 function cancelBanner() {
-  document.getElementById('banner-image-preview').src = 'https://placehold.co/300x200/F0F0F0/999?text=بنر';
+  document.getElementById('banner-image-preview').src = 'https://via.placeholder.com/300x200/F0F0F0/999?text=بنر';
   document.getElementById('banner-title-input').value = 'کودک شاد، کودک سالم!';
   document.getElementById('banner-desc-input').value = 'محیطی شاد و امن برای رشد و شکوفایی استعدادهای کودکان';
 }
@@ -2114,7 +2156,7 @@ function previewAboutIntroImage(input) {
 }
 
 function cancelAboutIntro() {
-  document.getElementById('about-intro-image-preview').src = 'https://placehold.co/300x200/F0F0F0/999?text=معرفی';
+  document.getElementById('about-intro-image-preview').src = 'https://via.placeholder.com/300x200/F0F0F0/999?text=معرفی';
   document.getElementById('about-intro-title-input').value = 'درباره ما';
   document.getElementById('about-intro-desc-input').value = 'مهدکودک کیدآپ محیطی امن و شاد برای رشد و یادگیری کودکان است. با بازی و فعالیت‌های آموزشی، کودکان را به کشف دنیای اطراف تشویق می‌کنیم.';
 }
@@ -2148,8 +2190,8 @@ function previewFavicon(input) {
 function saveGeneralSettings() { showToast('ذخیره شد'); }
 function cancelGeneralSettings() {
   document.getElementById('site-name-input').value = 'کیدآپ — مهدکودک';
-  document.getElementById('logo-preview').src = 'https://placehold.co/160x50/F875AA/fff?text=کیدآپ';
-  document.getElementById('favicon-preview').src = 'https://placehold.co/48/F875AA/fff?text=K';
+  document.getElementById('logo-preview').src = '/img/Logo.png';
+  document.getElementById('favicon-preview').src = 'https://via.placeholder.com/48/F875AA/fff?text=K';
 }
 
 // ============================================================
