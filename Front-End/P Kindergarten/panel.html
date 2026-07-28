@@ -289,7 +289,7 @@
         </div>
         <div class="card-body">
           <div style="margin-bottom:20px;">
-            <div id="home-slider-images-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;"></div>
+            <div id="home-slider-images-grid" style="display:grid;gap:10px;margin-bottom:10px;"></div>
             <div class="upload-zone" id="home-slider-images-upload-zone">
               <input type="file" accept="image/*" multiple id="home-slider-images-input" onchange="handleHomeSliderUpload(this)">
               <i class="fa-solid fa-images"></i>
@@ -1670,7 +1670,7 @@ function renderInfoBoxes() {
 
   list.innerHTML = infoBoxesData.map(box => `
     <div class="info-box" style="background:${box.color};width:280px;position:relative;">
-      <div style="position:absolute;top:8px;left:8px;display:flex;gap:4px;">
+      <div style="position:absolute;top:8px;left:8px;display:flex;gap:7px;">
         <button class="btn-icon-edit" onclick="editInfoBox(${box.id})"><i class="fa-solid fa-pen"></i></button>
         <button class="btn-icon-delete" onclick="deleteInfoBox(${box.id})">×</button>
       </div>
@@ -1775,7 +1775,7 @@ function renderFeatureBoxes() {
 
   list.innerHTML = featureBoxesData.map(box => `
     <div class="feature-box" style="background:${box.color};min-width:200px;max-width:280px;flex:1 1 200px;position:relative;">
-      <div style="position:absolute;top:8px;left:8px;display:flex;gap:4px;">
+      <div style="position:absolute;top:8px;left:8px;display:flex;gap:7px;">
         <button class="btn-icon-edit" onclick="editFeatureBox(${box.id})"><i class="fa-solid fa-pen"></i></button>
         <button class="btn-icon-delete" onclick="deleteFeatureBox(${box.id})">×</button>
       </div>
@@ -2066,7 +2066,7 @@ function renderHomeSliderImages() {
   grid.innerHTML = homeSliderImages.map((src, i) => `
     <div class="img-thumb-card">
       <img src="${src}" onerror="this.src='https://via.placeholder.com/200x200/F0F0F0/999?text=بدون+تصویر'">
-      <div style="position:absolute;top:8px;left:8px;display:flex;gap:4px;">
+      <div style="position:absolute;top:8px;left:8px;display:flex;gap:7px;">
         <button type="button" onclick="document.getElementById('home-slider-replace-${i}').click()" class="btn-icon-edit"><i class="fa-solid fa-pen"></i></button>
         <button type="button" onclick="removeHomeSliderImage(${i})" class="btn-icon-delete">×</button>
       </div>
