@@ -384,6 +384,7 @@
   input[type="date"],
   input[type="time"],
   input[type="file"],
+  input[type="password"],
   textarea,
   select {
     width: 100%;
@@ -413,6 +414,41 @@
   }
 
   textarea { resize: vertical; min-height: 90px; }
+
+  /* ─── PASSWORD FIELD ─── */
+  .password-field-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  .password-field-wrap input[type="password"],
+  .password-field-wrap input[type="text"] {
+    padding-left: 40px;
+  }
+
+  .password-toggle-btn {
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .password-toggle-btn:hover {
+    color: var(--pink);
+    background: var(--pink-bg);
+  }
 
   .hint { font-size: 11px; color: var(--text-muted); }
 
@@ -581,9 +617,9 @@
   .u-row { display: flex; align-items: center; gap: 9px; }
 
   .u-av {
-    width: 30px; height: 30px; border-radius: 50%;
+    width: 64px; height: 64px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700; flex-shrink: 0;
+    font-size: 20px; font-weight: 700; flex-shrink: 0;
   }
 
   .u-av.pink { background: var(--pink-bg); color: var(--pink); }
@@ -592,7 +628,7 @@
   .u-av.amber { background: var(--warning-bg); color: var(--warning); }
 
   .u-av-img {
-    width: 30px; height: 30px; border-radius: 50%;
+    width: 64px; height: 64px; border-radius: 50%;
     object-fit: cover; flex-shrink: 0; display: block;
     border: 1px solid var(--border);
   }
@@ -666,6 +702,55 @@
 
 .sidebar.open{
     transform:translateX(0);
+}
+
+/* ─── FAB: دکمه شناور افزودن کاربر ─── */
+.fab-quick-add{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:none;
+    background:var(--pink);
+    color:#fff;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(248,117,170,.45);
+    z-index:120;
+    opacity:0;
+    transform:translateY(14px) scale(.85);
+    transition:opacity .25s ease, transform .25s ease, background .15s;
+    pointer-events:none;
+}
+
+.fab-quick-add:hover{
+    background:#f4599c;
+}
+
+.fab-quick-add.show{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+}
+
+/* در بازه‌ای که سایدبار هنوز به‌صورت ثابت نمایش داده می‌شود ولی جدول کارتی شده،
+   دکمه شناور باید روی ناحیه محتوا/کارت‌ها بماند، نه روی سایدبار */
+@media (min-width:701px) and (max-width:768px){
+    .fab-quick-add{
+        right: calc(var(--sidebar-w) + 18px);
+    }
+}
+
+/* دکمه شناور فقط در حالت ریسپانسیو کاربرد دارد (هم‌راستا با بریک‌پوینت کارتی‌شدن جدول کاربران) */
+@media (min-width:769px){
+    .fab-quick-add{
+        display:none !important;
+    }
 }
 
 .sidebar-overlay.show{
@@ -946,6 +1031,24 @@
   }
 }
 
+/* عکس بخش وبلاگ در مودال ویرایش: در حالت ریسپانسیو زیر باکس اپلود وسط‌چین شود */
+@media (max-width: 600px) {
+  #blog-image-preview {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* آیکن باکس دسته‌بندی (صفحه اصلی) در مودال ویرایش: در حالت ریسپانسیو زیر باکس اپلود وسط‌چین شود */
+@media (max-width: 600px) {
+  #edit-feature-icon-preview {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 /* -----باکس رنگی- --------*/
 .color-swatch-row {
   display: flex;
@@ -1014,28 +1117,35 @@
   }
 }
 
-/* === وسط‌چین شدن فرم ویرایش باکس معرفی === */
-@media (max-width: 600px) {
-  .info-box-edit-form h3 {
+/* === وسط‌چین شدن فرم ویرایش باکس معرفی و باکس دسته‌بندی === */
+@media (max-width: 900px) {
+  .info-box-edit-form h3,
+  .feature-box-edit-form h3 {
     text-align: center;
   }
-  .info-box-edit-form .field {
+  .info-box-edit-form .field,
+  .feature-box-edit-form .field {
     align-items: center;
   }
-  .info-box-edit-form label {
+  .info-box-edit-form label,
+  .feature-box-edit-form label {
     text-align: center;
     width: 100%;
   }
-  .info-box-edit-form .color-swatch-row {
+  .info-box-edit-form .color-swatch-row,
+  .feature-box-edit-form .color-swatch-row {
     justify-content: center;
   }
-  .info-box-edit-form .upload-zone {
+  .info-box-edit-form .upload-zone,
+  .feature-box-edit-form .upload-zone {
     width: 100%;
   }
-  .info-box-edit-form #edit-info-icon-preview {
+  .info-box-edit-form #edit-info-icon-preview,
+  .feature-box-edit-form #edit-feature-icon-preview {
     margin: 6px auto 0;
   }
-  .info-box-edit-form .btn-row {
+  .info-box-edit-form .btn-row,
+  .feature-box-edit-form .btn-row {
     justify-content: center;
   }
 }
@@ -1167,6 +1277,13 @@
     padding-bottom: 4px;
   }
 
+  #sec-users .data-table tbody td:first-child .u-av-img,
+  #sec-users .data-table tbody td:first-child .u-av {
+    width: 74px !important;
+    height: 74px !important;
+    font-size: 22px;
+  }
+
   #sec-users .data-table tbody td:first-child::before {
     display: none;
   }
@@ -1184,15 +1301,15 @@
   }
 
   #sec-users .data-table tbody td:last-child .btn-ghost {
-    min-width: 44px;
-    min-height: 44px;
+    padding: 4px 10px;
+    font-size: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
 
   #sec-users .data-table tbody td:last-child .btn-ghost i {
-    font-size: 16px;
+    font-size: 12px;
   }
 
   /* 🔥 حذف کامل هاور صورتی در موبایل */
@@ -1229,6 +1346,11 @@
   #sec-users .data-table tbody td::before {
     min-width: unset;
     font-size: 11px;
+  }
+
+  #sec-users .data-table tbody td:first-child {
+    align-items: center;
+    width: 100%;
   }
 
   #sec-users .data-table tbody td:last-child {
@@ -1318,15 +1440,15 @@
   }
 
   #sec-blog .data-table tbody td:last-child .btn-ghost {
-    min-width: 44px;
-    min-height: 44px;
+    padding: 4px 10px;
+    font-size: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
 
   #sec-blog .data-table tbody td:last-child .btn-ghost i {
-    font-size: 16px;
+    font-size: 12px;
   }
 
   /* 🔥 حذف کامل هاور صورتی در موبایل */
