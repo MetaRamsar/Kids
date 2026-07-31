@@ -65,6 +65,23 @@
 </aside>
 <div class="sidebar-overlay" onclick="closeSidebar()"></div>
 
+<!-- دکمه‌های شناور افزودن (فقط حالت ریسپانسیو/کارتی، بعد از رد شدن دکمه اصلی و قبل از پایان بخش) -->
+<button type="button" class="fab-quick-add" id="fab-add-user" onclick="openUserModal()" title="افزودن کاربر" aria-label="افزودن کاربر">
+  <i class="fa-solid fa-plus"></i>
+</button>
+
+<button type="button" class="fab-quick-add" id="fab-add-blog" onclick="openBlogModal()" title="مقاله جدید" aria-label="مقاله جدید">
+  <i class="fa-solid fa-plus"></i>
+</button>
+
+<button type="button" class="fab-quick-add" id="fab-add-class" onclick="toggleClassForm()" title="افزودن کلاس" aria-label="افزودن کلاس">
+  <i class="fa-solid fa-plus"></i>
+</button>
+
+<button type="button" class="fab-quick-add" id="fab-add-teacher" onclick="openCoachModal()" title="افزودن معلم" aria-label="افزودن معلم">
+  <i class="fa-solid fa-plus"></i>
+</button>
+
 <!-- ═══════════ MAIN ═══════════ -->
 <div class="main-wrap">
 
@@ -442,7 +459,7 @@
           <div class="sec-title">کاربران</div>
           <div class="sec-sub" id="users-count">۰ کاربر</div>
         </div>
-        <button class="btn btn-primary" onclick="openUserModal()"><i class="fa-solid fa-plus"></i> افزودن ادمین</button>
+        <button class="btn btn-primary" id="add-user-btn" onclick="openUserModal()"><i class="fa-solid fa-plus"></i> افزودن کاربر</button>
       </div>
       <div class="card">
         <div class="card-head">
@@ -452,7 +469,7 @@
         </div>
         <div style="overflow-x:auto;">
           <table class="data-table">
-            <thead><tr><th>عکس</th><th>نام و نام خانوادگی</th><th>نقش</th><th>تلفن</th><th>عملیات</th></tr></thead>
+            <thead><tr><th>عکس</th><th>نام و نام خانوادگی</th><th>نقش</th><th>تلفن</th><th>وضعیت</th><th>عملیات</th></tr></thead>
             <tbody id="users-table-body"></tbody>
           </table>
         </div>
@@ -466,7 +483,7 @@
           <div class="sec-title">کلاس‌ها</div>
           <div class="sec-sub">۳ کلاس فعال</div>
         </div>
-        <button class="btn btn-primary" onclick="toggleClassForm()"><i class="fa-solid fa-plus"></i> افزودن کلاس</button>
+        <button class="btn btn-primary" id="add-class-btn" onclick="toggleClassForm()"><i class="fa-solid fa-plus"></i> افزودن کلاس</button>
       </div>
 
       <!-- فرم کلاس -->
@@ -553,7 +570,7 @@
           <div class="sec-title">معلم‌ها</div>
           <div class="sec-sub" id="coaches-count">۰ معلم</div>
         </div>
-        <button class="btn btn-primary" onclick="openCoachModal()"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
+        <button class="btn btn-primary" id="add-teacher-btn" onclick="openCoachModal()"><i class="fa-solid fa-plus"></i> افزودن معلم</button>
       </div>
       <div id="coaches-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;"></div>
 
@@ -577,12 +594,12 @@
           <div class="sec-title">وبلاگ</div>
           <div class="sec-sub">مدیریت مقالات</div>
         </div>
-        <button class="btn btn-primary" onclick="openBlogModal()"><i class="fa-solid fa-plus"></i> مقاله جدید</button>
+        <button class="btn btn-primary" id="add-blog-btn" onclick="openBlogModal()"><i class="fa-solid fa-plus"></i> مقاله جدید</button>
       </div>
       <div class="card">
         <div class="blog-table-wrap" style="overflow-x:auto;">
           <table class="data-table blog-table">
-            <thead><tr><th>تصویر</th><th>عنوان</th><th>دسته</th><th>تاریخ</th><th>برچسب‌ها</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+            <thead><tr><th>تصویر</th><th>عنوان</th><th>دسته</th><th>تاریخ</th><th>وضعیت</th><th>عملیات</th></tr></thead>
             <tbody id="blog-table-body"></tbody>
           </table>
         </div>
@@ -623,18 +640,31 @@ const sections = ['site','homepage','about','users','classes','blog'];
 
 // ---------- Users (panel access: admins, teachers, ...) ----------
 let usersData = [
-  { id: 1, name: 'مدیر سیستم', role: 'مدیر ارشد', phone: '۰۹۱۲۰۰۰۰۰۰۰', photo: '/img/profile-pic.jpg.jpeg' },
-  { id: 2, name: 'فریده موسوی', role: 'معلم', phone: '۰۹۱۲۳۳۳۴۴۴۵', photo: '' },
-  { id: 3, name: 'حسین کرمی', role: 'معلم', phone: '۰۹۳۵۱۱۱۲۲۲۳', photo: '' },
+  { id: 1, name: 'مدیر سیستم', role: 'مدیر ارشد', phone: '۰۹۱۲۰۰۰۰۰۰۰', photo: '/img/profile-pic.jpg.jpeg', status: 'active', password: 'admin@123' },
+  { id: 2, name: 'فریده موسوی', role: 'معلم', phone: '۰۹۱۲۳۳۳۴۴۴۵', photo: '', status: 'active', password: '123456' },
+  { id: 3, name: 'حسین کرمی', role: 'معلم', phone: '۰۹۳۵۱۱۱۲۲۲۳', photo: '', status: 'inactive', password: '123456' },
 ];
 let nextUserId = 4;
 const userRoles = ['مدیر ارشد', 'ادمین', 'معلم', 'پشتیبانی'];
 
+// کاربر لاگین‌شده فعلی (چون این پنل بک‌اند/لاگین واقعی ندارد، آیدی کاربر جاری اینجا مشخص می‌شود؛
+// همان کاربری است که در بالای سایدبار به عنوان «مدیر سیستم / مدیر ارشد» نمایش داده می‌شود)
+const CURRENT_USER_ID = 1;
+function getCurrentUser() {
+  return usersData.find(u => u.id === CURRENT_USER_ID) || usersData[0];
+}
+function isChiefAdmin(u) { return !!u && u.role === 'مدیر ارشد'; }
+function canEditUserRow(id) {
+  const current = getCurrentUser();
+  if (isChiefAdmin(current)) return true; // فقط مدیر ارشد به همه دسترسی ویرایش اطلاعات دارد
+  return id === current.id; // سایر کاربران فقط به اطلاعات خودشان دسترسی دارند
+}
+
 // ---------- Blog ----------
 let blogData = [
-  { id: 1, title: 'روز نقاشی', category: 'هنر', date: '۲۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/photo_2025-11-19_03-51-58.jpg', tags: 'نقاشی, خلاقیت', content: 'امروز روز نقاشی در مهدکودک بود...' },
-  { id: 2, title: 'جشن یلدا', category: 'مناسبت‌ها', date: '۳۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/download (9).jpg', tags: 'یلدا, جشن', content: 'جشن یلدا با حضور کودکان برگزار شد...' },
-  { id: 3, title: 'کارگاه خمیربازی', category: 'خلاقیت', date: '۵ دی ۱۴۰۳', status: 'پیش‌نویس', image: '/img/Cute.jpg', tags: 'خمیربازی, خلاقیت', content: 'کارگاه خمیربازی برای کودکان برگزار شد...' },
+  { id: 1, title: 'روز نقاشی', category: 'هنر', date: '۲۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/photo_2025-11-19_03-51-58.jpg', content: 'امروز روز نقاشی در مهدکودک بود...' },
+  { id: 2, title: 'جشن یلدا', category: 'مناسبت‌ها', date: '۳۰ آذر ۱۴۰۳', status: 'منتشر', image: '/img/download (9).jpg', content: 'جشن یلدا با حضور کودکان برگزار شد...' },
+  { id: 3, title: 'کارگاه خمیربازی', category: 'خلاقیت', date: '۵ دی ۱۴۰۳', status: 'پیش‌نویس', image: '/img/Cute.jpg', content: 'کارگاه خمیربازی برای کودکان برگزار شد...' },
 ];
 let nextBlogId = 4;
 
@@ -781,6 +811,9 @@ const socialPlatforms = [
   { key: 'linkedin', label: 'لینکدین', icon: 'fa-brands fa-linkedin', color: '#0A66C2', placeholder: 'https://linkedin.com/...' },
   { key: 'aparat', label: 'آپارات', icon: 'fa-solid fa-clapperboard', color: '#FF3333', placeholder: 'https://aparat.com/...' },
   { key: 'eitaa', label: 'ایتا', icon: 'fa-solid fa-paper-plane', color: '#3EB049', placeholder: 'https://eitaa.com/...' },
+  { key: 'shad', label: 'شاد', icon: 'fa-solid fa-comment-dots', color: '#F5A623', placeholder: 'https://shad.ir/...' },
+  { key: 'bale', label: 'بله', icon: 'fa-solid fa-paper-plane', color: '#3A9EE0', placeholder: 'https://ble.ir/...' },
+  { key: 'rubika', label: 'روبیکا', icon: 'fa-solid fa-comment', color: '#611D8D', placeholder: 'https://rubika.ir/...' },
   { key: 'other', label: 'سایر', icon: 'fa-solid fa-link', color: '#555555', placeholder: 'https://...' }
 ];
 
@@ -849,6 +882,9 @@ function showSection(name, evt) {
     }
   }
   if(window.innerWidth<=700) closeSidebar();
+  // بعد از تعویض بخش، اسکرول صفحه برگرده بالا تا کاربر مجبور نشه دستی برگرده بالا
+  window.scrollTo(0, 0);
+  if (typeof updateUsersFab === 'function') updateUsersFab();
 }
 
 function toggleSubmenu(el) {
@@ -923,12 +959,13 @@ function renderUsers() {
   tbody.innerHTML = filtered.map(u => `
     <tr>
       <td data-label="عکس">${u.photo
-        ? `<img src="${u.photo}" class="u-av-img" width="30" height="30" style="width:30px;height:30px;border-radius:50%;object-fit:cover;display:block;" onerror="this.outerHTML='<div class=\\'u-av pink\\'>${u.name.charAt(0)}</div>'">`
+        ? `<img src="${u.photo}" class="u-av-img" width="64" height="64" style="width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;" onerror="this.outerHTML='<div class=\\'u-av pink\\'>${u.name.charAt(0)}</div>'">`
         : `<div class="u-av pink">${u.name.charAt(0)}</div>`}</td>
       <td data-label="نام و نام خانوادگی" class="u-name">${u.name}</td>
       <td data-label="نقش"><span class="chip blue">${u.role}</span></td>
       <td data-label="تلفن">${u.phone}</td>
-      <td data-label="عملیات"><div style="display:flex;gap:4px;justify-content:flex-end;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editUser(${u.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i></button></div></td>
+      <td data-label="وضعیت"><span class="chip ${u.status === 'active' ? 'green' : 'amber'}">${u.status === 'active' ? 'فعال' : 'غیرفعال'}</span></td>
+      <td data-label="عملیات"><div style="display:flex;gap:4px;">${canEditUserRow(u.id) ? `<button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editUser(${u.id})"><i class="fa-solid fa-pen"></i></button>` : ''}${(u.id === getCurrentUser().id && isChiefAdmin(getCurrentUser())) ? '' : `<button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i></button>`}</div></td>
     </tr>
   `).join('');
 }
@@ -937,7 +974,13 @@ function filterUsers() { renderUsers(); }
 
 function openUserModal(data) {
   const isEdit = !!data;
-  const u = data || { name: '', role: 'ادمین', phone: '', photo: '' };
+  const u = data || { name: '', role: 'ادمین', phone: '', photo: '', status: 'active' };
+  const currentUser = getCurrentUser();
+  const currentIsChief = isChiefAdmin(currentUser);
+
+  // فقط مدیر ارشد اجازه‌ی تغییر پسورد را دارد؛ چه برای خودش، چه برای بقیه کاربران
+  const canEditPassword = currentIsChief;
+
   const roleOptions = userRoles.map(r => `<option value="${r}" ${u.role === r ? 'selected' : ''}>${r}</option>`).join('');
   const html = `
     <h3>${isEdit ? 'ویرایش' : 'افزودن'} کاربر</h3>
@@ -952,8 +995,22 @@ function openUserModal(data) {
     </div>
     <div class="form-grid">
       <div class="field full"><label>نام و نام خانوادگی</label><input type="text" id="user-name" value="${escapeHtml(u.name)}"></div>
-      <div class="field"><label>نقش</label><select id="user-role">${roleOptions}</select></div>
+      <div class="field"><label>نقش</label><select id="user-role" ${currentIsChief ? '' : 'disabled'}>${roleOptions}</select>${currentIsChief ? '' : '<small style="color:var(--text-muted);">تغییر نقش فقط توسط مدیر ارشد امکان‌پذیر است</small>'}</div>
       <div class="field"><label>تلفن</label><input type="text" id="user-phone" value="${escapeHtml(u.phone)}"></div>
+      <div class="field"><label>وضعیت</label><select id="user-status">
+        <option value="active" ${(u.status || 'active') === 'active' ? 'selected' : ''}>فعال</option>
+        <option value="inactive" ${u.status === 'inactive' ? 'selected' : ''}>غیرفعال</option>
+      </select></div>
+      ${canEditPassword ? `
+      <div class="field full">
+        <label>رمز عبور ورود</label>
+        <div class="password-field-wrap">
+          <input type="password" id="user-password" placeholder="برای عدم تغییر، خالی بگذارید" autocomplete="new-password">
+          <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility(this)" title="نمایش/مخفی‌کردن رمز" aria-label="نمایش/مخفی‌کردن رمز">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>` : ''}
     </div>
     <div class="btn-row">
       <button class="btn btn-primary" onclick="saveUser(${isEdit ? u.id : 'null'})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
@@ -964,31 +1021,62 @@ function openUserModal(data) {
 }
 
 function saveUser(id) {
+  // بررسی سطح دسترسی: مدیر ارشد به همه ردیف‌ها دسترسی دارد؛ سایر کاربران فقط به اطلاعات خودشان
+  if (id && !canEditUserRow(id)) {
+    alert('شما اجازه‌ی ویرایش اطلاعات این کاربر را ندارید.');
+    closeFormModal();
+    return;
+  }
+
   const name = document.getElementById('user-name').value.trim();
-  const role = document.getElementById('user-role').value;
+  const currentUser = getCurrentUser();
+  const currentIsChief = isChiefAdmin(currentUser);
+  const roleSelect = document.getElementById('user-role');
+  // اگر کاربر جاری مدیر ارشد نیست، نقش قابل تغییر نیست (حتی اگر کسی از کنسول دستکاری کند)
+  const role = currentIsChief ? roleSelect.value : (id ? usersData.find(u => u.id === id).role : roleSelect.value);
   const phone = document.getElementById('user-phone').value.trim();
+  const status = document.getElementById('user-status').value;
   const photoPreview = document.getElementById('user-photo-preview').src;
   const photo = photoPreview.includes('via.placeholder.com') ? '' : photoPreview;
+
+  // فیلد پسورد فقط وقتی در فرم وجود دارد که کاربر جاری مدیر ارشد باشد
+  const passwordInput = currentIsChief ? document.getElementById('user-password') : null;
+  const password = passwordInput ? passwordInput.value.trim() : '';
 
   if (!name) { alert('لطفاً نام را وارد کنید.'); return; }
 
   if (id) {
     const idx = usersData.findIndex(u => u.id === id);
-    if (idx !== -1) usersData[idx] = { ...usersData[idx], name, role, phone, photo };
+    if (idx !== -1) {
+      usersData[idx] = { ...usersData[idx], name, role, phone, photo, status };
+      if (password) usersData[idx].password = password;
+    }
   } else {
-    usersData.push({ id: nextUserId++, name, role, phone, photo });
+    const newUser = { id: nextUserId++, name, role, phone, photo, status };
+    if (password) newUser.password = password;
+    usersData.push(newUser);
   }
   closeFormModal();
   renderUsers();
+  renderSidebarProfile();
   showToast('کاربر ذخیره شد');
 }
 
 function editUser(id) {
+  if (!canEditUserRow(id)) {
+    alert('شما اجازه‌ی ویرایش اطلاعات این کاربر را ندارید.');
+    return;
+  }
   const u = usersData.find(u => u.id === id);
   if (u) openUserModal(u);
 }
 
 function deleteUser(id) {
+  // فقط مدیر ارشد نمی‌تواند حساب خودش را حذف کند
+  if (id === getCurrentUser().id && isChiefAdmin(getCurrentUser())) {
+    alert('مدیر ارشد نمی‌تواند حساب کاربری خودش را حذف کند.');
+    return;
+  }
   openDeleteModal(() => {
     usersData = usersData.filter(u => u.id !== id);
     renderUsers();
@@ -1008,7 +1096,6 @@ function renderBlog() {
       <td class="blog-title-cell" data-label="عنوان"><strong>${b.title}</strong></td>
       <td data-label="دسته">${b.category}</td>
       <td data-label="تاریخ">${b.date}</td>
-      <td data-label="برچسب‌ها"><span style="font-size:12px;color:var(--text-muted);">${b.tags || ''}</span></td>
       <td data-label="وضعیت"><span class="chip ${b.status === 'منتشر' ? 'green' : 'amber'}">${b.status}</span></td>
       <td class="blog-actions-cell" data-label="عملیات"><div style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editBlog(${b.id})"><i class="fa-solid fa-pen"></i></button><button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;color:#E24B4A;" onclick="deleteBlog(${b.id})"><i class="fa-solid fa-trash"></i></button></div></td>
     </tr>
@@ -1017,14 +1104,13 @@ function renderBlog() {
 
 function openBlogModal(data) {
   const isEdit = !!data;
-  const b = data || { title: '', category: '', date: '', status: 'منتشر', image: '', tags: '', content: '' };
+  const b = data || { title: '', category: '', date: '', status: 'منتشر', image: '', content: '' };
   const html = `
     <h3>${isEdit ? 'ویرایش' : 'مقاله جدید'}</h3>
     <div class="form-grid" style="margin-top:16px;">
       <div class="field full"><label>عنوان</label><input type="text" id="blog-title" value="${escapeHtml(b.title)}"></div>
       <div class="field"><label>دسته</label><input type="text" id="blog-category" value="${escapeHtml(b.category)}"></div>
       <div class="field"><label>تاریخ</label><input type="text" id="blog-date" value="${escapeHtml(b.date)}"></div>
-      <div class="field"><label>برچسب‌ها</label><input type="text" id="blog-tags" value="${escapeHtml(b.tags)}" placeholder="مثلاً: نقاشی, خلاقیت"></div>
       <div class="field"><label>وضعیت</label>
         <select id="blog-status">
           <option value="منتشر" ${b.status === 'منتشر' ? 'selected' : ''}>منتشر</option>
@@ -1069,7 +1155,6 @@ function saveBlog(id) {
   const category = document.getElementById('blog-category').value.trim();
   const date = document.getElementById('blog-date').value.trim();
   const status = document.getElementById('blog-status').value;
-  const tags = document.getElementById('blog-tags').value.trim();
   const content = document.getElementById('blog-content').value.trim();
   const image = document.getElementById('blog-image-preview').src || '';
 
@@ -1077,9 +1162,9 @@ function saveBlog(id) {
 
   if (id) {
     const idx = blogData.findIndex(b => b.id === id);
-    if (idx !== -1) blogData[idx] = { ...blogData[idx], title, category, date, status, tags, content, image };
+    if (idx !== -1) blogData[idx] = { ...blogData[idx], title, category, date, status, content, image };
   } else {
-    blogData.push({ id: nextBlogId++, title, category, date, status, tags, content, image });
+    blogData.push({ id: nextBlogId++, title, category, date, status, content, image });
   }
   closeFormModal();
   renderBlog();
@@ -1806,6 +1891,7 @@ function editFeatureBox(id) {
   if (!box) return;
   const colorSwatches = renderColorSwatches(featureBoxColors, box.color, 'edit-feature-color');
   const html = `
+    <div class="feature-box-edit-form">
     <h3>ویرایش باکس دسته‌بندی</h3>
     <div class="form-grid" style="margin-top:16px;">
       <div class="field full"><label>عنوان</label><input type="text" id="edit-feature-title" value="${escapeHtml(box.title)}"></div>
@@ -1828,6 +1914,7 @@ function editFeatureBox(id) {
     <div class="btn-row">
       <button class="btn btn-primary" onclick="saveFeatureBoxEdit(${id})"><i class="fa-solid fa-floppy-disk"></i> ذخیره</button>
       <button class="btn btn-ghost" onclick="closeFormModal();renderFeatureBoxes();">انصراف</button>
+    </div>
     </div>
   `;
   openFormModal(html);
@@ -2198,10 +2285,29 @@ function cancelGeneralSettings() {
 // 20. ADMIN PHOTO
 // ============================================================
 
+// نام، نقش و عکس بالای سایدبار همیشه از روی اطلاعات کاربر جاری
+// در usersData (همان دیتای بخش «کاربران») خوانده می‌شود
+function renderSidebarProfile() {
+  const u = getCurrentUser();
+  if (!u) return;
+  document.getElementById('admin-name').textContent = u.name || '';
+  document.getElementById('admin-role').textContent = u.role || '';
+  const photoEl = document.getElementById('admin-photo-preview');
+  photoEl.src = u.photo || '/img/profile-pic.jpg.jpeg';
+}
+
 function previewAdminPhoto(input) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
-    reader.onload = e => document.getElementById('admin-photo-preview').src = e.target.result;
+    reader.onload = e => {
+      document.getElementById('admin-photo-preview').src = e.target.result;
+      // عکس جدید در usersData کاربر جاری هم ذخیره می‌شود تا با بخش «کاربران» هماهنگ بماند
+      const u = getCurrentUser();
+      if (u) {
+        u.photo = e.target.result;
+        renderUsers();
+      }
+    };
     reader.readAsDataURL(input.files[0]);
   }
 }
@@ -2216,6 +2322,16 @@ function previewGenericImage(input, targetId) {
     reader.onload = e => document.getElementById(targetId).src = e.target.result;
     reader.readAsDataURL(input.files[0]);
   }
+}
+
+function togglePasswordVisibility(btn) {
+  const input = btn.previousElementSibling;
+  if (!input) return;
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  const icon = btn.querySelector('i');
+  icon.classList.toggle('fa-eye', !isHidden);
+  icon.classList.toggle('fa-eye-slash', isHidden);
 }
 
 // ============================================================
@@ -2298,11 +2414,57 @@ function cancelHomeTeachers() {
 }
 
 // ============================================================
+// 22b. FAB — دکمه‌های شناور افزودن (حالت ریسپانسیو/کارتی)
+// ============================================================
+
+const fabConfigs = [
+  { fabId: 'fab-add-user',    btnId: 'add-user-btn',    sectionId: 'sec-users',   endId: 'users-table-body' },
+  { fabId: 'fab-add-blog',    btnId: 'add-blog-btn',    sectionId: 'sec-blog',    endId: 'blog-table-body' },
+  { fabId: 'fab-add-class',   btnId: 'add-class-btn',   sectionId: 'sec-classes', endId: 'classes-grid' },
+  { fabId: 'fab-add-teacher', btnId: 'add-teacher-btn', sectionId: 'sec-classes', endId: 'coaches-grid' },
+];
+
+function updateSectionFab(cfg) {
+  const fab = document.getElementById(cfg.fabId);
+  const btn = document.getElementById(cfg.btnId);
+  const section = document.getElementById(cfg.sectionId);
+  if (!fab || !btn || !section) return;
+
+  const isSectionActive = section.classList.contains('active');
+  const isResponsive = window.innerWidth <= 768;
+
+  if (!isSectionActive || !isResponsive) {
+    fab.classList.remove('show');
+    return;
+  }
+
+  // به محض این‌که دکمه اصلی از بالای صفحه رد شود (اسکرول به پایین)، دکمه شناور نمایش داده می‌شود
+  const btnPassed = btn.getBoundingClientRect().bottom < 0;
+
+  // وقتی اسکرول به انتهای همان بخش (لیست/جدول مربوطه) برسد، دکمه شناور محو می‌شود
+  let reachedEnd = false;
+  const endEl = document.getElementById(cfg.endId);
+  if (endEl) {
+    reachedEnd = endEl.getBoundingClientRect().bottom <= window.innerHeight;
+  }
+
+  fab.classList.toggle('show', btnPassed && !reachedEnd);
+}
+
+function updateUsersFab() {
+  fabConfigs.forEach(updateSectionFab);
+}
+
+window.addEventListener('scroll', updateUsersFab, { passive: true });
+window.addEventListener('resize', updateUsersFab);
+
+// ============================================================
 // 23. INITIALIZATION
 // ============================================================
 
 function init() {
   renderUsers();
+  renderSidebarProfile();
   renderBlog();
   renderGallery();
   renderClasses();
@@ -2318,6 +2480,7 @@ function init() {
   fillClassSelects();
   renderClassAxisChips();
   renderClassSlides();
+  updateUsersFab();
 }
 
 document.addEventListener('DOMContentLoaded', init);
