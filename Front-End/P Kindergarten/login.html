@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود به پنل ادمین — کیدآپ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="login.style.css">
+</head>
+<body>
+
+  <div class="login-wrap">
+
+    <div class="login-card">
+
+      <div class="login-brand">
+        <img src="https://placehold.co/160x50/F875AA/fff?text=کیدآپ" alt="لوگو کیدآپ">
+      </div>
+
+      <div class="login-header">
+        <div class="login-title">ورود به پنل ادمین</div>
+        <div class="login-sub">برای دسترسی به پنل مدیریت وارد شوید</div>
+      </div>
+
+      <form id="login-form" class="login-form" onsubmit="handleLogin(event)">
+
+        <div class="field">
+          <label for="username">نام کاربری</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="username" name="username" placeholder="نام کاربری خود را وارد کنید" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">رمز عبور</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="رمز عبور خود را وارد کنید" autocomplete="current-password" required>
+            <button type="button" class="toggle-pass" onclick="togglePassword()" title="نمایش/عدم نمایش رمز عبور">
+              <i class="fa-solid fa-eye" id="toggle-pass-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <label class="remember-row">
+          <input type="checkbox" id="remember">
+          <span>مرا به خاطر بسپار</span>
+        </label>
+
+        <div id="login-error" class="login-error"></div>
+
+        <button type="submit" class="btn-login" id="login-btn">
+          <span id="login-btn-text">ورود به پنل</span>
+          <i class="fa-solid fa-spinner fa-spin" id="login-btn-spinner" style="display:none;"></i>
+        </button>
+
+      </form>
+
+    </div>
+
+    <div class="login-footer-note">© تمامی حقوق برای کیدآپ محفوظ است.</div>
+
+  </div>
+
+<script>
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('toggle-pass-icon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const errorBox = document.getElementById('login-error');
+    const btn = document.getElementById('login-btn');
+    const btnText = document.getElementById('login-btn-text');
+    const spinner = document.getElementById('login-btn-spinner');
+
+    errorBox.textContent = '';
+    errorBox.classList.remove('show');
+
+    if (!username || !password) {
+      errorBox.textContent = 'لطفاً نام کاربری و رمز عبور را وارد کنید.';
+      errorBox.classList.add('show');
+      return;
+    }
+
+    btn.disabled = true;
+    btnText.textContent = 'در حال ورود...';
+    spinner.style.display = 'inline-block';
+
+  
+    setTimeout(() => {
+      btn.disabled = false;
+      btnText.textContent = 'ورود به پنل';
+      spinner.style.display = 'none';
+      window.location.href = 'panel.html';
+    }, 1200);
+  }
+</script>
+
+</body>
+</html>
